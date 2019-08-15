@@ -9,10 +9,10 @@
 
 ## 事前準備
 * Terraform CLIインストール
- * [https://www.terraform.io/downloads.html](https://www.terraform.io/downloads.html)
+	* [https://www.terraform.io/downloads.html](https://www.terraform.io/downloads.html)
 * Terraform Cloudアカウント作成
- * [https://app.terraform.io/signup/account](https://app.terraform.io/signup/account)
+	* [https://app.terraform.io/signup/account](https://app.terraform.io/signup/account)
 * Git CLIインストール
- * [https://git-scm.com/](https://git-scm.com/)
+	* [https://git-scm.com/](https://git-scm.com/)
 * Githubアカウント作成
- * [https://github.com/](https://github.com/)
+	* [https://github.com/](https://github.com/)
