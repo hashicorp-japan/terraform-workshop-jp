@@ -35,9 +35,7 @@ GitHub上に`tf-handson-workshop`という名前のパブリックレポジト�
 
 <kbd>
   <img src="https://github-image-tkaburagi.s3.ap-northeast-1.amazonaws.com/terraform-workshop/hello-1.png">
-</kbd>
-
-
+</kbd>  
 
 <kbd>
   <img src="https://github-image-tkaburagi.s3.ap-northeast-1.amazonaws.com/terraform-workshop/hello-2.png">
