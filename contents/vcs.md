@@ -37,14 +37,19 @@ GitHub上に`tf-handson-workshop`という名前のパブリックレポジト�
   <img src="https://github-image-tkaburagi.s3.ap-northeast-1.amazonaws.com/terraform-workshop/hello-1.png">
 </kbd>
 
-![](https://github-image-tkaburagi.s3.ap-northeast-1.amazonaws.com/terraform-workshop/hello-2.png)
 
+
+<kbd>
+  <img src="https://github-image-tkaburagi.s3.ap-northeast-1.amazonaws.com/terraform-workshop/hello-2.png">
+</kbd>
 
 次に[こちら](https://github.com/settings/applications/new)にアクセスしTFC用のキーを発行します。
 
 OAuthアプリケーションの登録画面で以下のように入力してください。
 
-![](https://github-image-tkaburagi.s3.ap-northeast-1.amazonaws.com/terraform-workshop/hello-3.png)
+<kbd>
+  <img src="https://github-image-tkaburagi.s3.ap-northeast-1.amazonaws.com/terraform-workshop/hello-3.png">
+</kbd>
 
 * Application Name : Terraform Cloud
 * Homepage URL: https://app.terraform.io
@@ -52,19 +57,27 @@ OAuthアプリケーションの登録画面で以下のように入力してく
 
 入力したら`Register`をクリックします。
 
-![](https://github-image-tkaburagi.s3.ap-northeast-1.amazonaws.com/terraform-workshop/hello-4.png)
+<kbd>
+  <img src="https://github-image-tkaburagi.s3.ap-northeast-1.amazonaws.com/terraform-workshop/hello-4.png">
+</kbd>
 
 次にTFCに戻り`Add VCS Provider`を選択します。`Client ID`と`Client Secret`の欄に上のGitHub上の画面で取得した値をコピペしてください。
 
-![](https://github-image-tkaburagi.s3.ap-northeast-1.amazonaws.com/terraform-workshop/hello-5.png)
+<kbd>
+  <img src="https://github-image-tkaburagi.s3.ap-northeast-1.amazonaws.com/terraform-workshop/hello-5.png">
+</kbd>
 
 `Create`をクリックします。
 
-![](https://github-image-tkaburagi.s3.ap-northeast-1.amazonaws.com/terraform-workshop/hello-6.png)
+<kbd>
+  <img src="https://github-image-tkaburagi.s3.ap-northeast-1.amazonaws.com/terraform-workshop/hello-6.png">
+</kbd>
 
 VCS Providerが一つ追加され、Callback URLが生成されたのでこれをコピーし、これをGitHubの`Authorization callback URL`の項目を置き換えます。
 
-![](https://github-image-tkaburagi.s3.ap-northeast-1.amazonaws.com/terraform-workshop/hello-7.png)
+<kbd>
+  <img src="https://github-image-tkaburagi.s3.ap-northeast-1.amazonaws.com/terraform-workshop/hello-7.png">
+</kbd>
 
 これでSaveし、VCSの設定は完了です。次にこれを紐付けたワークスペースを作成します。
 
@@ -99,15 +112,21 @@ git push -u origin master
 
 TFC上でWorkspaceを作成します。トップ画面の`+ New Workspace`を選択し、GitHubを選択します。
 
-![](https://github-image-tkaburagi.s3-ap-northeast-1.amazonaws.com/terraform-workshop/vcs-1.png)
+<kbd>
+  <img src="https://github-image-tkaburagi.s3.ap-northeast-1.amazonaws.com/terraform-workshop/vcs-1.png">
+</kbd>
 
 レポジトリは先ほど作成した`tf-handson-workshop`を選択し、`Create Workspace`をクリックします。
 
-![](https://github-image-tkaburagi.s3-ap-northeast-1.amazonaws.com/terraform-workshop/vcs-2.png)
+<kbd>
+  <img src="https://github-image-tkaburagi.s3.ap-northeast-1.amazonaws.com/terraform-workshop/vcs-2.png">
+</kbd>
 
 成功の画面が出たら`Queue Plan`を実行して動作を確認してみましょう。ここではからのコードを実行しているため`Apply will not run`となるはずです。
 
-![](https://github-image-tkaburagi.s3-ap-northeast-1.amazonaws.com/terraform-workshop/vcs-4.png)
+<kbd>
+  <img src="https://github-image-tkaburagi.s3.ap-northeast-1.amazonaws.com/terraform-workshop/vcs-4.png">
+</kbd>
 
 
 次以降の章で実際のコードをApplyしてGitHubを通したインフラのプロビジョニングを試してみます。
