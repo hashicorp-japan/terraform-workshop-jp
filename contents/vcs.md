@@ -39,7 +39,7 @@ GitHub上に`tf-handson-workshop`という名前のパブリックレポジト�
 
 <kbd>
   <img src="https://github-image-tkaburagi.s3.ap-northeast-1.amazonaws.com/terraform-workshop/hello-2.png">
-</kbd>
+</kbd>  
 
 次に[こちら](https://github.com/settings/applications/new)にアクセスしTFC用のキーを発行します。
 
@@ -47,7 +47,7 @@ OAuthアプリケーションの登録画面で以下のように入力してく
 
 <kbd>
   <img src="https://github-image-tkaburagi.s3.ap-northeast-1.amazonaws.com/terraform-workshop/hello-3.png">
-</kbd>
+</kbd>  
 
 * Application Name : Terraform Cloud
 * Homepage URL: https://app.terraform.io
