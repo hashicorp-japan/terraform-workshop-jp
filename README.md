@@ -15,6 +15,6 @@ OSS版ではすでに多くの情報が日本語でも調べることが可能�
 
 ## 事前準備
 * [Terraform 0.12.6 CLIインストール](https://releases.hashicorp.com/terraform/0.12.6/)
-* [Terraform Cloudアカウント作成]((https://app.terraform.io/signup/account))
+* [Terraform Cloudアカウント作成](https://app.terraform.io/signup/account)
 * [Git CLIインストール](https://git-scm.com/)
 * [Githubアカウント作成](https://github.com/)
