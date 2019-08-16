@@ -33,7 +33,7 @@ GitHub上に`tf-handson-workshop`という名前のパブリックレポジト�
 
 トップ画面の`Settings`から`VCS Providers`を選んでください。
 
-![](https://github-image-tkaburagi.s3.ap-northeast-1.amazonaws.com/terraform-workshop/hello-1.png)
+![](https://github-image-tkaburagi.s3.ap-northeast-1.amazonaws.com/terraform-workshop/hello-1.png){: .shadow}
 
 ![](https://github-image-tkaburagi.s3.ap-northeast-1.amazonaws.com/terraform-workshop/hello-2.png)
 
