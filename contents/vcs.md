@@ -33,16 +33,16 @@ GitHub上に`tf-handson-workshop`という名前のパブリックレポジト�
 
 トップ画面の`Settings`から`VCS Providers`を選んでください。
 
-![](https://github-image-tkaburagi.s3.ap-northeast-1.amazonaws.com/terraform-workshop/hello-1.png?response-content-disposition=inline&X-Amz-Security-Token=AgoJb3JpZ2luX2VjEKr%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaDmFwLW5vcnRoZWFzdC0xIkcwRQIgQ%2FCUTbZslaR1E2O53g2PPMkxGDSgG7KaieHPUM1WZK8CIQDTP92GAdPXlWUhQfSv5dkNOidPWPstNFPE6XIRvptPNirbAwhDEAAaDDY0MzUyOTU1NjI1MSIMYLIZlr2dXRtvsFtEKrgDB3LFAGcmLgXd63J5b0nzYj8QmDbC27fqYEsunl7bzFhY3rPNKC6lajQ2gSISm3bSnKV%2F%2BQP5MX16KaG%2B54IWo8au07rlzGofEhB9ri9WwNTiJXlyS479WAcQh54Isu5DZgiIL7FvwQ2da9z3njykywGdEWDYJyEpgBqSdheVJcDALPd5pff8vYSZLym6BBPfrrfrlwxDP2smHYT6Cn2bK%2BeSejnqxECPR24S3%2Fl2dMdxbsz5myN4kkOrkk7sVhWqdZNCFvfj0dvuT1ciER1NddDHsUth0MWhfWNBr9EWnI%2Bb9dbEGNZnS7SQ0x6OsOpcHvVrlriPr5T7DBrEA7GVBVO%2BxZzfYwUo2Uf2JLDbPLCutQNpUaHIXutofb%2BQfG9TAzlcZdf1yHDeYXuANyJxf%2Bh6CmCn5Y6MfelgaFcXrhx9BPYOsZP464gThFBSax%2Fq%2Bu7PDEOWGTqzOO4zfKfSO3sp7C%2FFSJYIW6Xl4g3roF63n1YV2NF2qLFAAxafgHFIRz22AE1pv2kfUnQDy8oqxPNYlEA0uuxF3v%2BdmBbRh213DO%2FWsmww%2FgGrYHPnzEkVZAbddKS19AQw3qTZ6gU6tAEuuyAYej4QTfuWnlnLYWpVobAfhVswPQl8VRjMXhAlvhWvlcbvBFZ6E2e4A60RkocIDUj8NnJJCxMEDY0bgUSPt8Bbs%2FjBLuIbyZveye2HE9LHwXkqgzLER4tqLIzhzyPZ0BZZQCIycxFSvb%2F9qAO6csW3wXRlicICd006ekeTxDihpTvp6p%2BKFBYIj4ddfn9WVipd0ks0B%2FvSU29zfGDTiLXnjOTM8oueuZySZYjg97T2E3U%3D&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20190816T122624Z&X-Amz-SignedHeaders=host&X-Amz-Expires=300&X-Amz-Credential=ASIAZLVKZYENZZAGQJK6%2F20190816%2Fap-northeast-1%2Fs3%2Faws4_request&X-Amz-Signature=8b942c677cb8902c190b275eedd546347e15818fbb59583251b3de8ef839d0d8)
+![](https://github-image-tkaburagi.s3.ap-northeast-1.amazonaws.com/terraform-workshop/hello-1.png)
 
-![](https://github-image-tkaburagi.s3-ap-northeast-1.amazonaws.com/terraform-workshop/hello-2.png)
+![](https://github-image-tkaburagi.s3.ap-northeast-1.amazonaws.com/terraform-workshop/hello-2.png)
 
 
 次に[こちら](https://github.com/settings/applications/new)にアクセスしTFC用のキーを発行します。
 
 OAuthアプリケーションの登録画面で以下のように入力してください。
 
-![](https://github-image-tkaburagi.s3-ap-northeast-1.amazonaws.com/terraform-workshop/hello-3.png)
+![](https://github-image-tkaburagi.s3.ap-northeast-1.amazonaws.com/terraform-workshop/hello-3.png)
 
 * Application Name : Terraform Cloud
 * Homepage URL: https://app.terraform.io
@@ -50,19 +50,19 @@ OAuthアプリケーションの登録画面で以下のように入力してく
 
 入力したら`Register`をクリックします。
 
-![](https://github-image-tkaburagi.s3-ap-northeast-1.amazonaws.com/terraform-workshop/hello-4.png)
+![](https://github-image-tkaburagi.s3.ap-northeast-1.amazonaws.com/terraform-workshop/hello-4.png)
 
 次にTFCに戻り`Add VCS Provider`を選択します。`Client ID`と`Client Secret`の欄に上のGitHub上の画面で取得した値をコピペしてください。
 
-![](https://github-image-tkaburagi.s3-ap-northeast-1.amazonaws.com/terraform-workshop/hello-5.png)
+![](https://github-image-tkaburagi.s3.ap-northeast-1.amazonaws.com/terraform-workshop/hello-5.png)
 
 `Create`をクリックします。
 
-![](https://github-image-tkaburagi.s3-ap-northeast-1.amazonaws.com/terraform-workshop/hello-6.png)
+![](https://github-image-tkaburagi.s3.ap-northeast-1.amazonaws.com/terraform-workshop/hello-6.png)
 
 VCS Providerが一つ追加され、Callback URLが生成されたのでこれをコピーし、これをGitHubの`Authorization callback URL`の項目を置き換えます。
 
-![](https://github-image-tkaburagi.s3-ap-northeast-1.amazonaws.com/terraform-workshop/hello-7.png)
+![](https://github-image-tkaburagi.s3.ap-northeast-1.amazonaws.com/terraform-workshop/hello-7.png)
 
 これでSaveし、VCSの設定は完了です。次にこれを紐付けたワークスペースを作成します。
 
