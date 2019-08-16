@@ -68,6 +68,8 @@ git push -u origin master
   <img src="https://github-image-tkaburagi.s3.ap-northeast-1.amazonaws.com/terraform-workshop/var-3.png">
 </kbd>
 
+AWS CLIで確認します。
+
 ```console
 $ aws ec2 describe-instances --query "Reservations[].Instances[].{InstanceId:InstanceId,State:State"
 [
@@ -100,6 +102,8 @@ Saveしたらワークスペースのセッテイングから`Destruction and De
 <kbd>
   <img src="https://github-image-tkaburagi.s3.ap-northeast-1.amazonaws.com/terraform-workshop/var-7.png">
 </kbd>
+
+Destroyされていることを確認しましょう。
 
 ```console
 $ aws ec2 describe-instances --query "Reservations[].Instances[].{InstanceId:InstanceId,State:State"
