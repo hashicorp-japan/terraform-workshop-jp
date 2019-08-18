@@ -466,3 +466,4 @@ WIP
 * [Sentinel Terraform](https://www.terraform.io/docs/cloud/sentinel/index.html)
 * [Sentinel Language](https://docs.hashicorp.com/sentinel/language/)
 * [Mocking Terraform Data](https://www.terraform.io/docs/cloud/sentinel/mock.html)
+* [Sample Policies](https://github.com/hashicorp/terraform-guides/tree/master/governance)
