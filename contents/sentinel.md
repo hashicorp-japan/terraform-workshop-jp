@@ -465,3 +465,4 @@ WIP
 * [Sentinel Docs](https://docs.hashicorp.com/sentinel/)
 * [Sentinel Terraform](https://www.terraform.io/docs/cloud/sentinel/index.html)
 * [Sentinel Language](https://docs.hashicorp.com/sentinel/language/)
+* [Mocking Terraform Data](https://www.terraform.io/docs/cloud/sentinel/mock.html)
