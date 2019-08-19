@@ -47,6 +47,7 @@ cp path/to/hello-tf/variables.tf path/to/tf-handson-workshop/variables.tf
 * image : ami-06d9ad3f86032262d
 * machine_type : f1-micro
 * project : PROJECT_NAME
+* hello_tf_instance_count : 1
 ```
 </details>
 

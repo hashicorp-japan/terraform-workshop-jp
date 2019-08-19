@@ -164,9 +164,9 @@ provider "google" {
 }
 
 resource "google_compute_instance" "vm_instance" {
-  name         = "terraform-instance"
+  name = "terraform-instance-${count.index}"
   machine_type = var.machine_type
-  count = 1
+  count = var.hello_tf_instance_count
   zone = asia-northeast1-a
   labels = {
     owner = "kabu",
