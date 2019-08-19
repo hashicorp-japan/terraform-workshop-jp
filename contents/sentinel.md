@@ -44,6 +44,22 @@ main = rule {
 EOF
 ```
 
+<details><summary>GCPの場合はこちら</summary>
+
+```
+import "tfplan"
+
+main = rule {
+  all tfplan.resources.google_compute_instance as _, instances {
+    all instances as _, r {
+      (length(r.applied.tags) else 0) > 0
+    }
+  }
+}
+```
+</details>
+
+
 ```shell
 echo "# sentinel-handson-workshop" >> README.md
 git init
@@ -133,6 +149,44 @@ resource "aws_instance" "hello-tf-instance" {
   )
 }
 ```
+
+<details><summary>GCPの場合はこちら</summary>
+
+```
+terraform {
+  required_version = " 0.12.6"
+}
+
+provider "google" {
+  credentials = var.gcp_key
+  project     = var.project
+  region      = var.region
+}
+
+resource "google_compute_instance" "vm_instance" {
+  name         = "terraform-instance"
+  machine_type = var.machine_type
+  count = 1
+  zone = asia-northeast1-a
+  labels = {
+    owner = "kabu",
+    ttl = "100"
+  }
+  boot_disk {
+    initialize_params {
+      image = var.image
+    }
+  }
+
+  network_interface {
+    # A default network is created for all GCP projects
+    network       = "default"
+    access_config {
+    }
+  }
+}
+```
+</details>
 
 ```shell
 git add main.tf
@@ -341,6 +395,21 @@ main = rule {
 }
 ```
 
+<details><summary>GCPの場合はこちら</summary>
+
+```
+import "tfplan"
+
+main = rule {
+  all tfplan.resources.aws_instance as _, instances {
+    all instances as _, r {
+      (length(r.applied.tags) else 0) > 0
+    }
+  }
+}
+```
+</details>
+
 `testdata/mock-tfplan.sentinel`を確認してみましょう。
 
 ```console
@@ -408,6 +477,28 @@ main = rule {
 }
 ```
 
+<details><summary>GCPの場合はこちら</summary>
+
+```
+import "tfplan"
+
+mandatory_tags = [
+  "ttl", 
+  "owner",
+  "env",
+]
+
+main = rule {
+    all tfplan.resources.google_compute_instance as _, instances {
+      all instances as _, r {
+            all mandatory_tags as t {
+                r.applied.tags contains t
+            }
+        }
+    }
+}
+```
+</details>
 ```console
 $ sentinel apply foo.sentinel
 Pass

@@ -154,6 +154,18 @@ terraform plan
 terraform apply
 ```
 
+<details><summary>GCPの場合はこちら</summary>
+
+```
+export TF_VAR_gcp_key=PATH_TO_KEY_JSON
+export TF_VAR_machine_type=f1-micro
+export TF_VAR_image=debian-cloud/debian-9
+export TF_VAR_project=YOUT_PROJECT
+terraform plan
+terraform apply
+```
+</details>
+
 Applyが終了するとAWSのインスタンスが一つ作られていることがわかるでしょう。
 
 ```console

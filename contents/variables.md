@@ -39,6 +39,17 @@ cp path/to/hello-tf/variables.tf path/to/tf-handson-workshop/variables.tf
 * hello_tf_instance_type : t2.micro
 ```
 
+<details><summary>GCPの場合はこちら</summary>
+
+```
+* gcp_key : JSONファイルコピペ : Senstive
+* region : ap-northeast1
+* image : ami-06d9ad3f86032262d
+* machine_type : f1-micro
+* project : PROJECT_NAME
+```
+</details>
+
 <kbd>
   <img src="https://github-image-tkaburagi.s3.ap-northeast-1.amazonaws.com/terraform-workshop/var-2.png">
 </kbd>
