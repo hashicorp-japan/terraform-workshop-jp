@@ -16,7 +16,7 @@ cd  tf-workspace/hello-tf
 
 早速このフォルダにTerraformのコンフィグファイルを作ってみます。コンフィグファイルは`HashiCorp Configuration Language`というフレームワークを使って記述していきます。
 
-`main.tf`と`vaiables.tf`という二つのファイルを作ってみます。`main.tf`はその名の通りTerraformのメインのファイルで、このファイルに記述されている内容がTerraformで実行されます。`variables.tf`は変数を定義するファイルです。各変数にはデフォルト値や型などを指定できます。
+`main.tf`と`vaiables.tf`という二つのファイルを作ってみます。`main.tf`はその名の通りTerraformのメインのファイルで、このファイルに記述されている内容がTerraformで実行されます。`variables.tf`は変数を定義するフ CDァイルです。各変数にはデフォルト値や型などを指定できます。
 
 ```shell
 cat <<EOF > main.tf
@@ -39,6 +39,7 @@ EOF
 ```
 
 <details><summary>GCPの場合はこちら</summary>
+
 ```
 terraform {
   required_version = " 0.12.6"
@@ -46,17 +47,17 @@ terraform {
 
 provider "google" {
     credentials = var.gcp_key
-    project     = "se-kabu"
-    region      = "asia-northeast1"
+    project     = var.project
+    region      = var.region
 }
 
 resource "google_compute_instance" "vm_instance" {
     name         = "terraform-instance"
-    machine_type = "f1-micro"
-    zone = "asia-northeast1-a"
+    machine_type = var.machine_type
+    zone = asia-northeast1-a
     boot_disk {
         initialize_params {
-            image = "debian-cloud/debian-9"
+            image = var.image
         }
     }
 
@@ -84,6 +85,19 @@ variable "hello_tf_instance_type" {
 }
 EOF
 ```
+
+<details><summary>GCPの場合はこちら</summary>
+
+```    
+variable "gcp_key" {}
+variable "machine_type" {}
+variable "region" {
+    default = "asia-northeast1"
+}
+variable "project" {}
+variable "image" {}
+```
+</details>
 
 二つのファイルができたらそのディレクトリ上でTerraformの初期化処理を行います。`init`処理ではステートファイルの保存先などのバックエンドの設定や必要ばプラグインのインストールを実施します。
 
