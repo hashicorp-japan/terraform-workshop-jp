@@ -500,8 +500,7 @@ main = rule {
 ```
 </details>
 
-```
-console
+```console
 $ sentinel apply foo.sentinel
 Pass
 ```
