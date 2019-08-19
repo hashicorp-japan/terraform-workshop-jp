@@ -52,7 +52,7 @@ import "tfplan"
 main = rule {
   all tfplan.resources.google_compute_instance as _, instances {
     all instances as _, r {
-      (length(r.applied.tags) else 0) > 0
+      (length(r.applied.labels) else 0) > 0
     }
   }
 }
@@ -403,7 +403,7 @@ import "tfplan"
 main = rule {
   all tfplan.resources.aws_instance as _, instances {
     all instances as _, r {
-      (length(r.applied.tags) else 0) > 0
+      (length(r.applied.labels) else 0) > 0
     }
   }
 }
@@ -482,7 +482,7 @@ main = rule {
 ```
 import "tfplan"
 
-mandatory_tags = [
+mandatory_labels = [
   "ttl", 
   "owner",
   "env",
@@ -491,8 +491,8 @@ mandatory_tags = [
 main = rule {
     all tfplan.resources.google_compute_instance as _, instances {
       all instances as _, r {
-            all mandatory_tags as t {
-                r.applied.tags contains t
+            all mandatory_labels as t {
+                r.applied.labels contains t
             }
         }
     }
