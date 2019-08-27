@@ -55,7 +55,7 @@ resource "google_compute_instance" "vm_instance" {
     name = "terraform-instance-${count.index}"
     count = var.hello_tf_instance_count
     machine_type = var.machine_type
-    zone = asia-northeast1-a
+    zone = "asia-northeast1-a"
     boot_disk {
         initialize_params {
             image = var.image
