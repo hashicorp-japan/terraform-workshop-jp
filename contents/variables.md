@@ -18,8 +18,17 @@ Variableのストレージは一つのワークスペースに一つ用意され
 先ほど作成した`tf-handson-workshop`に変更を加えます。`hello-tf`で利用したコードをコピーします。
 
 ```shell
-cp path/to/hello-tf/main.tf path/to/tf-handson-workshop/main.tf
-cp path/to/hello-tf/variables.tf path/to/tf-handson-workshop/variables.tf
+$ cp path/to/hello-tf/main.tf path/to/tf-workspace/tf-handson-workshop/main.tf
+$ cp path/to/hello-tf/variables.tf path/to/tf-workspace/tf-handson-workshop/variables.tf
+```
+
+このようになっていればOKです。
+
+```
+.
+└── tf-handson-workshop
+    ├── main.tf
+    └── variables.tf
 ```
 
 `hello-tf`では環境変数を使って変数の値をセットしましたが、今回はエンタープライズの機能を利用します。変数のセットはGUIもしくはCLIで設定できます。
@@ -44,7 +53,7 @@ cp path/to/hello-tf/variables.tf path/to/tf-handson-workshop/variables.tf
 ```
 * gcp_key : JSONファイルコピペ : Senstive
 * region : ap-northeast1
-* image : ami-06d9ad3f86032262d
+* image : debian-cloud/debian-9
 * machine_type : f1-micro
 * project : PROJECT_NAME
 * hello_tf_instance_count : 1
@@ -60,10 +69,10 @@ cp path/to/hello-tf/variables.tf path/to/tf-handson-workshop/variables.tf
 ここまで完了したらコードをコミットしてみます。
 
 ```shell
-git add .
-git commit -m "first commit"
-git remote add origin https://github.com/tkaburagi/tf-handson-workshop.git
-git push -u origin master
+$ git add .
+$ git commit -m "first commit"
+$ git remote add origin https://github.com/tkaburagi/tf-handson-workshop.git
+$ git push -u origin master
 ```
 
 ## 実行結果の確認

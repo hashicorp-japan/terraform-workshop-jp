@@ -10,8 +10,8 @@ Terraform v0.12.6
 ```
 
 ```shell
-mkdir -p tf-workspace/hello-tf
-cd  tf-workspace/hello-tf
+$ mkdir -p tf-workspace/hello-tf
+$ cd  tf-workspace/hello-tf
 ```
 
 早速このフォルダにTerraformのコンフィグファイルを作ってみます。コンフィグファイルは`HashiCorp Configuration Language`というフレームワークを使って記述していきます。
@@ -19,7 +19,7 @@ cd  tf-workspace/hello-tf
 `main.tf`と`vaiables.tf`という二つのファイルを作ってみます。`main.tf`はその名の通りTerraformのメインのファイルで、このファイルに記述されている内容がTerraformで実行されます。`variables.tf`は変数を定義するフ CDァイルです。各変数にはデフォルト値や型などを指定できます。
 
 ```shell
-cat <<EOF > main.tf
+$ cat <<EOF > main.tf
 terraform {
 	required_version = " 0.12.6"
 }
@@ -73,7 +73,7 @@ resource "google_compute_instance" "vm_instance" {
 </details>
 
 ```shell 
-cat << EOF > variables.tf
+$ cat << EOF > variables.tf
 variable "access_key" {}
 variable "secret_key" {}
 variable "region" {}
@@ -106,7 +106,7 @@ variable "image" {}
 二つのファイルができたらそのディレクトリ上でTerraformの初期化処理を行います。`init`処理ではステートファイルの保存先などのバックエンドの設定や必要ばプラグインのインストールを実施します。
 
 ```shell
-terraform init
+$ terraform init
 ```
 
 ここではAWSのプラグインがインストールされるはずです。
@@ -150,23 +150,23 @@ $ aws ec2 describe-instances --query "Reservations[].Instances[].{InstanceId:Ins
 がありますが、今回は環境変数でセットします。
 
 ```shell
-export TF_VAR_access_key=************
-export TF_VAR_secret_key=************
-export TF_VAR_region=ap-northeast-1
-export TF_VAR_ami=ami-06d9ad3f86032262d
-terraform plan
-terraform apply
+$ export TF_VAR_access_key=************
+$ export TF_VAR_secret_key=************
+$ export TF_VAR_region=ap-northeast-1
+$ export TF_VAR_ami=ami-06d9ad3f86032262d
+$ terraform plan
+$ terraform apply
 ```
 
 <details><summary>GCPの場合はこちら</summary>
 
 ```
-export TF_VAR_gcp_key=PATH_TO_KEY_JSON
-export TF_VAR_machine_type=f1-micro
-export TF_VAR_image=debian-cloud/debian-9
-export TF_VAR_project=YOUT_PROJECT
-terraform plan
-terraform apply
+$ export TF_VAR_gcp_key=PATH_TO_KEY_JSON
+$ export TF_VAR_machine_type=f1-micro
+$ export TF_VAR_image=debian-cloud/debian-9
+$ export TF_VAR_project=YOUT_PROJECT
+$ terraform plan
+$ terraform apply
 ```
 </details>
 
@@ -188,9 +188,9 @@ $ aws ec2 describe-instances --query "Reservations[].Instances[].{InstanceId:Ins
 次にインスタンスの数を増やしてみます。`hello_tf_instance_count`の値を上書きして再度実行します。
 
 ```shell
-export TF_VAR_hello_tf_instance_count=2 
-terraform plan
-terraform apply -auto-approve
+$ export TF_VAR_hello_tf_instance_count=2 
+$ terraform plan
+$ terraform apply -auto-approve
 ```
 
 ちなみに今回は`-auto-approve`というパラメータを使って途中の実行確認を省略しています。AWSのインスタンスが二つに増えています。Terraformは環境に差分が生じた際はPlanで差分を検出し、差分のみ実施するため既存のリソースには何の影響も及ぼしません。
@@ -219,7 +219,7 @@ $ aws ec2 describe-instances --query "Reservations[].Instances[].{InstanceId:Ins
 
 
 ```shell
-terraform destroy 
+$ terraform destroy 
 ```
 
 実行ししばらくするとEC2インスタンスが`terminated`の状態になってることがわかるはずです。

@@ -84,14 +84,14 @@ VCS Providerが一つ追加され、Callback URLが生成されたのでこれ�
 まずワークスペースのレポジトリを作ります。
 
 ```shell
-mkdir -p tf-workspace/tf-handson-workshop
-cd path/to/tf-workspace/tf-handson-workshop
+$ mkdir -p tf-workspace/tf-handson-workshop
+$ cd path/to/tf-workspace/tf-handson-workshop
 ```
 
 以下のファイルを作ります。
 
 ```shell
-cat <<EOF > main.tf
+$ cat <<EOF > main.tf
 terraform {
 	required_version = " 0.12.6"
 }
@@ -101,11 +101,11 @@ EOF
 GitHubにプッシュして連携の確認をしてみましょう。
 
 ```shell
-git init
-git add main.tf
-git commit -m "first commit"
-git remote add origin https://github.com/tkaburagi/tf-handson-workshop.git
-git push -u origin master
+$ git init
+$ git add main.tf
+$ git commit -m "first commit"
+$ git remote add origin https://github.com/tkaburagi/tf-handson-workshop.git
+$ git push -u origin master
 ```
 
 TFC上でWorkspaceを作成します。トップ画面の`+ New Workspace`を選択し、GitHubを選択します。

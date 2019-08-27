@@ -16,14 +16,14 @@ Terraformは便利なツールですが、多くのユーザが利用し大規�
 GitHub上に`sentinel-handson-workshop`という名前のパブリックレポジトリを作成してください。
 
 ```shell
-mkdir -p tf-workspace/sentinel-handson-workshop
-cd path/to/tf-workspace/sentinel-handson-workshop
+$ mkdir -p tf-workspace/sentinel-handson-workshop
+$ cd path/to/tf-workspace/sentinel-handson-workshop
 ```
 
 以下の二つのファイルを追加します。
 
 ```shell
-cat <<EOF > sentinel.hcl
+$ cat <<EOF > sentinel.hcl
 policy "first-policy" {
     enforcement_level = "hard-mandatory"
 }
@@ -31,7 +31,7 @@ EOF
 ```
 
 ```shell
-cat <<EOF > first-policy.sentinel
+$ cat <<EOF > first-policy.sentinel
 import "tfplan"
 
 main = rule {
@@ -61,23 +61,26 @@ main = rule {
 
 
 ```shell
-echo "# sentinel-handson-workshop" >> README.md
-git init
-git add .
-git commit -m "first commit"
-git remote add origin https://github.com/tkaburagi/sentinel-handson-workshop.git
-git push -u origin master
+$ echo "# sentinel-handson-workshop" >> README.md
+$ git init
+$ git add .
+$ git commit -m "first commit"
+$ git remote add origin https://github.com/tkaburagi/sentinel-handson-workshop.git
+$ git push -u origin master
 ```
 
 Sentinelは最低限二つのファイルが必要です。一つは`sentinel.hcl`、もう一つは`<POLICYNAME>.sentinel`です。
 
-```console
-$ tree .
-.
-├── first-policy.sentinel
-└── sentinel.hcl
+このようになっていればOKです。
 
-0 directories, 2 files
+```
+.
+├── sentinel-handson-workshop
+│   ├── first-policy.sentinel
+│   └── sentinel.hcl
+└── tf-handson-workshop
+    ├── main.tf
+    └── variables.tf
 ```
 
 `sentinel.hcl`のファイルは実際のポリシーが定義されているコードの設定を行います。`enforcement_level`を定義し、そのポリシーの強制度合いを設定します。
@@ -104,7 +107,7 @@ $ tree .
   <img src="https://github-image-tkaburagi.s3.ap-northeast-1.amazonaws.com/terraform-workshop/sentinel-1.png">
 </kbd>
 
-以下のように入力してください。名前などは任意で構いません。**workspaceを選んだらADD WORKSPACEを押すのを忘れないですください。**
+以下のように入力してください。名前などは任意で構いません。**workspaceを選んだらADD WORKSPACEを押すのを忘れないでください。**
 
 <kbd>
   <img src="https://github-image-tkaburagi.s3.ap-northeast-1.amazonaws.com/terraform-workshop/sentinel-2.png">
@@ -189,9 +192,9 @@ resource "google_compute_instance" "vm_instance" {
 </details>
 
 ```shell
-git add main.tf
-git commit -m "added tags"
-git push
+$ git add main.tf
+$ git commit -m "added tags"
+$ git push
 ```
 
 再度ワークスペースのRunsの中から最新の実行を選んでください。次はポリシーチェックをクリアし、Applyできるはずです。`confirm & apply`をクリックしてApplyしてみましょう。
@@ -238,12 +241,12 @@ Applyにはコンフィグレーションファイルというファイルが必
 サンプルを一つ作ってみます。
 
 ```shell
-mkdir simulator-sample
-cd simulator-sample
+$ mkdir simulator-sample
+$ cd simulator-sample
 ```
 
 ```shell
-cat <<EOF > sentinel.json
+$ cat <<EOF > sentinel.json
 {
     "mock": {
         "time": {
@@ -260,7 +263,7 @@ EOF
 次にSentinelのコードを作ります。
 
 ```shell
-cat <<EOF > foo.sentinel
+$ cat <<EOF > foo.sentinel
 import "time"
 
 main = time.hour == 10
@@ -290,7 +293,7 @@ Pass
 まずは関数を一つ作ってみます。ここでのSentinelはポリシーの定義ではなくあくまでも関数でのモックデータの定義なので`main`は必要ありません。
 
 ```shell
-cat <<EOF > mock-foo.sentinel
+$ cat <<EOF > mock-foo.sentinel
 bar = func() {                                                                                                                                                           
     return "baz"                                                                                                                                                                
 }                                                                                                                                                                               
@@ -300,7 +303,7 @@ EOF
 次に新しいコンフィグを作ってモックデータに先ほどSentinelで作った関数を指定します。
 
 ```shell
-cat <<EOF > sentinel-2.json
+$ cat <<EOF > sentinel-2.json
 {                                                                                                                                                                        
     "mock": {                                                                                                                                                                   
         "foo": "mock-foo.sentinel"                                                                                                                                              
@@ -312,7 +315,7 @@ EOF
 最後に新しいポリシーの定義ファイルを作ります。
 
 ```shell
-cat <<EOF > foo-2.sentinel
+$ cat <<EOF > foo-2.sentinel
 import "foo"                                                                                                                                                                    
                                                                                                                                                                                 
 main = foo.bar() == "baz"
@@ -339,17 +342,16 @@ ApplyするとPassとなるはずです。
 WorkspacesのRunsから最新の実行結果の`Plan finished`をクリックすると`Downloads Sentinel mocks`というボタンがあるのでこれをクリックしてモックデータをダウンロードし新しいフォルダを作ります。
 
 ```shell
-tar xvfz path/to/run-gvXm387VP1VShKC1-sentinel-mocks.tar.gz
-mkdir -p simulator-tf-sample/test/foo simulator-tf-sample/testdata
-touch simulator-tf-sample/sentinel.json simulator-tf-sample/foo.sentinel simulator-tf-sample/test/foo/fail.json simulator-tf-sample/test/foo/pass.json
-mv path/to/run-gvXm387VP1VShKC1-sentinel-mocks/* simulator-tf-sample/testdata/
-cd simulator-tf-sample
+$ tar xvfz path/to/run-gvXm387VP1VShKC1-sentinel-mocks.tar.gz
+$ mkdir -p simulator-tf-sample/test/foo simulator-tf-sample/testdata
+$ touch simulator-tf-sample/sentinel.json simulator-tf-sample/foo.sentinel simulator-tf-sample/test/foo/fail.json simulator-tf-sample/test/foo/pass.json
+$ mv path/to/run-gvXm387VP1VShKC1-sentinel-mocks/* simulator-tf-sample/testdata/
+$ cd simulator-tf-sample
 ```
 
 以下のような構造になればOKです。
 
 ```console
-$ tree .
 .
 ├── foo.sentinel
 ├── sentinel.json
@@ -547,10 +549,6 @@ FALSE - foo.sentinel:19:1 - Rule "main"
 ```
 
 モックデータのインスタンスには`env`のタグはついていないので、Failとなりポリシーが意図通りに動作していることがわかります。
-
-### Test
-
-WIP
 
 ## 参考リンク
 * [Sentinel](https://www.hashicorp.com/sentinel)
