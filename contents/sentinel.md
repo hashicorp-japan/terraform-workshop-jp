@@ -13,7 +13,9 @@ Terraformは便利なツールですが、多くのユーザが利用し大規�
 ## Sentinelコードの作成
 それではまずはSentinelを利用するための設定を行います。
 
+```
 GitHub上に`sentinel-handson-workshop`という名前のパブリックレポジトリを作成してください。
+```
 
 ```shell
 $ mkdir -p tf-workspace/sentinel-handson-workshop

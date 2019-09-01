@@ -27,8 +27,9 @@ TFCにアクセスし最初のセットアップを行いましょう。
 
 ### GitHubレポジトリ作成
 
-GitHub上に`tf-handson-workshop`という名前のパブリックレポジトリを作成してください。
-
+```
+GitHub上に"tf-handson-workshop"という名前のパブリックレポジトリを作成してください。
+```
 ### GitHubのOAuth Applicationの作成
 
 トップ画面の`Settings`から`VCS Providers`を選んでください。
