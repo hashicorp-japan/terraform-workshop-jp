@@ -135,7 +135,7 @@ Sentinelは最低限二つのファイルが必要です。一つは`sentinel.hc
 
 ```hcl
 terraform {
-  required_version = " 0.12.6"
+  required_version = " 0.12.2"
 }
 
 provider "aws" {
@@ -159,7 +159,7 @@ resource "aws_instance" "hello-tf-instance" {
 
 ```
 terraform {
-  required_version = " 0.12.6"
+  required_version = " 0.12.2"
 }
 
 provider "google" {

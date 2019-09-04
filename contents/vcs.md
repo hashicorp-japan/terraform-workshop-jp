@@ -51,7 +51,7 @@ OAuthアプリケーションの登録画面で以下のように入力してく
 </kbd>  
 
 * Application Name : Terraform Cloud
-* Homepage URL: `https://app.terraform.io`
+* Homepage URL: `https://ptfe.masa.hashidemos.io`
 * Authorization callback URL: `https://example.com/replace-this-later`
 
 入力したら`Register`をクリックします。
@@ -78,7 +78,11 @@ VCS Providerが一つ追加され、Callback URLが生成されたのでこれ�
   <img src="https://github-image-tkaburagi.s3.ap-northeast-1.amazonaws.com/terraform-workshop/hello-7.png">
 </kbd>
 
-これでSaveし、VCSの設定は完了です。次にこれを紐付けたワークスペースを作成します。
+これでSaveしましょう。
+
+最後にトップ画面の`Settings` -> `VCS Providers` から先ほど追加したGitHubの`Connect`をクリックして認証行ってください。
+
+これでVCSの設定は完了です。次にこれを紐付けたワークスペースを作成します。
 
 ## Workspaceの作成
 
@@ -94,7 +98,7 @@ $ cd path/to/tf-workspace/tf-handson-workshop
 ```shell
 $ cat <<EOF > main.tf
 terraform {
-	required_version = " 0.12.6"
+	required_version = " 0.12.2"
 }
 EOF
 ```
@@ -121,7 +125,7 @@ TFC上でWorkspaceを作成します。トップ画面の`+ New Workspace`を選
   <img src="https://github-image-tkaburagi.s3.ap-northeast-1.amazonaws.com/terraform-workshop/vcs-2.png">
 </kbd>
 
-成功の画面が出たら`Queue Plan`を実行して動作を確認してみましょう。ここではからのコードを実行しているため`Apply will not run`となるはずです。
+成功の画面が出たら`Queue Plan`を実行して動作を確認してみましょう。ここでは空のコードを実行しているため`Apply will not run`となるはずです。
 
 <kbd>
   <img src="https://github-image-tkaburagi.s3.ap-northeast-1.amazonaws.com/terraform-workshop/vcs-4.png">
