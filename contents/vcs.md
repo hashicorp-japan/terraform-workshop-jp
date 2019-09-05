@@ -90,7 +90,7 @@ VCS Providerが一つ追加され、Callback URLが生成されたのでこれ�
 
 ```shell
 $ mkdir -p tf-workspace/tf-handson-workshop
-$ cd path/to/tf-workspace/tf-handson-workshop
+$ cd tf-workspace/tf-handson-workshop
 ```
 
 以下のファイルを作ります。

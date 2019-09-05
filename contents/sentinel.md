@@ -19,7 +19,7 @@ GitHub上に`sentinel-handson-workshop`という名前のパブリックレポ�
 
 ```shell
 $ mkdir -p tf-workspace/sentinel-handson-workshop
-$ cd path/to/tf-workspace/sentinel-handson-workshop
+$ cd tf-workspace/sentinel-handson-workshop
 ```
 
 以下の二つのファイルを追加します。
