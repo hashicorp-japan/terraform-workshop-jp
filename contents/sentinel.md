@@ -327,7 +327,7 @@ EOF
 モックデータで定義されている`foo`をimportして、関数`bar`を実行し、実行結果が`baz`であるかどうかを判定しています。
 
 ```console
-$ sentinel apply -config=sentinel-2.json bar.sentinel
+$ sentinel apply -config=sentinel-2.json foo-2.sentinel
 Pass
 ```
 
