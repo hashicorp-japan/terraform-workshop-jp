@@ -6,7 +6,7 @@ Enterprise版ではOrganizationごとにプライベートなModule Registryを�
 
 ## モジュールを作る
 
-まずModuleを作っていきましょう。モジュールはTFEで対応しているコードレポジトリ上に作っていきます。まずはGihuHub上にレポジトリを作ります。
+まずModuleを作っていきましょう。モジュールはTFEで対応しているコードレポジトリ上に作っていきます。まずはGitHub上にレポジトリを作ります。
 
 ```
 GitHubのアカウントに"terraform-aws-securitygroup"という名前のレポジトリを作ってください。
