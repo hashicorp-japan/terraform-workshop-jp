@@ -238,7 +238,7 @@ TFEのPrivate Module Registryのいいところはバージョン管理ができ
 `variables.tf`
 
 ```hcl
-variable "lan_serf" {
+variable "wan_serf" {
   default = "8302"
 }
 ```
