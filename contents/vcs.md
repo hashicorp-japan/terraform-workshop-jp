@@ -98,7 +98,7 @@ $ cd path/to/tf-workspace/tf-handson-workshop
 ```shell
 $ cat <<EOF > main.tf
 terraform {
-	required_version = " 0.12.2"
+	required_version = " 0.12.6"
 }
 EOF
 ```
@@ -106,10 +106,11 @@ EOF
 GitHubにプッシュして連携の確認をしてみましょう。
 
 ```shell
+$ export GITURL=<YOUR_REPO_URL>
 $ git init
 $ git add main.tf
 $ git commit -m "first commit"
-$ git remote add origin https://github.com/tkaburagi/tf-handson-workshop.git
+$ git remote add origin $GITURL
 $ git push -u origin master
 ```
 

@@ -72,6 +72,8 @@ resource "google_compute_instance" "vm_instance" {
 ```
 </details>
 
+次に`variables.tf`ファイルを作ります。
+
 ```shell 
 $ cat << EOF > variables.tf
 variable "access_key" {}

@@ -92,7 +92,7 @@ $ git push -u origin master
 AWS CLIで確認します。
 
 ```console
-$ aws ec2 describe-instances --query "Reservations[].Instances[].{InstanceId:InstanceId,State:State"
+$ aws ec2 describe-instances --query "Reservations[].Instances[].{InstanceId:InstanceId,State:State}"
 [
     {
         "InstanceId": "i-07bbdb6c0532e1617",
@@ -127,7 +127,7 @@ Saveしたらワークスペースのセッテイングから`Destruction and De
 Destroyされていることを確認しましょう。
 
 ```console
-$ aws ec2 describe-instances --query "Reservations[].Instances[].{InstanceId:InstanceId,State:State"
+$ aws ec2 describe-instances --query "Reservations[].Instances[].{InstanceId:InstanceId,State:State}"
 [
     {
         "InstanceId": "i-07bbdb6c0532e1617",
