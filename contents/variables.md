@@ -70,8 +70,8 @@ $ cp path/to/hello-tf/variables.tf path/to/tf-workspace/tf-handson-workshop/vari
 
 ```shell
 $ git add .
-$ git commit -m "first commit"
-$ git remote add origin https://github.com/tkaburagi/tf-handson-workshop.git
+$ git commit -m "second commit"
+$ git emote add origin https://github.com/tkaburagi/tf-handson-workshop.git
 $ git push -u origin master
 ```
 
