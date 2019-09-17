@@ -21,7 +21,7 @@ $ cd  tf-workspace/hello-tf
 ```shell
 $ cat <<EOF > main.tf
 terraform {
-	required_version = " 0.12.6"
+	required_version = "~> 0.12"
 }
 
 provider "aws" {
