@@ -30,7 +30,12 @@ provider "aws" {
 	region = var.region
 }
 
-:wq
+resource "aws_instance" "hello-tf-instance" {
+  ami = var.ami
+  count = var.hello_tf_instance_count
+  instance_type = var.hello_tf_instance_type
+}
+
 EOF
 ```
 

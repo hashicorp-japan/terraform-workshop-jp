@@ -15,11 +15,52 @@ Variableのストレージは一つのワークスペースに一つ用意され
 
 ## 変数のセット
 
-先ほど作成した`tf-handson-workshop`に変更を加えます。`hello-tf`で利用したコードをコピーします。
+先ほど作成した`tf-handson-workshop`に変更を加えます。
 
 ```shell
-$ cp path/to/hello-tf/main.tf path/to/tf-workspace/tf-handson-workshop/main.tf
-$ cp path/to/hello-tf/variables.tf path/to/tf-workspace/tf-handson-workshop/variables.tf
+$ cd path/to/tf-workspace/tf-handson-workshop
+```
+
+以下の二つのファイルを作成してください。
+
+
+```shell
+$ cat <<EOF > main.tf
+
+terraform {
+  required_version = "~> 0.12"
+}
+
+provider "aws" {
+  access_key = var.access_key
+  secret_key = var.secret_key
+  region = var.region
+}
+
+resource "aws_instance" "hello-tf-instance" {
+  ami = var.ami
+  count = var.hello_tf_instance_count
+  instance_type = var.hello_tf_instance_type
+}
+
+EOF
+```
+
+```shell 
+$ cat << EOF > variables.tf
+
+variable "access_key" {}
+variable "secret_key" {}
+variable "region" {}
+variable "ami" {}
+variable "hello_tf_instance_count" {
+    default = 2
+}
+variable "hello_tf_instance_type" {
+    default = "t2.micro"
+}
+
+EOF
 ```
 
 このようになっていればOKです。
