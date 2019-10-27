@@ -51,7 +51,7 @@ OAuthアプリケーションの登録画面で以下のように入力してく
 </kbd>  
 
 * Application Name : Terraform Cloud
-* Homepage URL: `https://ptfe.masa.hashidemos.io`
+* Homepage URL: `https://app.terraform.io`
 * Authorization callback URL: `https://example.com/replace-this-later`
 
 入力したら`Register`をクリックします。
