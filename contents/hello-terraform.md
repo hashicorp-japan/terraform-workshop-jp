@@ -247,6 +247,36 @@ $ aws ec2 describe-instances --query "Reservations[].Instances[].{InstanceId:Ins
 ]
 ```
 
+## Webシステムをプロビジョニングする
+
+次はもう少し複雑な構成のシステムをプロジョニングしてみましょう。
+
+```shell
+$ cd tf-workspace
+$ git clone https://github.com/tkaburagi/tf-simple-web
+$ cd tf-simple-web
+```
+
+二つのAWSインスタンスを立ち上げ、その上にApacheをインストールしその二つのインスタンスをインスタンスグループとしてALBにアタッチしています。そのために必要な最低限のネットワーク設定も行なっていますので気になる人はコードを見てみてください。
+
+Terraform Applyしてみましょう。
+
+```shell
+$ terraform plan
+$ terraform apply
+```
+
+Applyが成功するとアウトプットとして以下のような内容が出力されるはずです。
+
+```
+Outputs:
+
+alb_dns = web-alb-1553156387.ap-northeast-1.elb.amazonaws.com
+```
+
+こちらにWebブラウザでアクセスして、Apacheが起動していることを確認してみましょう。
+また、AWSのコンソールを確認してインスタンスやLBの他にVPC, Security Groupも作られていることを確認してみましょう。
+
 ## Enterprise版の価値
 
 Applyが実行されると`terraform.tfstate`というファイルが生成されます。このファイルは現在のインフラの状態をJson形式で保持しているものですが、次のPlanのタイミングの差分の検出などで扱われ非常に重要です。例えばチームで作業をする際などはこのステートの共有方法をどうやって運用するかなどの考慮が必要になります。
