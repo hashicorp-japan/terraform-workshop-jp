@@ -172,7 +172,7 @@ resource "google_compute_instance" "vm_instance" {
   name = "terraform-instance-${count.index}"
   machine_type = var.machine_type
   count = var.hello_tf_instance_count
-  zone = asia-northeast1-a
+  zone = "asia-northeast1-a"
   labels = {
     owner = "kabu",
     ttl = "100"
