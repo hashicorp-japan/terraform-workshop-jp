@@ -13,6 +13,16 @@ Terraformはソフトウェアの性質上、非常に機密性の高いデー�
 
 Variableのストレージは一つのワークスペースに一つ用意されます。またこの他にもステートファイルなど重要なデータは例外なく暗号化され保存されています。
 
+Terraform Enterpriseには二種類に変数がサポートされています。`Terraform Variables`と`Environment Variables`です。
+
+`Terraform Variables`はTerrafromで扱う変数です。ここでセットされた値は`terraform.tfvars`として扱われます。そのため連携するVCSにもし`terraform.tfvars`がある場合はオーバーライドされます。
+
+`Environment Variables`はLinuxのWorker(Terraform Runなどを行うコンポーネント)上にセットされる値です。ここでセットされた値がexportコマンドよって実行前に環境変数としてセットされます。`Environment Variables`の中にはTFE上で特別な意味を持つものが存在します。
+
+* CONFIRM_DESTROY: `Destroy`を許容するかどうか。デフォルトでは無効です。
+* TFE_PARALLELISM: 処理高速化のための並列実行のオプションです。デフォルトは10です。
+
+
 ## 変数のセット
 
 先ほど作成した`tf-handson-workshop`に変更を加えます。
@@ -201,3 +211,4 @@ diffが取られ、変更点なども直感的に確認できます。各実行�
 * [Data Protection](https://www.terraform.io/docs/enterprise/system-overview/data-security.html)
 * [Variables](https://www.terraform.io/docs/cloud/workspaces/variables.html)
 * [TFC API Doc](https://www.terraform.io/docs/cloud/api/index.html)
+* [Terraform VariablesとEnviron Variables](https://www.terraform.io/docs/cloud/workspaces/variables.html#terraform-variables)
