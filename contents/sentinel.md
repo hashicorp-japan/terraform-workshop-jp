@@ -148,10 +148,10 @@ resource "aws_instance" "hello-tf-instance" {
   ami = var.ami
   count = var.hello_tf_instance_count
   instance_type = var.hello_tf_instance_type
-  tags = map(
-  "owner", "Kabu",
-  "ttl", "100"
-  )
+  tags = {
+    owner = "Kabu"
+    ttl   = "100"
+  }
 }
 ```
 
@@ -172,10 +172,10 @@ resource "google_compute_instance" "vm_instance" {
   name = "terraform-instance-${count.index}"
   machine_type = var.machine_type
   count = var.hello_tf_instance_count
-  zone = asia-northeast1-a
+  zone = "asia-northeast1-a"
   labels = {
     owner = "kabu",
-    ttl = "100"
+    ttl   = "100"
   }
   boot_disk {
     initialize_params {
