@@ -19,8 +19,8 @@ Terraform Enterpriseには二種類に変数がサポートされています。
 
 `Environment Variables`はLinuxのWorker(Terraform Runなどを行うコンポーネント)上にセットされる値です。ここでセットされた値がexportコマンドよって実行前に環境変数としてセットされます。`Environment Variables`の中にはTFE上で特別な意味を持つものが存在します。
 
-* CONFIRM_DESTROY: `Destroy`を許容するかどうか。デフォルトでは無効です。
-* TFE_PARALLELISM: 処理高速化のための並列実行のオプションです。デフォルトは10です。
+* `CONFIRM_DESTROY`: `Destroy`を許容するかどうか。デフォルトでは無効です。
+* `TFE_PARALLELISM`: 処理高速化のための並列実行のオプション。デフォルトは10です。
 
 
 ## 変数のセット
