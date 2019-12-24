@@ -33,4 +33,4 @@ OSS版ではすでに多くの情報が日本語でも調べることが可能�
 * [Enterprise機能3: Policy as Code](https://github.com/hashicorp-japan/terraform-workshop/blob/master/contents/sentinel.md)
 * [Enterprise機能4: Private Module Registry](https://github.com/hashicorp-japan/terraform-workshop/blob/master/contents/module.md)
 * [Enterprise機能5: Terraform Enterprise API](https://github.com/hashicorp-japan/terraform-workshop/blob/master/contents/tf-api.md)
-* [Enterprise機能6: Notifications]
+* [Enterprise機能6: Notifications](https://github.com/hashicorp-japan/terraform-workshop/blob/master/notifications.md)
