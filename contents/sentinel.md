@@ -1,4 +1,4 @@
-# SetinelによるPolicy as Code
+# SentinelによるPolicy as Code
 
 Terraformは便利なツールですが、多くのユーザが利用し大規模な運用になるとガバンナンスをきかせユーザの行動を制御することが運用上課題となります。有償版ではHashiCorpが開発する[Sentinel](https://www.hashicorp.com/sentinel)というフレームワークを利用し、ポリシーを定義することができます。
 
