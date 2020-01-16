@@ -2,12 +2,19 @@
 
 ここではOSS版のTerraformを利用してAWS上に一つインスタンスを作り、それぞれのコンポーネントや用語について説明をします。
 
-まずTerraformがインストールされており、実行権限があることを確認し、任意の作業用ディレクトリを作ります。
+Terrformがインストールされていない場合は[こちら](https://www.terraform.io/downloads.html)よりダウンロードをしてください。
+
+ダウンロードしたらunzipして実行権限を付与し、パスを通します。かきはmacOSの手順です。
 
 ```console
+$ unzip terraform*.zip
+$ chmod + x terraform
+$ mv terraform /usr/local/bin
 $ terraform -version
 Terraform v0.12.6
 ```
+
+次に任意の作業用ディレクトリを作ります。
 
 ```shell
 $ mkdir -p tf-workspace/hello-tf
