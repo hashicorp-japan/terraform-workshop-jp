@@ -4,7 +4,7 @@
 
 Terrformがインストールされていない場合は[こちら](https://www.terraform.io/downloads.html)よりダウンロードをしてください。
 
-ダウンロードしたらunzipして実行権限を付与し、パスを通します。かきはmacOSの手順です。
+ダウンロードしたらunzipして実行権限を付与し、パスを通します。下記はmacOSの手順です。
 
 ```console
 $ unzip terraform*.zip
