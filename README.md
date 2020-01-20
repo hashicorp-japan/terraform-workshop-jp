@@ -28,7 +28,7 @@ OSS版ではすでに多くの情報が日本語でも調べることが可能�
 
 ## アジェンダ
 * [初めてのTerraform](https://github.com/hashicorp-japan/terraform-workshop/blob/master/contents/hello-terraform.md)
-* [Enterprise機能1: VCS連携](https://github.com/hashicorp-japan/terraform-workshop/blob/master/contents/vcs.md)
+* Enterprise機能1: VCS連携([GitHub](https://github.com/hashicorp-japan/terraform-workshop/blob/master/contents/vcs.md), [Azure DevOps](https://github.com/hashicorp-japan/terraform-workshop/blob/master/contents/vcs-azure.md)
 * [Enterprise機能2: Secure Variable Storage](https://github.com/hashicorp-japan/terraform-workshop/blob/master/contents/variables.md)
 * [Enterprise機能3: Policy as Code](https://github.com/hashicorp-japan/terraform-workshop/blob/master/contents/sentinel.md)
 * [Enterprise機能4: Private Module Registry](https://github.com/hashicorp-japan/terraform-workshop/blob/master/contents/module.md)
