@@ -14,12 +14,25 @@ $ terraform -version
 Terraform v0.12.6
 ```
 
+以下はWindowsの手順です。
+terraform*.zipを解凍します。
+解答して作成されたフォルダにPathを通します。
+```PS
+PS> terraform -version
+Terraform v0.12.6
+```
+
 次に任意の作業用ディレクトリを作ります。
 
 ```shell
 $ mkdir -p tf-workspace/hello-tf
 $ cd  tf-workspace/hello-tf
 ```
+```PS
+PS> mkdir tf-workspace/hello-tf
+PS> cd  tf-workspace/hello-tf
+```
+
 
 早速このフォルダにTerraformのコンフィグファイルを作ってみます。コンフィグファイルは`HashiCorp Configuration Language`というフレームワークを使って記述していきます。
 
@@ -45,7 +58,9 @@ resource "aws_instance" "hello-tf-instance" {
 
 EOF
 ```
-
+```PS
+PS> 
+```
 <details><summary>GCPの場合はこちら</summary>
 
 ```
