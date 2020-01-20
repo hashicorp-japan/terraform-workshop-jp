@@ -48,7 +48,7 @@ EOF
 
 <details><summary>GCPの場合はこちら</summary>
 
-```
+```hcl
 terraform {
   required_version = "~> 0.12"
 }
@@ -80,6 +80,92 @@ resource "google_compute_instance" "vm_instance" {
 ```
 </details>
 
+<details><summary>Azureの場合はこちら</summary>
+
+```hcl
+terraform {
+  required_version = "~> 0.12" 
+}
+
+provider "azurerm" {
+  client_id = var.client_id
+  tenant_id = var.tenant_id
+  subscription_id = var.subscription_id
+  client_secret = var.client_secret
+}
+
+resource "azurerm_virtual_machine" "main" {
+  name                  = "my-vm-${count.index}"
+  count = var.hello_tf_instance_count
+  location              = var.location
+  resource_group_name   = azurerm_resource_group.example.name
+  network_interface_ids = [azurerm_network_interface.example.id]
+  vm_size               = "Standard_DS1_v2"
+
+  os_profile {
+    computer_name  = "hostname"
+    admin_username = "vmadmin"
+    admin_password = var.admin_password
+  }
+  os_profile_linux_config {
+    disable_password_authentication = false
+  }
+  tags = {
+    environment = "playground"
+  }
+  storage_image_reference {
+    publisher = "Canonical"
+    offer     = "UbuntuServer"
+    sku       = "16.04-LTS"
+    version   = "latest"
+  }
+  storage_os_disk {
+    name              = "myosdisk1"
+    caching           = "ReadWrite"
+    create_option     = "FromImage"
+    managed_disk_type = "Standard_LRS"
+  }
+}
+
+resource "azurerm_resource_group" "example" {
+  name     = "my-group"
+  location = var.location
+}
+
+
+resource "azurerm_virtual_network" "example" {
+  name                = "my-network"
+  address_space       = ["10.0.0.0/16"]
+  location            = var.location
+  resource_group_name   = azurerm_resource_group.example.name
+}
+
+resource "azurerm_subnet" "example" {
+  name                 = "my-subnet"
+  resource_group_name   = azurerm_resource_group.example.name
+  virtual_network_name = azurerm_virtual_network.example.name
+  address_prefix       = "10.0.2.0/24"
+}
+
+resource "azurerm_network_interface" "example" {
+  name                = "my-nw-interface"
+  location            = var.location
+  resource_group_name   = azurerm_resource_group.example.name
+
+  ip_configuration {
+    name                          = "my-ip-config"
+    subnet_id                     = azurerm_subnet.example.id
+    private_ip_address_allocation = "Dynamic"
+  }
+
+  tags = {
+    environment = "payground"
+  }
+}
+```
+</details>
+
+
 次に`variables.tf`ファイルを作ります。
 
 ```shell 
@@ -99,7 +185,7 @@ EOF
 
 <details><summary>GCPの場合はこちら</summary>
 
-```    
+```hcl
 variable "gcp_key" {}
 variable "machine_type" {}
 variable "hello_tf_instance_count" {
@@ -113,13 +199,28 @@ variable "image" {}
 ```
 </details>
 
+<details><summary>Azureの場合はこちら</summary>
+
+```hcl
+variable "client_id" {}
+variable "client_secret" {}
+variable "tenant_id" {}
+variable "subscription_id" {}
+variable "location" {}
+variable "admin_password" {}
+variable "hello_tf_instance_count" {
+    default = 1
+}
+```
+</details>
+
 二つのファイルができたらそのディレクトリ上でTerraformの初期化処理を行います。`init`処理ではステートファイルの保存先などのバックエンドの設定や必要ばプラグインのインストールを実施します。
 
 ```shell
 $ terraform init
 ```
 
-ここではAWSのプラグインがインストールされるはずです。
+ここではAWS(or GCP or Azure)のプラグインがインストールされるはずです。
 
 ```console
 $  ls -R .terraform/plugins
@@ -129,7 +230,7 @@ darwin_amd64
 lock.json                         terraform-provider-aws_v2.24.0_x4
 ```
 
-次に`plan`と`apply`を実施してインスタンスを作ってみましょう。aws cliでインスタンスの状況確認しておいてください。
+次に`plan`と`apply`を実施してインスタンスを作ってみましょう。aws cliでインスタンスの状況確認しておいてください。(GCP/Azureの場合はWebブラウザから確認してください。)
 
 ```console
 $ aws ec2 describe-instances --query "Reservations[].Instances[].{InstanceId:InstanceId,State:State}"
@@ -180,7 +281,21 @@ $ terraform apply
 ```
 </details>
 
-Applyが終了するとAWSのインスタンスが一つ作られていることがわかるでしょう。
+<details><summary>Azureの場合はこちら</summary>
+
+```
+$ export TF_VAR_client_id="************"
+$ export TF_VAR_subscription_id="************"
+$ export TF_VAR_client_secret="************"
+$ export TF_VAR_tenant_id="************"
+$ export TF_VAR_location="East Asia" 
+$ export TF_VAR_admin_password="Password1234!"
+$ terraform plan
+$ terraform apply
+```
+</details>
+
+Applyが終了するとAWS(or GCP or Azure)のインスタンスが一つ作られていることがわかるでしょう。(GCP/Azureの場合はWebブラウザから確認してください。)
 
 ```console
 $ aws ec2 describe-instances --query "Reservations[].Instances[].{InstanceId:InstanceId,State:State}"
@@ -203,7 +318,7 @@ $ terraform plan
 $ terraform apply -auto-approve
 ```
 
-ちなみに今回は`-auto-approve`というパラメータを使って途中の実行確認を省略しています。AWSのインスタンスが二つに増えています。Terraformは環境に差分が生じた際はPlanで差分を検出し、差分のみ実施するため既存のリソースには何の影響も及ぼしません。
+ちなみに今回は`-auto-approve`というパラメータを使って途中の実行確認を省略しています。AWS(or GCP or Azure)のインスタンスが二つに増えています。Terraformは環境に差分が生じた際はPlanで差分を検出し、差分のみ実施するため既存のリソースには何の影響も及ぼしません。(GCP/Azureの場合はWebブラウザから確認してください。)
 
 ```console
 $ aws ec2 describe-instances --query "Reservations[].Instances[].{InstanceId:InstanceId,State:State}"
@@ -232,7 +347,7 @@ $ aws ec2 describe-instances --query "Reservations[].Instances[].{InstanceId:Ins
 $ terraform destroy 
 ```
 
-実行ししばらくするとEC2インスタンスが`terminated`の状態になってることがわかるはずです。
+実行ししばらくするとEC2インスタンスが`terminated`の状態になってることがわかるはずです。(GCP/Azureの場合はWebブラウザから確認してください。)
 
 ```console
 $ aws ec2 describe-instances --query "Reservations[].Instances[].{InstanceId:InstanceId,State:State}"
