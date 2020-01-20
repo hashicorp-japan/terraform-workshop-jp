@@ -73,6 +73,149 @@ variable "hello_tf_instance_type" {
 EOF
 ```
 
+<details><summary>GCPの場合はこちら</summary>
+
+```hcl
+terraform {
+  required_version = "~> 0.12"
+}
+
+provider "google" {
+    credentials = var.gcp_key
+    project     = var.project
+    region      = var.region
+}
+
+resource "google_compute_instance" "vm_instance" {
+    name = "terraform-instance-${count.index}-<YOURNAME>"
+    count = var.hello_tf_instance_count
+    machine_type = var.machine_type
+    zone = "asia-northeast1-a"
+    boot_disk {
+        initialize_params {
+            image = var.image
+        }
+    }
+
+    network_interface {
+        # A default network is created for all GCP projects
+        network       = "default"
+        access_config {
+        }
+    }
+}
+```
+```hcl
+variable "gcp_key" {}
+variable "machine_type" {}
+variable "hello_tf_instance_count" {
+    default = 1
+}
+variable "region" {
+    default = "asia-northeast1"
+}
+variable "project" {}
+variable "image" {}
+```
+</details>
+
+
+<details><summary>Azureの場合はこちら</summary>
+
+```hcl
+terraform {
+  required_version = "~> 0.12" 
+}
+
+provider "azurerm" {
+  client_id = var.client_id
+  tenant_id = var.tenant_id
+  subscription_id = var.subscription_id
+  client_secret = var.client_secret
+}
+
+resource "azurerm_virtual_machine" "main" {
+  name                  = "my-vm-${count.index}"
+  count = var.hello_tf_instance_count
+  location              = var.location
+  resource_group_name   = azurerm_resource_group.example.name
+  network_interface_ids = [azurerm_network_interface.example.*.id[count.index]]
+  vm_size               = "Standard_DS1_v2"
+
+  os_profile {
+    computer_name  = "hostname"
+    admin_username = "vmadmin"
+    admin_password = var.admin_password
+  }
+  os_profile_linux_config {
+    disable_password_authentication = false
+  }
+  tags = {
+    environment = "playground"
+  }
+  storage_image_reference {
+    publisher = "Canonical"
+    offer     = "UbuntuServer"
+    sku       = "16.04-LTS"
+    version   = "latest"
+  }
+  storage_os_disk {
+    name              = "my-osdisk-${count.index}"
+    caching           = "ReadWrite"
+    create_option     = "FromImage"
+    managed_disk_type = "Standard_LRS"
+  }
+}
+
+resource "azurerm_resource_group" "example" {
+  name     = "my-group"
+  location = var.location
+}
+
+
+resource "azurerm_virtual_network" "example" {
+  name                = "my-network"
+  address_space       = ["10.0.0.0/16"]
+  location            = var.location
+  resource_group_name   = azurerm_resource_group.example.name
+}
+
+resource "azurerm_subnet" "example" {
+  name                 = "my-subnet"
+  resource_group_name   = azurerm_resource_group.example.name
+  virtual_network_name = azurerm_virtual_network.example.name
+  address_prefix       = "10.0.2.0/24"
+}
+
+resource "azurerm_network_interface" "example" {
+  name                = "my-nw-interface-${count.index}"
+  count = var.hello_tf_instance_count
+  location            = var.location
+  resource_group_name   = azurerm_resource_group.example.name
+
+  ip_configuration {
+    name                          = "my-ip-config"
+    subnet_id                     = azurerm_subnet.example.id
+    private_ip_address_allocation = "Dynamic"
+  }
+
+  tags = {
+    environment = "payground"
+  }
+}
+```
+```hcl
+variable "client_id" {}
+variable "client_secret" {}
+variable "tenant_id" {}
+variable "subscription_id" {}
+variable "location" {}
+variable "admin_password" {}
+variable "hello_tf_instance_count" {
+    default = 1
+}
+```
+</details>
 このようになっていればOKです。
 
 ```
@@ -111,6 +254,19 @@ EOF
 ```
 </details>
 
+<details><summary>Azureの場合はこちら</summary>
+
+```
+* client_id : ******* : Senstive
+* client_secret : ******* : Senstive
+* tenant_id : ******* : Senstive
+* subscription_id : ******* : Senstive
+* location : East Asia
+* dmin_password : Password1234!
+* hello_tf_instance_count : 1
+```
+</details>
+
 <kbd>
   <img src="https://github-image-tkaburagi.s3.ap-northeast-1.amazonaws.com/terraform-workshop/var-2.png">
 </kbd>
@@ -139,7 +295,7 @@ $ git push -u origin master
   <img src="https://github-image-tkaburagi.s3.ap-northeast-1.amazonaws.com/terraform-workshop/var-3.png">
 </kbd>
 
-AWS CLIで確認します。
+AWS CLIで確認します。(GCP/Azureの場合はWebブラウザから確認してください。)
 
 ```console
 $ aws ec2 describe-instances --query "Reservations[].Instances[].{InstanceId:InstanceId,State:State}"
@@ -174,7 +330,7 @@ Saveしたらワークスペースのセッテイングから`Destruction and De
   <img src="https://github-image-tkaburagi.s3.ap-northeast-1.amazonaws.com/terraform-workshop/var-7.png">
 </kbd>
 
-Destroyされていることを確認しましょう。
+Destroyされていることを確認しましょう。(GCP/Azureの場合はWebブラウザから確認してください。)
 
 ```console
 $ aws ec2 describe-instances --query "Reservations[].Instances[].{InstanceId:InstanceId,State:State}"

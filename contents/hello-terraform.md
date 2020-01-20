@@ -99,7 +99,7 @@ resource "azurerm_virtual_machine" "main" {
   count = var.hello_tf_instance_count
   location              = var.location
   resource_group_name   = azurerm_resource_group.example.name
-  network_interface_ids = [azurerm_network_interface.example.id]
+  network_interface_ids = [azurerm_network_interface.example.*.id[count.index]]
   vm_size               = "Standard_DS1_v2"
 
   os_profile {
@@ -120,7 +120,7 @@ resource "azurerm_virtual_machine" "main" {
     version   = "latest"
   }
   storage_os_disk {
-    name              = "myosdisk1"
+    name              = "my-osdisk-${count.index}"
     caching           = "ReadWrite"
     create_option     = "FromImage"
     managed_disk_type = "Standard_LRS"
@@ -148,7 +148,8 @@ resource "azurerm_subnet" "example" {
 }
 
 resource "azurerm_network_interface" "example" {
-  name                = "my-nw-interface"
+  name                = "my-nw-interface-${count.index}"
+  count = var.hello_tf_instance_count
   location            = var.location
   resource_group_name   = azurerm_resource_group.example.name
 
