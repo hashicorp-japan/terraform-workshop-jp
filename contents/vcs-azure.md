@@ -68,7 +68,9 @@ OAuthアプリケーションの登録画面で以下のように入力してく
 
 `App ID`と`Client Secret`はコピーしておいてください。この画面はこのままにしておいてください。
 
-次にTFCに戻り`Add VCS Provider`を選択します。`App ID`と`Client Secret`の欄に上のAzure DevOps上の画面で取得した値をコピペしてください。
+次にTFCに戻り`Add VCS Provider`を選択します。
+
+`Version Control System(VCS) Provider`からプルダウンで`Azure DevOps Services`を選択し、`App ID`と`Client Secret`の欄に上のAzure DevOps上の画面で取得した値をコピペしてください。
 
 <kbd>
   <img src="https://github-image-tkaburagi.s3.ap-northeast-1.amazonaws.com/terraform-workshop/vcs-azure-3.png">
