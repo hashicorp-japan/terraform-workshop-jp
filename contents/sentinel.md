@@ -61,6 +61,21 @@ main = rule {
 ```
 </details>
 
+<details><summary>Azureの場合はこちら</summary>
+
+```
+import "tfplan"
+
+main = rule {
+  all tfplan.resources.azurerm_virtual_machine as _, instances {
+    all instances as _, r {
+      (length(r.applied.tags) else 0) > 0
+    }
+  }
+}
+```
+</details>
+
 
 ```shell
 $ echo "# sentinel-handson-workshop" >> README.md
@@ -193,6 +208,92 @@ resource "google_compute_instance" "vm_instance" {
 ```
 </details>
 
+<details><summary>Azureの場合はこちら</summary>
+
+```hcl
+terraform {
+  required_version = "~> 0.12" 
+}
+
+provider "azurerm" {
+  client_id = var.client_id
+  tenant_id = var.tenant_id
+  subscription_id = var.subscription_id
+  client_secret = var.client_secret
+}
+
+resource "azurerm_virtual_machine" "main" {
+  name                  = "my-vm-${count.index}"
+  count = var.hello_tf_instance_count
+  location              = var.location
+  resource_group_name   = azurerm_resource_group.example.name
+  network_interface_ids = [azurerm_network_interface.example.*.id[count.index]]
+  vm_size               = "Standard_DS1_v2"
+
+  os_profile {
+    computer_name  = "hostname"
+    admin_username = "vmadmin"
+    admin_password = var.admin_password
+  }
+  os_profile_linux_config {
+    disable_password_authentication = false
+  }
+  tags = {
+    owner = "kabu",
+    ttl   = "100"
+  }
+  storage_image_reference {
+    publisher = "Canonical"
+    offer     = "UbuntuServer"
+    sku       = "16.04-LTS"
+    version   = "latest"
+  }
+  storage_os_disk {
+    name              = "my-osdisk-${count.index}"
+    caching           = "ReadWrite"
+    create_option     = "FromImage"
+    managed_disk_type = "Standard_LRS"
+  }
+}
+
+resource "azurerm_resource_group" "example" {
+  name     = "my-group"
+  location = var.location
+}
+
+
+resource "azurerm_virtual_network" "example" {
+  name                = "my-network"
+  address_space       = ["10.0.0.0/16"]
+  location            = var.location
+  resource_group_name   = azurerm_resource_group.example.name
+}
+
+resource "azurerm_subnet" "example" {
+  name                 = "my-subnet"
+  resource_group_name   = azurerm_resource_group.example.name
+  virtual_network_name = azurerm_virtual_network.example.name
+  address_prefix       = "10.0.2.0/24"
+}
+
+resource "azurerm_network_interface" "example" {
+  name                = "my-nw-interface-${count.index}"
+  count = var.hello_tf_instance_count
+  location            = var.location
+  resource_group_name   = azurerm_resource_group.example.name
+
+  ip_configuration {
+    name                          = "my-ip-config"
+    subnet_id                     = azurerm_subnet.example.id
+    private_ip_address_allocation = "Dynamic"
+  }
+
+  tags = {
+    environment = "payground"
+  }
+}
+```
+
 ```shell
 $ git add main.tf
 $ git commit -m "added tags"
@@ -201,7 +302,7 @@ $ git push
 
 再度ワークスペースのRunsの中から最新の実行を選んでください。次はポリシーチェックをクリアし、Applyできるはずです。`confirm & apply`をクリックしてApplyしてみましょう。
 
-Applyが成功したら念の為インタンスにタグが付与されていることも確認しておきましょう。
+Applyが成功したら念の為インタンスにタグが付与されていることも確認しておきましょう。(GCP/Azureの場合はWebブラウザから確認してください。)
 
 ```console
 $ aws ec2 describe-instances --query "Reservations[].Instances[].{InstanceId:InstanceId,State:State,Tags:Tags}"
@@ -405,7 +506,7 @@ main = rule {
 import "tfplan"
 
 main = rule {
-  all tfplan.resources.aws_instance as _, instances {
+  all tfplan.resources.google_compute_instance as _, instances {
     all instances as _, r {
       (length(r.applied.labels) else 0) > 0
     }
@@ -413,6 +514,22 @@ main = rule {
 }
 ```
 </details>
+
+<details><summary>Azureの場合はこちら</summary>
+
+```
+import "tfplan"
+
+main = rule {
+  all tfplan.resources.azurerm_virtual_machine as _, instances {
+    all instances as _, r {
+      (length(r.applied.tags) else 0) > 0
+    }
+  }
+}
+```
+</details>
+
 
 `testdata/mock-tfplan.sentinel`を確認してみましょう。
 
@@ -489,7 +606,6 @@ import "tfplan"
 mandatory_labels = [
   "ttl", 
   "owner",
-  "env",
 ]
 
 main = rule {
@@ -497,6 +613,28 @@ main = rule {
       all instances as _, r {
             all mandatory_labels as t {
                 r.applied.labels contains t
+            }
+        }
+    }
+}
+```
+</details>
+
+<details><summary>Azureの場合はこちら</summary>
+
+```
+import "tfplan"
+
+mandatory_labels = [
+  "ttl", 
+  "owner",
+]
+
+main = rule {
+    all tfplan.resources.azurerm_virtual_machine as _, instances {
+      all instances as _, r {
+            all mandatory_labels as t {
+                r.applied.tags contains t
             }
         }
     }
@@ -559,3 +697,4 @@ FALSE - foo.sentinel:19:1 - Rule "main"
 * [Sentinel Language](https://docs.hashicorp.com/sentinel/language/)
 * [Mocking Terraform Data](https://www.terraform.io/docs/cloud/sentinel/mock.html)
 * [Sample Policies](https://github.com/hashicorp/terraform-guides/tree/master/governance)
+* [Sample Policies](https://www.terraform.io/docs/cloud/sentinel/examples.html)
