@@ -79,10 +79,11 @@ main = rule {
 
 ```shell
 $ echo "# sentinel-handson-workshop" >> README.md
+# export GITURL=<YOUR_GIT_REPO_URL>
 $ git init
 $ git add .
 $ git commit -m "first commit"
-$ git remote add origin https://github.com/tkaburagi/sentinel-handson-workshop.git
+$ git remote add origin ${GITURL}
 $ git push -u origin master
 ```
 
