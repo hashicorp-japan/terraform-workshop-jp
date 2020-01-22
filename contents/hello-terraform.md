@@ -382,6 +382,7 @@ $ cd tf-simple-web
 Terraform Applyしてみましょう。
 
 ```shell
+$ terraform init
 $ terraform plan
 $ terraform apply
 ```
