@@ -79,7 +79,7 @@ main = rule {
 
 ```shell
 $ echo "# sentinel-handson-workshop" >> README.md
-# export GITURL=<YOUR_GIT_REPO_URL>
+$ export GITURL=<YOUR_GIT_REPO_URL>
 $ git init
 $ git add .
 $ git commit -m "first commit"
