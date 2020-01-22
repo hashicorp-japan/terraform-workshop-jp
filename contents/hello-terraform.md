@@ -215,6 +215,10 @@ variable "hello_tf_instance_count" {
 二つのファイルができたらそのディレクトリ上でTerraformの初期化処理を行います。`init`処理ではステートファイルの保存先などのバックエンドの設定や必要ばプラグインのインストールを実施します。
 
 ```shell
+$ export TF_VAR_access_key=************
+$ export TF_VAR_secret_key=************
+$ export TF_VAR_region=ap-northeast-1
+$ export TF_VAR_ami=ami-06d9ad3f86032262d
 $ terraform init
 ```
 
