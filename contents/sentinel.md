@@ -293,6 +293,7 @@ resource "azurerm_network_interface" "example" {
   }
 }
 ```
+</details>
 
 ```shell
 $ git add main.tf
