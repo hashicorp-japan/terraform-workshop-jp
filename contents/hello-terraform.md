@@ -17,18 +17,20 @@ Terraform v0.12.6
 以下はWindowsの手順です。
 terraform*.zipを解凍します。
 解答して作成されたフォルダにPathを通します。
-```PS
+```shell
 PS> terraform -version
 Terraform v0.12.6
 ```
 
 次に任意の作業用ディレクトリを作ります。
 
+・macOS
 ```shell
 $ mkdir -p tf-workspace/hello-tf
 $ cd  tf-workspace/hello-tf
 ```
-```PS
+・Windows
+```shell
 PS> mkdir tf-workspace/hello-tf
 PS> cd  tf-workspace/hello-tf
 ```
@@ -38,6 +40,7 @@ PS> cd  tf-workspace/hello-tf
 
 `main.tf`と`vaiables.tf`という二つのファイルを作ってみます。`main.tf`はその名の通りTerraformのメインのファイルで、このファイルに記述されている内容がTerraformで実行されます。`variables.tf`は変数を定義するファイルです。各変数にはデフォルト値や型などを指定できます。
 
+・macOS
 ```shell
 $ cat <<EOF > main.tf
 terraform {
@@ -58,8 +61,24 @@ resource "aws_instance" "hello-tf-instance" {
 
 EOF
 ```
-```PS
-PS> 
+
+・Windows
+```
+terraform {
+	required_version = "~> 0.12"
+}
+
+provider "aws" {
+	access_key = var.access_key
+	secret_key = var.secret_key
+	region = var.region
+}
+
+resource "aws_instance" "hello-tf-instance" {
+  ami = var.ami
+  count = var.hello_tf_instance_count
+  instance_type = var.hello_tf_instance_type
+}
 ```
 <details><summary>GCPの場合はこちら</summary>
 
@@ -97,6 +116,7 @@ resource "google_compute_instance" "vm_instance" {
 
 次に`variables.tf`ファイルを作ります。
 
+・macOS
 ```shell 
 $ cat << EOF > variables.tf
 variable "access_key" {}
@@ -110,6 +130,19 @@ variable "hello_tf_instance_type" {
     default = "t2.micro"
 }
 EOF
+```
+・Windows
+```
+variable "access_key" {}
+variable "secret_key" {}
+variable "region" {}
+variable "ami" {}
+variable "hello_tf_instance_count" {
+    default = 1
+}
+variable "hello_tf_instance_type" {
+    default = "t2.micro"
+}
 ```
 
 <details><summary>GCPの場合はこちら</summary>
@@ -130,12 +163,18 @@ variable "image" {}
 
 二つのファイルができたらそのディレクトリ上でTerraformの初期化処理を行います。`init`処理ではステートファイルの保存先などのバックエンドの設定や必要ばプラグインのインストールを実施します。
 
+・macOS
 ```shell
 $ terraform init
+```
+・Windows
+```shell
+PS> terraform.exe init
 ```
 
 ここではAWSのプラグインがインストールされるはずです。
 
+・macOS
 ```console
 $  ls -R .terraform/plugins
 darwin_amd64
@@ -144,8 +183,24 @@ darwin_amd64
 lock.json                         terraform-provider-aws_v2.24.0_x4
 ```
 
+・Windows
+```shell
+PS> ls -R .terraform/plugins
+    ディレクトリ: C:\terraform_0.12.19_windows_amd64\tf-workspace\hello-tf\.terraform\plugins
+Mode                LastWriteTime         Length Name
+----                -------------         ------ ----
+d-----       2020/01/15     17:12                windows_amd64
+
+    ディレクトリ: C:\terraform_0.12.19_windows_amd64\tf-workspace\hello-tf\.terraform\plugins\windows_amd64
+Mode                LastWriteTime         Length Name
+----                -------------         ------ ----
+-a----       2020/01/15     17:12             79 lock.json
+-a----       2020/01/15     17:12      141627392 terraform-provider-aws_v2.44.0_x4.exe
+```
+
 次に`plan`と`apply`を実施してインスタンスを作ってみましょう。aws cliでインスタンスの状況確認しておいてください。
 
+・macOS
 ```console
 $ aws ec2 describe-instances --query "Reservations[].Instances[].{InstanceId:InstanceId,State:State}"
 [
@@ -174,6 +229,7 @@ $ aws ec2 describe-instances --query "Reservations[].Instances[].{InstanceId:Ins
 
 がありますが、今回は環境変数でセットします。
 
+・macOS
 ```shell
 $ export TF_VAR_access_key=************
 $ export TF_VAR_secret_key=************
@@ -182,9 +238,19 @@ $ export TF_VAR_ami=ami-06d9ad3f86032262d
 $ terraform plan
 $ terraform apply
 ```
+・Windows
+```
+PS > $env:TF_VAR_access_key=************
+PS > $env:TF_VAR_secret_key=************
+PS > $env:TF_VAR_region=ap-northeast-1
+PS > $env:TF_VAR_ami=ami-06d9ad3f86032262d
+PS > terraform.exe plan
+PS > terraform.exe apply
+```
 
 <details><summary>GCPの場合はこちら</summary>
 
+・macOS
 ```
 $ export TF_VAR_gcp_key=PATH_TO_KEY_JSON
 $ export TF_VAR_machine_type=f1-micro
@@ -193,6 +259,16 @@ $ export TF_VAR_project=YOUT_PROJECT
 $ terraform plan
 $ terraform apply
 ```
+・Windows
+```
+PS > $env:TF_VAR_gcp_key=PATH_TO_KEY_JSON
+PS > $env:TF_VAR_machine_type=f1-micro
+PS > $env:TF_VAR_image=debian-cloud/debian-9
+PS > $env:TF_VAR_project=YOUT_PROJECT
+PS > terraform.exe plan
+PS > terraform.exe apply
+```
+
 </details>
 
 Applyが終了するとAWSのインスタンスが一つ作られていることがわかるでしょう。
@@ -212,10 +288,17 @@ $ aws ec2 describe-instances --query "Reservations[].Instances[].{InstanceId:Ins
 
 次にインスタンスの数を増やしてみます。`hello_tf_instance_count`の値を上書きして再度実行します。
 
+・macOS
 ```shell
 $ export TF_VAR_hello_tf_instance_count=2 
 $ terraform plan
 $ terraform apply -auto-approve
+```
+・Windows
+```shell
+PS > $env:TF_VAR_hello_tf_instance_count=2
+PS > terraform.exe plan
+PS > terraform.exe apply -auto-approve
 ```
 
 ちなみに今回は`-auto-approve`というパラメータを使って途中の実行確認を省略しています。AWSのインスタンスが二つに増えています。Terraformは環境に差分が生じた際はPlanで差分を検出し、差分のみ実施するため既存のリソースには何の影響も及ぼしません。
@@ -242,9 +325,13 @@ $ aws ec2 describe-instances --query "Reservations[].Instances[].{InstanceId:Ins
 
 次に`destroy`で環境をリセットします。
 
-
+・macOS
 ```shell
 $ terraform destroy 
+```
+・Windows
+```shell
+PS > terraform.exe destroy
 ```
 
 実行ししばらくするとEC2インスタンスが`terminated`の状態になってることがわかるはずです。
@@ -283,9 +370,17 @@ $ cd tf-simple-web
 
 Terraform Applyしてみましょう。
 
+・macOS
 ```shell
+$ terraform init
 $ terraform plan
 $ terraform apply
+```
+・Windows
+```shell
+PS> terraform.exe init
+PS> terraform.exe plan
+PS> terraform.exe apply
 ```
 
 Applyが成功するとアウトプットとして以下のような内容が出力されるはずです。
