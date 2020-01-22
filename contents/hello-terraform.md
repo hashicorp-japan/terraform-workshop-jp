@@ -110,9 +110,6 @@ resource "azurerm_virtual_machine" "main" {
   os_profile_linux_config {
     disable_password_authentication = false
   }
-  tags = {
-    environment = "playground"
-  }
   storage_image_reference {
     publisher = "Canonical"
     offer     = "UbuntuServer"
