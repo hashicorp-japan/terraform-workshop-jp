@@ -165,7 +165,7 @@ resource "aws_instance" "hello-tf-instance" {
   count = var.hello_tf_instance_count
   instance_type = var.hello_tf_instance_type
   tags = {
-    owner = "Kabu"
+    owner = "me"
     ttl   = "100"
   }
 }
@@ -190,7 +190,7 @@ resource "google_compute_instance" "vm_instance" {
   count = var.hello_tf_instance_count
   zone = "asia-northeast1-a"
   labels = {
-    owner = "kabu",
+    owner = "me",
     ttl   = "100"
   }
   boot_disk {
@@ -229,7 +229,7 @@ resource "azurerm_virtual_machine" "main" {
   location              = var.location
   resource_group_name   = azurerm_resource_group.example.name
   network_interface_ids = [azurerm_network_interface.example.*.id[count.index]]
-  vm_size               = "Standard_DS1_v2"
+  vm_size               = var.vm_size
 
   os_profile {
     computer_name  = "hostname"
@@ -240,7 +240,7 @@ resource "azurerm_virtual_machine" "main" {
     disable_password_authentication = false
   }
   tags = {
-    owner = "kabu",
+    owner = "me",
     ttl   = "100"
   }
   storage_image_reference {
@@ -317,7 +317,7 @@ $ aws ec2 describe-instances --query "Reservations[].Instances[].{InstanceId:Ins
         },
         "Tags": [
             {
-                "Value": "Kabu",
+                "Value": "me",
                 "Key": "owner"
             },
             {
@@ -538,7 +538,7 @@ main = rule {
 ```console
 $ grep -A 4 -n tags testdata/mock-tfplan.sentinel
   "tags": {
-24-               "owner": "Kabu",
+24-               "owner": "me",
 25-               "ttl":   "100",
 26-             },
 27-             "timeouts":         null,
@@ -551,7 +551,7 @@ $ grep -A 4 -n tags testdata/mock-tfplan.sentinel
 --
 213:              "tags.owner": {
 214-                "computed": false,
-215-                "new":      "Kabu",
+215-                "new":      "me",
 216-                "old":      "",
 217-              },
 --

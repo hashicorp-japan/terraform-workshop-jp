@@ -140,7 +140,7 @@ resource "azurerm_virtual_machine" "main" {
   location              = var.location
   resource_group_name   = azurerm_resource_group.example.name
   network_interface_ids = [azurerm_network_interface.example.*.id[count.index]]
-  vm_size               = "Standard_DS1_v2"
+  vm_size               = var.vm_size
 
   os_profile {
     computer_name  = "hostname"
@@ -202,6 +202,7 @@ resource "azurerm_network_interface" "example" {
 }
 ```
 ```hcl
+variable "vm_size" {}
 variable "client_id" {}
 variable "client_secret" {}
 variable "tenant_id" {}
@@ -259,8 +260,9 @@ variable "hello_tf_instance_count" {
 * tenant_id : ******* : Senstive
 * subscription_id : ******* : Senstive
 * location : East Asia
-* dmin_password : Password1234!
+* admin_password : Password1234!
 * hello_tf_instance_count : 1
+* vm_size : Standard_DS1_v2
 ```
 </details>
 
