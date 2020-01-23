@@ -377,6 +377,15 @@ $ git clone https://github.com/tkaburagi/tf-simple-web
 $ cd tf-simple-web
 ```
 
+<details><summary>Azureの場合はこちら</summary>
+
+```shell
+$ cd tf-workspace
+$ git clone https://github.com/tkaburagi/tf-azure-simple-web
+$ cd tf-simple-web
+```
+</details>
+
 二つのAWSインスタンスを立ち上げ、その上にApacheをインストールしその二つのインスタンスをインスタンスグループとしてALBにアタッチしています。そのために必要な最低限のネットワーク設定も行なっていますので気になる人はコードを見てみてください。
 
 Terraform Applyしてみましょう。
@@ -387,7 +396,7 @@ $ terraform plan
 $ terraform apply
 ```
 
-Applyが成功するとアウトプットとして以下のような内容が出力されるはずです。
+Applyが成功するとアウトプットとして以下のような内容が出力されるはずです。(Azureの場合はPublic IPが出力されます。)
 
 ```
 Outputs:
