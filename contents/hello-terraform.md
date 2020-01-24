@@ -100,7 +100,7 @@ resource "azurerm_virtual_machine" "main" {
   location              = var.location
   resource_group_name   = azurerm_resource_group.example.name
   network_interface_ids = [azurerm_network_interface.example.*.id[count.index]]
-  vm_size               = var.vm_size
+  vm_size               = "Standard_DS1_v2"
 
   os_profile {
     computer_name  = "hostname"
@@ -120,7 +120,7 @@ resource "azurerm_virtual_machine" "main" {
     name              = "my-osdisk-${count.index}"
     caching           = "ReadWrite"
     create_option     = "FromImage"
-    managed_disk_type = var.vm_size
+    managed_disk_type = "Standard_LRS"
   }
 }
 
@@ -200,7 +200,6 @@ variable "image" {}
 <details><summary>Azureの場合はこちら</summary>
 
 ```hcl
-variable "vm_size" {}
 variable "client_id" {}
 variable "client_secret" {}
 variable "tenant_id" {}
@@ -287,9 +286,8 @@ $ export TF_VAR_client_id="************"
 $ export TF_VAR_subscription_id="************"
 $ export TF_VAR_client_secret="************"
 $ export TF_VAR_tenant_id="************"
-$ export TF_VAR_location="Japan East" 
+$ export TF_VAR_location="East Asia" 
 $ export TF_VAR_admin_password="Password1234!"
-$ export TF_VAR_vm_size="Standard_DS1_v2"
 $ terraform plan
 $ terraform apply
 ```
