@@ -47,7 +47,9 @@ Workspaceは以下のボタンより作成できます。
 
 以下の画面で、**No VCS Connection**を選択してください。
 
-![Create new workspace](../assets/tfc-remote-state/create_workspace.png){.border}
+<kbd>
+  <img src="../assets/tfc-remote-state/create_workspace.png">
+</kbd>
 
 - Workspace名にには重複しない任意の名前をつけてください。以下、このページでは、ここで指定した名前を*YOURWORKSPACE*という置き換え表示で表します。
 
