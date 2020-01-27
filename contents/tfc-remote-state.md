@@ -53,7 +53,7 @@ Workspaceは以下のボタンより作成できます。
 
 つぎに、Workspaceの**Setting > General >** にナビゲートし、Execution modeを**Local**に設定して保存してください。
 
-![execution mode](../assets/tfc-remote-state/execution_mode.png){.border}
+![execution mode](../assets/tfc-remote-state/execution_mode.png)
 
 Execution modeを**Local**に設定すると、Terrarormの実行はLocal環境で行いますが、作成されるStateファイルはTerraform cloudに保存されます。
 
