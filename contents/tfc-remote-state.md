@@ -53,7 +53,9 @@ Workspaceは以下のボタンより作成できます。
 
 つぎに、Workspaceの**Setting > General >** にナビゲートし、Execution modeを**Local**に設定して保存してください。
 
-![execution mode](../assets/tfc-remote-state/execution_mode.png)
+<kbd>
+  <img src="../assets/tfc-remote-state/execution_mode.png">
+</kbd>
 
 Execution modeを**Local**に設定すると、Terrarormの実行はLocal環境で行いますが、作成されるStateファイルはTerraform cloudに保存されます。
 
@@ -64,15 +66,21 @@ Execution modeを**Local**に設定すると、Terrarormの実行はLocal環境�
 
 右上の自分のアイコンをクリックして**User setting**を選択します。
 
-![User setting](../assets/tfc-remote-state/user_setting.png)
+<kbd>
+  <img src="../assets/tfc-remote-state/user_setting.png">
+</kbd>
 
 そこから、**Token**メニューから**Generate Token**ボタンでUser Tokenを作成します。DescriptionにはこのTokenについてｒの說明を追加できます。
 
-![](../assets/tfc-remote-state/generate_token.png)
+<kbd>
+  <img src="../assets/tfc-remote-state/generate_token.png">
+</kbd>
 
 作成されたTokenはこの画面でしか表示されないので、必ずコピーもしくはDownloadしておいてください。
 
-![](../assets/tfc-remote-state/generated_token.png)
+<kbd>
+  <img src="../assets/tfc-remote-state/generated_token.png">
+</kbd>
 
 次に、ここで作成されたTokenをLocal環境の```~/.terraformrc```に書き込みます。
 **Windowsの場合、%APPDATA%\terraform.rcとなります。**
@@ -130,7 +138,9 @@ use this backend unless the backend configuration changes.
 
 この段階で、Terraform cloudのWorkspaceを確認すると、Stateファイルが作成されているはずです。
 
-![](../assets/tfc-remote-state/new_state.png)
+<kbd>
+  <img src="../assets/tfc-remote-state/new_state.png">
+</kbd>
 
 それでは```apply```してみましょう。
 
