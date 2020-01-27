@@ -31,10 +31,11 @@ OSS版ではすでに多くの情報が日本語でも調べることが可能�
 * [Terraform cloudによるRemote state管理](./contents/tfc-remote-state.md)
 * VCS連携 ([GitHub](https://github.com/hashicorp-japan/terraform-workshop/blob/master/contents/vcs.md), [Azure DevOps](https://github.com/hashicorp-japan/terraform-workshop/blob/master/contents/vcs-azure.md))
 * [Secure Variable Storage](https://github.com/hashicorp-japan/terraform-workshop/blob/master/contents/variables.md)
-* [Enterprise機能1: Policy as Code](https://github.com/hashicorp-japan/terraform-workshop/blob/master/contents/sentinel.md)
-* [Enterprise機能2: Private Module Registry](https://github.com/hashicorp-japan/terraform-workshop/blob/master/contents/module.md)
-* [Enterprise機能3: Terraform Enterprise API](https://github.com/hashicorp-japan/terraform-workshop/blob/master/contents/tf-api.md)
-* [Enterprise機能4: Notifications](https://github.com/hashicorp-japan/terraform-workshop/blob/master/contents/notifications.md)
+* [Enterprise機能1: RBAC](./contents/teams.md)
+* [Enterprise機能2: Policy as Code](https://github.com/hashicorp-japan/terraform-workshop/blob/master/contents/sentinel.md)
+* [Enterprise機能3: Private Module Registry](https://github.com/hashicorp-japan/terraform-workshop/blob/master/contents/module.md)
+* [Enterprise機能4: Terraform Enterprise API](https://github.com/hashicorp-japan/terraform-workshop/blob/master/contents/tf-api.md)
+* [Enterprise機能5: Notifications](https://github.com/hashicorp-japan/terraform-workshop/blob/master/contents/notifications.md)
 * CLI Drive Run
 * API Drive Run
 * Terraform Enterpriseのインストール
