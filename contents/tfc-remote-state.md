@@ -47,13 +47,13 @@ Workspaceは以下のボタンより作成できます。
 
 以下の画面で、**No VCS Connection**を選択してください。
 
-![Create new workspace](../assets/tfc-remote-state/create_workspace.png)
+![Create new workspace](../assets/tfc-remote-state/create_workspace.png){.border}
 
 - Workspace名にには重複しない任意の名前をつけてください。以下、このページでは、ここで指定した名前を*YOURWORKSPACE*という置き換え表示で表します。
 
 つぎに、Workspaceの**Setting > General >** にナビゲートし、Execution modeを**Local**に設定して保存してください。
 
-![execution mode](../assets/tfc-remote-state/execution_mode.png)
+![execution mode](../assets/tfc-remote-state/execution_mode.png){.border}
 
 Execution modeを**Local**に設定すると、Terrarormの実行はLocal環境で行いますが、作成されるStateファイルはTerraform cloudに保存されます。
 
