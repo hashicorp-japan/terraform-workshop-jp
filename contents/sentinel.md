@@ -11,7 +11,7 @@ Terraformは便利なツールですが、多くのユーザが利用し大規�
 * 特定リソースの利用禁止
 
 ## Sentinelコードの作成
-それではまずはSentinelを利用するための設定を行います。
+それではまずはSentinelを利用するための設定を行います。Sentinelは最低限二つのファイルが必要です。一つは`sentinel.hcl`、もう一つは`<POLICYNAME>.sentinel`です。
 
 ```
 GitHub上に`sentinel-handson-workshop`という名前のパブリックレポジトリを作成してください。
@@ -24,6 +24,8 @@ $ cd tf-workspace/sentinel-handson-workshop
 
 以下の二つのファイルを追加します。
 
+* 全クラウド共通のファイル
+
 ```shell
 $ cat <<EOF > sentinel.hcl
 policy "first-policy" {
@@ -31,6 +33,8 @@ policy "first-policy" {
 }
 EOF
 ```
+
+* クラウドごとに変化するファイル
 
 ```shell
 $ cat <<EOF > first-policy.sentinel
@@ -77,18 +81,6 @@ main = rule {
 </details>
 
 
-```shell
-$ echo "# sentinel-handson-workshop" >> README.md
-$ export GITURL=<YOUR_GIT_REPO_URL>
-$ git init
-$ git add .
-$ git commit -m "first commit"
-$ git remote add origin ${GITURL}
-$ git push -u origin master
-```
-
-Sentinelは最低限二つのファイルが必要です。一つは`sentinel.hcl`、もう一つは`<POLICYNAME>.sentinel`です。
-
 このようになっていればOKです。
 
 ```
@@ -111,6 +103,18 @@ Sentinelは最低限二つのファイルが必要です。一つは`sentinel.hc
 	* 実行は許可するが、警告を出すモード
 
 `first-policy.sentinel`のファイルは実際のポリシーコードです。ここの例は全てのインスタンスに対してタグがついているかを確認しています。
+
+それではこれをGitHubにプッシュしてみます。
+
+```shell
+$ echo "# sentinel-handson-workshop" >> README.md
+$ export GITURL=<YOUR_GIT_REPO_URL>
+$ git init
+$ git add .
+$ git commit -m "first commit"
+$ git remote add origin ${GITURL}
+$ git push -u origin master
+```
 
 ## TFCの設定
 次にTFC側の設定です。トップ画面の一番上のタブから`Settings`を選択し、
