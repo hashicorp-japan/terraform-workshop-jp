@@ -49,6 +49,7 @@ EOF
 <details><summary>GCPの場合はこちら</summary>
 
 ```hcl
+cat <<EOF > main.tf
 terraform {
   required_version = "~> 0.12"
 }
@@ -77,12 +78,14 @@ resource "google_compute_instance" "vm_instance" {
         }
     }
 }
+EOF
 ```
 </details>
 
 <details><summary>Azureの場合はこちら</summary>
 
 ```hcl
+cat <<EOF > main.tf
 terraform {
   required_version = "~> 0.12" 
 }
@@ -160,6 +163,7 @@ resource "azurerm_network_interface" "example" {
     environment = "payground"
   }
 }
+EOF
 ```
 </details>
 
