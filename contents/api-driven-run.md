@@ -129,8 +129,9 @@ tar cvfz main.tar.gz -C tf_test .
 >tar.gzパッケージのルートディレクトリが、そのままTerraform実行時のディレクトリになります。以下のような構成になっていればOKです。
 >```shell
 > $ tar tvfz main.tar.gz
-drwxr-xr-x  0 masa   staff       0  4 14 14:59 ./
--rw-r--r--  0 masa   staff     130  4 14 14:59 ./main.tf
+> drwxr-xr-x  0 masa   staff       0  4 14 14:59 ./
+> -rw-r--r--  0 masa   staff     130  4 14 14:59 ./main.tf
+>
 ```
 
 それでは[アップロード用のAPI](https://www.terraform.io/docs/cloud/api/configuration-versions.html#upload-configuration-files)を使ってパッケージをアップロードします。
@@ -326,8 +327,8 @@ curl --header "Authorization: Bearer ${TOKEN}" --header "Content-Type: applicati
 
 それでは取得したRun IDに対して[Apply a RunのAPI](https://www.terraform.io/docs/cloud/api/run.html#apply-a-run)を実行します。
 
-'''shell
-export RUN_ID=<取得したｔRun ID>
+```shell
+export RUN_ID=<取得したRun ID>
 
 cat << EOF >> apply_run.json
 {
