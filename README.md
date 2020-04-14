@@ -37,5 +37,5 @@ OSS版ではすでに多くの情報が日本語でも調べることが可能�
 * [Enterprise機能4: Terraform Enterprise API](https://github.com/hashicorp-japan/terraform-workshop/blob/master/contents/tf-api.md)
 * [Enterprise機能5: Notifications](https://github.com/hashicorp-japan/terraform-workshop/blob/master/contents/notifications.md)
 * CLI Drive Run
-* API Drive Run
+* [API Drive Run](./contents/api-driven-run.md)
 * Terraform Enterpriseのインストール
