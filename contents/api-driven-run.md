@@ -54,7 +54,7 @@ Workspaceに対してConfiguration versionを作成します。この例では�
 ```shell
 export WORKSPACE_ID=<WorkspaceのID>
 
-cat << EOF > payload.json
+cat << EOF > configuration_version.json
 {
   "data": {
     "type": "configuration-versions",
