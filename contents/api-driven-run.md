@@ -60,7 +60,7 @@ cat << EOF > configuration_version.json
     "type": "configuration-versions",
     "attributes": {
       "auto-queue-runs": true,
-			"speculative": false
+      "speculative": false
     }
   }
 }
@@ -127,11 +127,10 @@ tar cvfz main.tar.gz -C tf_test .
 >**Note**
 >
 >tar.gzパッケージのルートディレクトリが、そのままTerraform実行時のディレクトリになります。以下のような構成になっていればOKです。
->```shell
-> $ tar tvfz main.tar.gz
-> drwxr-xr-x  0 masa   staff       0  4 14 14:59 ./
-> -rw-r--r--  0 masa   staff     130  4 14 14:59 ./main.tf
->
+```shell
+$ tar tvfz main.tar.gz
+drwxr-xr-x  0 masa   staff       0  4 14 14:59 ./
+-rw-r--r--  0 masa   staff     130  4 14 14:59 ./main.tf
 ```
 
 それでは[アップロード用のAPI](https://www.terraform.io/docs/cloud/api/configuration-versions.html#upload-configuration-files)を使ってパッケージをアップロードします。
