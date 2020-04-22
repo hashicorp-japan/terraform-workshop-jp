@@ -84,14 +84,41 @@ Execution modeを**Local**に設定すると、Terrarormの実行はLocal環境�
   <img src="../assets/tfc-remote-state/generated_token.png">
 </kbd>
 
-次に、ここで作成されたTokenをLocal環境の```~/.terraformrc```に書き込みます。
+次に、ここで作成されたTokenをLocal環境の設定ファイルに登録します。`terraform login` コマンドを使います。Tokenは `~/.terraform.d/credentials.tfrc.json `に保存されます。
 **Windowsの場合、%APPDATA%\terraform.rcとなります。**
 
 ```shell
-root@workstation:~# cat ~/.terraformrc
-credentials "app.terraform.io" {
-    token = "TdobpJ0do60AZw.atlasv1.LK7nXDhzqJNy7zqIkwm0WaMPPuz4vEL5RU7aDTZ1vQQf16vjfEwyOrzDdw4KQejeGnM"
-}
+terraform login
+
+Terraform will request an API token for app.terraform.io using your browser.
+
+If login is successful, Terraform will store the token in plain text in
+the following file for use by subsequent commands:
+    /Users/masa/.terraform.d/credentials.tfrc.json
+
+Do you want to proceed? (y/n) y
+Terraform must now open a web browser to the tokens page for app.terraform.io.
+
+If a browser does not open this automatically, open the following URL to proceed:
+    https://app.terraform.io/app/settings/tokens?source=terraform-login
+
+
+---------------------------------------------------------------------------------
+
+Generate a token using your browser, and copy-paste it into this prompt.
+
+Terraform will store the token in plain text in the following file
+for use by subsequent commands:
+    /Users/masa/.terraform.d/credentials.tfrc.json
+
+Token for app.terraform.io: 
+
+Retrieved token for user masa_hashicorp
+
+
+---------------------------------------------------------------------------------
+
+Success! Terraform has obtained and saved an API token.
 ```
 
 これでLocal環境からTerraform CloudのAPIにアクセスする準備が整いました。
