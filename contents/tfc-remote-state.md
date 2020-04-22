@@ -122,7 +122,7 @@ terraform init
 ここで、もし直前のWorkshopで作成されたStateファイルが存在していると以下のように、「既存StateファイルをRemote Backendにコピーするか？」と尋ねられます。*Yes* と入力して下さい。
 
 ```console
-root@workstation:~/hashicat-aws# terraform init
+# terraform init
 
 Initializing the backend...
 Do you want to copy existing state to the new backend?
