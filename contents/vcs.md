@@ -112,6 +112,7 @@ $ export GITURL=<YOUR_REPO_URL>
 $ git init
 $ git add main.tf
 $ git commit -m "first commit"
+$ git branch -M main
 $ git remote add origin $GITURL
 $ git push -u origin master
 ```
