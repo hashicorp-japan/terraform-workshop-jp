@@ -288,7 +288,7 @@ $ export TF_VAR_subscription_id="************"
 $ export TF_VAR_client_secret="************"
 $ export TF_VAR_tenant_id="************"
 $ export TF_VAR_location="East Asia" 
-$ export TF_VAR_admin_password="Password1234!"
+$ export TF_VAR_admin_password="Password1234"
 $ terraform plan
 $ terraform apply
 ```
