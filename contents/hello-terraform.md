@@ -373,7 +373,7 @@ $ aws ec2 describe-instances --query "Reservations[].Instances[].{InstanceId:Ins
 次はもう少し複雑な構成のシステムをプロジョニングしてみましょう。
 
 ```shell
-$ cd tf-workspace
+$ cd ..
 $ git clone https://github.com/tkaburagi/tf-simple-web
 $ cd tf-simple-web
 ```
@@ -381,9 +381,9 @@ $ cd tf-simple-web
 <details><summary>Azureの場合はこちら</summary>
 
 ```shell
-$ cd tf-workspace
+$ cd ..
 $ git clone https://github.com/tkaburagi/tf-azure-simple-web
-$ cd tf-simple-web
+$ cd tf-azure-simple-web
 ```
 </details>
 
