@@ -49,7 +49,6 @@ EOF
 <details><summary>GCPの場合はこちら</summary>
 
 ```hcl
-cat <<EOF > main.tf
 terraform {
   required_version = "~> 0.12"
 }
@@ -78,14 +77,12 @@ resource "google_compute_instance" "vm_instance" {
         }
     }
 }
-EOF
 ```
 </details>
 
 <details><summary>Azureの場合はこちら</summary>
 
 ```hcl
-cat <<EOF > main.tf
 terraform {
   required_version = "~> 0.12" 
 }
@@ -164,7 +161,6 @@ resource "azurerm_network_interface" "example" {
     environment = "payground"
   }
 }
-EOF
 ```
 </details>
 
@@ -226,7 +222,7 @@ $ terraform init
 ここではAWS(or GCP or Azure)のプラグインがインストールされるはずです。
 
 ```console
-$  ls -R .terraform/plugins
+$  ls -R .terraform/providers #OR ls -R .terraform/plugins
 darwin_amd64
 
 .terraform/plugins/darwin_amd64:
