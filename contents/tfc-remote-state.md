@@ -88,6 +88,7 @@ Execution modeを**Local**に設定すると、Terrarormの実行はLocal環境�
 **Windowsの場合、%APPDATA%\terraform.rcとなります。**
 
 ```shell
+cd  hello-tf
 terraform login
 
 Terraform will request an API token for app.terraform.io using your browser.
@@ -178,6 +179,8 @@ terraform apply
 ```
 
 この```apply```ではLocalのStateファイルではなく、Terraform cloud上のStateファイルを使用します。よって、もうLocalのStateファイルは必要ないので削除しても構いません。
+
+再度Terraform CloudのGUIからステートファイルを確認してください。変更が反映されることがわかるはずです。
 
 ## まとめ
 
