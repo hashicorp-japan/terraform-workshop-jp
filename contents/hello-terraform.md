@@ -407,6 +407,12 @@ alb_dns = web-alb-1553156387.ap-northeast-1.elb.amazonaws.com
 
 こちらにWebブラウザでアクセスして、Apacheが起動していることを確認してみましょう。
 また、AWSのコンソールを確認してインスタンスやLBの他にVPC, Security Groupも作られていることを確認してみましょう。
+	
+destroyで環境をリセットします。
+	
+```shell
+$ terraform destroy -auto-approve
+```
 
 ## Enterprise版の価値
 
