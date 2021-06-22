@@ -114,7 +114,7 @@ $ git add main.tf
 $ git commit -m "first commit"
 $ git branch -M main
 $ git remote add origin $GITURL
-$ git push -u origin master
+$ git push -u origin main
 ```
 
 TFC上でWorkspaceを作成します。トップ画面の`+ New Workspace`を選択し、GitHubを選択します。
