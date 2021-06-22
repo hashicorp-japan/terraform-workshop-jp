@@ -84,11 +84,19 @@ Execution modeを**Local**に設定すると、Terrarormの実行はLocal環境�
   <img src="../assets/tfc-remote-state/generated_token.png">
 </kbd>
 
+### Terraformバージョンの指定
+```
+* トップ画面からワークスペースを選択
+* Settingsを選択
+* Terraform バージョンを0.12.31に指定
+* Save Settingsを選択
+```
+
 次に、ここで作成されたTokenをLocal環境の設定ファイルに登録します。`terraform login` コマンドを使います。Tokenは `~/.terraform.d/credentials.tfrc.json `に保存されます。
 **Windowsの場合、%APPDATA%\terraform.rcとなります。**
 
 ```shell
-cd  hello-tf
+cd  ../hello-tf
 terraform login
 
 Terraform will request an API token for app.terraform.io using your browser.
@@ -175,6 +183,7 @@ use this backend unless the backend configuration changes.
 それでは```apply```してみましょう。
 
 ```
+rm terraform.tfstate.backup .terraform/terraform.tfstate rm terraform.tfstate.backup
 terraform apply
 ```
 
