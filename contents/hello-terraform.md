@@ -28,7 +28,6 @@ $ cd  tf-workspace/hello-tf
 ```shell
 $ cat <<EOF > main.tf
 terraform {
-	required_version = "~> 0.12"
 }
 
 provider "aws" {
@@ -50,7 +49,6 @@ EOF
 
 ```hcl
 terraform {
-  required_version = "~> 0.12"
 }
 
 provider "google" {
@@ -84,7 +82,6 @@ resource "google_compute_instance" "vm_instance" {
 
 ```hcl
 terraform {
-  required_version = "~> 0.12" 
 }
 
 provider "azurerm" {
