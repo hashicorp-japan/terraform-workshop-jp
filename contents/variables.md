@@ -38,7 +38,6 @@ $ cd path/to/tf-workspace/tf-handson-workshop
 $ cat <<EOF > main.tf
 
 terraform {
-  required_version = "~> 0.12"
 }
 
 provider "aws" {
@@ -77,7 +76,6 @@ EOF
 
 ```hcl
 terraform {
-  required_version = "~> 0.12"
 }
 
 provider "google" {
@@ -124,7 +122,6 @@ variable "image" {}
 
 ```hcl
 terraform {
-  required_version = "~> 0.12" 
 }
 
 provider "azurerm" {
