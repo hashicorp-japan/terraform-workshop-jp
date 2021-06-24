@@ -336,9 +336,6 @@ $ aws ec2 describe-instances --query "Reservations[].Instances[].{InstanceId:Ins
 ]
 ```
 
->
->
-
 ## Webシステムをプロビジョニングする
 
 次はもう少し複雑な構成のシステムをプロジョニングしてみましょう。
