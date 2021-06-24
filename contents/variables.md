@@ -31,7 +31,7 @@ Terraform Enterpriseには二種類に変数がサポートされています。
 $ cd path/to/tf-workspace/tf-handson-workshop
 ```
 
-以下の二つのファイルを作成してください。
+以下の二つのファイルを作成してください。`main.tf`, `variables.tf` というファイル名です。
 
 
 ```shell
