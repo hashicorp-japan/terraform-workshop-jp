@@ -112,8 +112,9 @@ $ export GITURL=<YOUR_GIT_REPO_URL>
 $ git init
 $ git add .
 $ git commit -m "first commit"
+$ git branch -M main
 $ git remote add origin ${GITURL}
-$ git push -u origin master
+$ git push -u origin main
 ```
 
 ## TFCの設定
@@ -155,7 +156,6 @@ $ git push -u origin master
 
 ```hcl
 terraform {
-  required_version = "~> 0.12"
 }
 
 provider "aws" {
@@ -179,7 +179,6 @@ resource "aws_instance" "hello-tf-instance" {
 
 ```
 terraform {
-  required_version = "~> 0.12"
 }
 
 provider "google" {
@@ -217,7 +216,6 @@ resource "google_compute_instance" "vm_instance" {
 
 ```hcl
 terraform {
-  required_version = "~> 0.12" 
 }
 
 provider "azurerm" {
