@@ -280,17 +280,13 @@ $ git push -u origin main
 
 ## 実行結果の確認
 
-ワークスペースのトップ画面に戻ると新規のコミットに対してプランが走っていることがわかります。
+ワークスペースのトップ画面に戻り`Runs`のタブを見ると新規のコミットに対してプランが走っていることがわかります。
 
 <kbd>
-  <img src="https://github-image-tkaburagi.s3.ap-northeast-1.amazonaws.com/terraform-workshop/var-3.png">
+  <img src="https://github.com/hashicorp-japan/terraform-workshop-jp/blob/master/assets/run-new-ui.png">
 </kbd>
 
 クリックしてプランの詳細を確認し、プランが終わるとApply可能になります。`Confirm`をクリックしApplyを実行ししばらくすると成功するはずです。
-
-<kbd>
-  <img src="https://github-image-tkaburagi.s3.ap-northeast-1.amazonaws.com/terraform-workshop/var-3.png">
-</kbd>
 
 AWS CLIで確認します。(GCP/Azureの場合はWebブラウザから確認してください。)
 
