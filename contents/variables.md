@@ -275,7 +275,7 @@ variable "hello_tf_instance_count" {
 ```shell
 $ git add .
 $ git commit -m "second commit"
-$ git push -u origin master
+$ git push -u origin main
 ```
 
 ## 実行結果の確認
