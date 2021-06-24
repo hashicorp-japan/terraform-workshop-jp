@@ -100,7 +100,6 @@ $ cd tf-workspace/tf-handson-workshop
 ```shell
 $ cat <<EOF > main.tf
 terraform {
-	required_version = "~> 0.12"
 }
 EOF
 ```
