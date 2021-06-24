@@ -117,7 +117,8 @@ $ git remote add origin $GITURL
 $ git push -u origin main
 ```
 
-TFC上でWorkspaceを作成します。トップ画面の`+ New Workspace`を選択し、GitHubを選択します。
+TFC上でWorkspaceを作成します。トップ画面の`+ New Workspace`を選択しします。
+ワークスペース作成画面で`VCS Drive Workflow`を選択し、その後の画面でGitHubを選択します。
 
 <kbd>
   <img src="https://github.com/hashicorp-japan/terraform-workshop-jp/blob/master/assets/tfc-remote-state/create-ws-new-ui.png">
