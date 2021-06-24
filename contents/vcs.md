@@ -120,7 +120,7 @@ $ git push -u origin main
 TFC上でWorkspaceを作成します。トップ画面の`+ New Workspace`を選択し、GitHubを選択します。
 
 <kbd>
-  <img src="https://github-image-tkaburagi.s3.ap-northeast-1.amazonaws.com/terraform-workshop/vcs-1.png">
+  <img src="https://github.com/hashicorp-japan/terraform-workshop-jp/blob/master/assets/tfc-remote-state/create-ws-new-ui.png">
 </kbd>
 
 レポジトリは先ほど作成した`tf-handson-workshop`を選択し、`Create Workspace`をクリックします。
