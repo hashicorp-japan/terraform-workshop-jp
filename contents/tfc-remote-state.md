@@ -1,4 +1,4 @@
-# Terraform CloudによるRemote state管理
+# Terraform Cloudによるリモートステート管理
 
 さて、最初のWorkshopではLocal環境でTerraformを実行し、StateファイルもLocal環境に作成されました。
 
@@ -20,21 +20,18 @@ Terraformで継続的にProvisioningを行なうためにはStateファイルの
 Terraform Cloud及びTerraform Enterpriseにはこれらの問題を解決すべく、様々なTeam collaboration及びGovernanceの機能を予め用意してあります。これからのWorkshopでは、これら機能を紹介していきます。
 
 ## 事前準備
----
 
 1. このWorkshopを行なうにはTerraform Cloudのアカウントが必要です。こちらからサインアップをしてください。（すでにアカウントをお持ちの方はスキップしてください。）
 
 [https://app.terraform.io/signup/account](https://app.terraform.io/signup/account)
 
-## Remote State管理機能
----
+## リモートステート管理機能
 
-Terraform cloudにはRemote State管理機能があります。ちなみに、**この機能は誰でも無料で利用できます**。
+Terraform CloudにはRemote State管理機能があります。ちなみに、**この機能は誰でも無料で利用できます**。
 
 ここでは、Remote State管理機能を使うエクササイズを行います。
 
 ### Workspaceの設定
----
 
 Terraform Cloudにログインし、新規Workspaceを作成します。
 ワークスペース名は任意で構いません。
@@ -45,24 +42,33 @@ Workspaceは以下のボタンより作成できます。
 
 ![new workspace](../assets/tfc-remote-state/new_workspace.png)
 
-以下の画面で、**No VCS Connection**を選択してください。
+以下の画面で、**CLI Drive Workflow**を選択してください。
 
 <kbd>
-  <img src="../assets/tfc-remote-state/create_workspace.png">
+  <img src="../assets/tfc-remote-state/create-ws-new-ui.png">
 </kbd>
 
-- Workspace名にには重複しない任意の名前をつけてください。以下、このページでは、ここで指定した名前を*YOURWORKSPACE*という置き換え表示で表します。
+ワークスペース名は`hello-tf`とします。
 
-つぎに、Workspaceの**Setting > General >** にナビゲートし、Execution modeを**Local**に設定して保存してください。
+<kbd>
+  <img src="../assets/tfc-remote-state/create-ws-new-ui-2.png">
+</kbd>
+
+つぎに作成したワークスペースのSettingsメニューから以下の操作を実施して下さい。
+
+```
+* Settings > General ナビゲートし、Execution modeをLocalに設定
+* Terraform バージョンを1.0.0に指定
+* Save Settingsを選択して保存
+```
 
 <kbd>
   <img src="../assets/tfc-remote-state/execution_mode.png">
 </kbd>
 
-Execution modeを**Local**に設定すると、Terrarormの実行はLocal環境で行いますが、作成されるStateファイルはTerraform cloudに保存されます。
+Execution modeを**Local**に設定すると、Terraformの実行はLocal環境で行いますが、作成されるStateファイルはTerraform Cloudに保存されます。
 
 ### User Tokenの作成
----
 
 さて、次にLocalのTerraform環境からTerraform Cloudにアクセスするために、User tokenを作成します。このUser tokenはローカル環境や別のシステム（CI/CDパイプラインや外部ツールなど）からTerraform Cloud APIを叩く際に必要となります。
 
@@ -84,20 +90,13 @@ Execution modeを**Local**に設定すると、Terrarormの実行はLocal環境�
   <img src="../assets/tfc-remote-state/generated_token.png">
 </kbd>
 
-### Terraformバージョンの指定
-```
-* トップ画面からワークスペースを選択
-* Settingsを選択
-* Terraform バージョンを1.0.0に指定
-* Save Settingsを選択
-```
 
 次に、ここで作成されたTokenをLocal環境の設定ファイルに登録します。`terraform login` コマンドを使います。Tokenは `~/.terraform.d/credentials.tfrc.json `に保存されます。
 **Windowsの場合、%APPDATA%\terraform.rcとなります。**
 
-```shell
-cd  ../hello-tf
-terraform login
+```console
+$ cd path/to/hello-tf
+$ terraform login
 
 Terraform will request an API token for app.terraform.io using your browser.
 
@@ -133,9 +132,8 @@ Success! Terraform has obtained and saved an API token.
 これでLocal環境からTerraform CloudのAPIにアクセスする準備が整いました。
 
 ### Remote Backendの設定
----
 
-つぎにTerraformにRemote Backendを使用するコードを追加します。以下のコードを```remote_backend.tf```という名前で作成してください。*YOURORGANIZATION*は使用しているOrganizationの値に、*YOURWORKSPACE*は使用しているWorkspaceに置き換えてください。
+つぎにTerraformにRemote Backendを使用するコードを追加します。以下のコードを``main.tf``という名前で作成してください。*YOURORGANIZATION*は使用しているOrganizationの値に置き換えてください。
 
 ```hcl
 terraform {
@@ -143,7 +141,7 @@ terraform {
     hostname = "app.terraform.io"
     organization = "YOURORGANIZATION"
     workspaces {
-      name = "YOURWORKSPACE"
+      name = "hello-cf"
     }
   }
 }
@@ -151,14 +149,10 @@ terraform {
 
 ここまでの準備が出来ましたら、Terraformを実行します。以下のコマンドを実行してください。
 
-```
-terraform init
-```
-
 ここで、もし直前のWorkshopで作成されたStateファイルが存在していると以下のように、「既存StateファイルをRemote Backendにコピーするか？」と尋ねられます。*Yes* と入力して下さい。
 
 ```console
-# terraform init
+$ terraform init -migrate-state
 
 Initializing the backend...
 Do you want to copy existing state to the new backend?
@@ -174,22 +168,60 @@ Successfully configured the backend "remote"! Terraform will automatically
 use this backend unless the backend configuration changes.
 ```
 
-この段階で、Terraform cloudのWorkspaceを確認すると、Stateファイルが作成されているはずです。
+この段階で、Terraform CloudのWorkspaceを確認すると、Stateファイルが作成されているはずです。
 
 <kbd>
   <img src="../assets/tfc-remote-state/new_state.png">
 </kbd>
 
-それでは```apply```してみましょう。
+中を見てみると先ほど作成した環境のステートが記述されているはずです。
 
+<kbd>
+  <img src="../assets/tfc-remote-state/state-2.png">
+</kbd>
+
+### 環境のクリーンアップ
+
+次に`destroy`で環境をリセットします。
+
+```shell
+$ terraform destroy 
 ```
-rm terraform.tfstate.backup .terraform/terraform.tfstate rm terraform.tfstate.backup
-terraform apply
+実行中にステートレポジトリのGUIを見るとロックがかかっていることがわかります。
+
+<kbd>
+  <img src="../assets/tfc-remote-state/state-3.png">
+</kbd>
+
+実行ししばらくするとEC2インスタンスが`terminated`の状態になってることがわかるはずです。(GCP/Azureの場合はWebブラウザから確認してください。)
+
+```console
+$ aws ec2 describe-instances --query "Reservations[].Instances[].{InstanceId:InstanceId,State:State}"
+[
+    {
+        "InstanceId": "i-00918d5c9466da418",
+        "State": {
+            "Code": 48,
+            "Name": "terminated"
+        }
+    },
+    {
+        "InstanceId": "i-0b0aea4b4ab27ef4b",
+        "State": {
+            "Code": 16,
+            "Name": "terminated"
+        }
+    }
+]
 ```
 
-この```apply```ではLocalのStateファイルではなく、Terraform cloud上のStateファイルを使用します。よって、もうLocalのStateファイルは必要ないので削除しても構いません。
+この`destroy`ではLocalのStateファイルではなく、Terraform Cloud上のStateファイルを使用します。よって、もうLocalのStateファイルは必要ないので削除しても構いません。
 
 再度Terraform CloudのGUIからステートファイルを確認してください。変更が反映されることがわかるはずです。
+
+<kbd>
+  <img src="../assets/tfc-remote-state/state-1.png">
+</kbd>
 
 ## まとめ
 

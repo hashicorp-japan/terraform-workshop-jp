@@ -28,7 +28,7 @@ OSS版ではすでに多くの情報が日本語でも調べることが可能�
 
 ## アジェンダ
 * [初めてのTerraform](https://github.com/hashicorp-japan/terraform-workshop/blob/master/contents/hello-terraform.md)
-* [Terraform CloudによるRemote state管理](./contents/tfc-remote-state.md)
+* [Terraform Cloudによるリモートステート管理](./contents/tfc-remote-state.md)
 * VCS連携 ([GitHub](https://github.com/hashicorp-japan/terraform-workshop/blob/master/contents/vcs.md), [Azure DevOps](https://github.com/hashicorp-japan/terraform-workshop/blob/master/contents/vcs-azure.md))
 * [Secure Variable Storage](https://github.com/hashicorp-japan/terraform-workshop/blob/master/contents/variables.md)
 * [Enterprise機能1: RBAC](./contents/teams.md)

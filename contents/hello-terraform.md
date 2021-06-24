@@ -336,34 +336,8 @@ $ aws ec2 describe-instances --query "Reservations[].Instances[].{InstanceId:Ins
 ]
 ```
 
-次に`destroy`で環境をリセットします。
-
-
-```shell
-$ terraform destroy 
-```
-
-実行ししばらくするとEC2インスタンスが`terminated`の状態になってることがわかるはずです。(GCP/Azureの場合はWebブラウザから確認してください。)
-
-```console
-$ aws ec2 describe-instances --query "Reservations[].Instances[].{InstanceId:InstanceId,State:State}"
-[
-    {
-        "InstanceId": "i-00918d5c9466da418",
-        "State": {
-            "Code": 48,
-            "Name": "terminated"
-        }
-    },
-    {
-        "InstanceId": "i-0b0aea4b4ab27ef4b",
-        "State": {
-            "Code": 16,
-            "Name": "terminated"
-        }
-    }
-]
-```
+>
+>
 
 ## Webシステムをプロビジョニングする
 
