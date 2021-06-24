@@ -133,10 +133,11 @@ Success! Terraform has obtained and saved an API token.
 
 ### Remote Backendの設定
 
-つぎにTerraformにRemote Backendを使用するコードを追加します。以下のコードを``main.tf``という名前で作成してください。*YOURORGANIZATION*は使用しているOrganizationの値に置き換えてください。
+つぎにTerraformにRemote Backendを使用するコードを追加します。`main.tf`の`terraform`スタンザを以下のように変更してください。*YOURORGANIZATION*は使用しているOrganizationの値に置き換えてください。
 
 ```hcl
 terraform {
+#ここから
   backend "remote" {
     hostname = "app.terraform.io"
     organization = "YOURORGANIZATION"
@@ -144,6 +145,7 @@ terraform {
       name = "hello-cf"
     }
   }
+#ここまで追加
 }
 ```
 
