@@ -88,7 +88,7 @@ Execution modeを**Local**に設定すると、Terrarormの実行はLocal環境�
 ```
 * トップ画面からワークスペースを選択
 * Settingsを選択
-* Terraform バージョンを0.12.31に指定
+* Terraform バージョンを1.0.0に指定
 * Save Settingsを選択
 ```
 
