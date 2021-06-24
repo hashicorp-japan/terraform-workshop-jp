@@ -130,7 +130,7 @@ TFC上でWorkspaceを作成します。トップ画面の`+ New Workspace`を選
   <img src="https://github-image-tkaburagi.s3.ap-northeast-1.amazonaws.com/terraform-workshop/vcs-2.png">
 </kbd>
 
-成功の画面が出たら`Queue Plan`を実行して動作を確認してみましょう。ここでは空のコードを実行しているため`Apply will not run`となるはずです。
+成功の画面が出たら`Actions` -> `Start a New Plan` を実行して動作を確認してみましょう。ここでは空のコードを実行しているため`Apply will not run`となるはずです。
 
 <kbd>
   <img src="https://github-image-tkaburagi.s3.ap-northeast-1.amazonaws.com/terraform-workshop/vcs-4.png">
