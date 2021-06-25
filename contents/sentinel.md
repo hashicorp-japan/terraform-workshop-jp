@@ -37,31 +37,30 @@ EOF
 
 * クラウドごとに変化するファイル
 
-```shell
-$ cat <<EOF > first-policy.sentinel
-import "tfplan"
-
-main = rule {
-  all tfplan.resources.aws_instance as _, instances {
-    all instances as _, r {
-      (length(r.applied.tags) else 0) > 0
-    }
-  }
-}
-EOF
+```
+WIP
 ```
 
 <details><summary>GCPの場合はこちら</summary>
 
 ```
-import "tfplan"
+import "tfplan/v2" as tfplan
+
+mandatory_labels = [
+	"ttl",
+]
+
+instances = filter tfplan.resource_changes as _, rc {
+	rc.mode is "managed" and
+		rc.type is "google_compute_instance"
+}
+
+tags = instances["google_compute_instance.vm_instance[0]"]["change"]["after"]["labels"]
 
 main = rule {
-  all tfplan.resources.google_compute_instance as _, instances {
-    all instances as _, r {
-      (length(r.applied.labels) else 0) > 0
-    }
-  }
+	all mandatory_labels as t {
+		tags contains t
+	}
 }
 ```
 </details>
@@ -69,15 +68,7 @@ main = rule {
 <details><summary>Azureの場合はこちら</summary>
 
 ```
-import "tfplan"
-
-main = rule {
-  all tfplan.resources.azurerm_virtual_machine as _, instances {
-    all instances as _, r {
-      (length(r.applied.tags) else 0) > 0
-    }
-  }
-}
+WIP
 ```
 </details>
 
@@ -139,7 +130,7 @@ $ git push -u origin main
 
 ## ポリシーを試してみる
 
-それでは実行してみましょう。ワークスペースの`Queue Plan`を選択し、Runをキックします。
+それでは実行してみましょう。ワークスペースの`Actions` -> `Start a New Plan` を選択し、Runをキックします。
 
 <kbd>
   <img src="https://github-image-tkaburagi.s3.ap-northeast-1.amazonaws.com/terraform-workshop/sentinel-3.png">
@@ -349,6 +340,7 @@ Applyにはコンフィグレーションファイルというファイルが必
 サンプルを一つ作ってみます。
 
 ```shell
+$ cd path/to/tf-workspace
 $ mkdir simulator-sample
 $ cd simulator-sample
 ```
@@ -402,30 +394,29 @@ Pass
 
 ```shell
 $ cat <<EOF > mock-foo.sentinel
-bar = func() {                                                                                                                                                           
-    return "baz"                                                                                                                                                                
-}                                                                                                                                                                               
-EOF   
+bar = func() {                         
+    return "baz"
+}
+EOF
 ```
 
 次に新しいコンフィグを作ってモックデータに先ほどSentinelで作った関数を指定します。
 
 ```shell
 $ cat <<EOF > sentinel-2.json
-{                                                                                                                                                                        
-    "mock": {                                                                                                                                                                   
-        "foo": "mock-foo.sentinel"                                                                                                                                              
-    }                                                                                                                                                                           
-}                                                                                                                            
-EOF       
+{
+    "mock": {
+        "foo": "mock-foo.sentinel" 
+    }                                  
+}                                                   
+EOF
 ```
 
 最後に新しいポリシーの定義ファイルを作ります。
 
 ```shell
 $ cat <<EOF > foo-2.sentinel
-import "foo"                                                                                                                                                                    
-                                                                                                                                                                                
+import "foo"      
 main = foo.bar() == "baz"
 EOF
 ```
@@ -450,11 +441,10 @@ ApplyするとPassとなるはずです。
 WorkspacesのRunsから最新の実行結果の`Plan finished`をクリックすると`Downloads Sentinel mocks`というボタンがあるのでこれをクリックしてモックデータをダウンロードし新しいフォルダを作ります。
 
 ```shell
-$ tar xvfz path/to/run-gvXm387VP1VShKC1-sentinel-mocks.tar.gz
-$ mkdir -p simulator-tf-sample/test/foo simulator-tf-sample/testdata
-$ touch simulator-tf-sample/sentinel.json simulator-tf-sample/foo.sentinel simulator-tf-sample/test/foo/fail.json simulator-tf-sample/test/foo/pass.json
-$ mv path/to/run-gvXm387VP1VShKC1-sentinel-mocks/* simulator-tf-sample/testdata/
-$ cd simulator-tf-sample
+$ cd path/to/tf-workspace
+$ mkdir simulator-tf-sample simulator-tf-sample/testdata
+$ touch simulator-tf-sample/sentinel.hcl simulator-tf-sample/tags-check.sentinel
+$ tar xvfz path/to/run-gvXm387VP1VShKC1-sentinel-mocks.tar.gz  -C simulator-tf-sample/testdata
 ```
 
 以下のような構造になればOKです。
@@ -463,75 +453,106 @@ $ cd simulator-tf-sample
 .
 ├── foo.sentinel
 ├── sentinel.json
-├── test
-│   └── foo
-│       ├── fail.json
-│       └── pass.json
 └── testdata
+    ├── mock-tfconfig-v2.sentinel
     ├── mock-tfconfig.sentinel
+    ├── mock-tfplan-v2.sentinel
     ├── mock-tfplan.sentinel
+    ├── mock-tfrun.sentinel
+    ├── mock-tfstate-v2.sentinel
     └── mock-tfstate.sentinel
-
-3 directories, 7 files
 ```
 
 `testdata/`以下にコピーした3つのファイルにはSentinelで定義されたモックデータが入っています。全てを理解する必要はないので、これが最新のTerraformの状況をシミュレートしているとだけ押さえておけばとりあえず大丈夫です。
 
 sentinel.jsonを以下のように記述してください。
 
-```json
-{
-  "mock": {
-    "tfconfig": "testdata/mock-tfconfig.sentinel",
-    "tfplan": "testdata/mock-tfplan.sentinel",
-    "tfstate": "testdata/mock-tfstate.sentinel"
+```hcl
+mock "tfconfig" {
+  module {
+    source = "testdata/mock-tfconfig.sentinel"
+  }
+}
+
+mock "tfconfig/v1" {
+  module {
+    source = "testdata/mock-tfconfig.sentinel"
+  }
+}
+
+mock "tfconfig/v2" {
+  module {
+    source = "testdata/mock-tfconfig-v2.sentinel"
+  }
+}
+
+mock "tfplan" {
+  module {
+    source = "testdata/mock-tfplan.sentinel"
+  }
+}
+
+mock "tfplan/v1" {
+  module {
+    source = "testdata/mock-tfplan.sentinel"
+  }
+}
+
+mock "tfplan/v2" {
+  module {
+    source = "testdata/mock-tfplan-v2.sentinel"
+  }
+}
+
+mock "tfstate" {
+  module {
+    source = "testdata/mock-tfstate.sentinel"
+  }
+}
+
+mock "tfstate/v1" {
+  module {
+    source = "testdata/mock-tfstate.sentinel"
   }
 }
 ```
 
 ダウンロードした環境をシミュレートするSentinelファイルをモックデータとして指定しています。実際のポリシーコードではこの`tfconfig`, `tfplan`,`tfstate`をimportしてポリシーを定義しローカルで実行します。
 
-一番最初に試したタグの有無をチェックするポリシーを使って試してみたいと思います。`foo.sentinel`を以下のように編集します。
+一番最初に試したタグの有無をチェックするポリシーを使って試してみたいと思います。`tags.sentinel`を以下のように編集します。
 
 ```sentinel
-import "tfplan"
-
-main = rule {
-  all tfplan.resources.aws_instance as _, instances {
-    all instances as _, r {
-      (length(r.applied.tags) else 0) > 0
-    }
-  }
-}
+WIP
 ```
 
 <details><summary>GCPの場合はこちら</summary>
 
-```
-import "tfplan"
+```sentinel
+import "tfplan/v2" as tfplan
+
+mandatory_labels = [
+	"ttl",
+]
+
+instances = filter tfplan.resource_changes as _, rc {
+	rc.mode is "managed" and
+		rc.type is "google_compute_instance"
+}
+
+tags = instances["google_compute_instance.vm_instance[0]"]["change"]["after"]["labels"]
 
 main = rule {
-  all tfplan.resources.google_compute_instance as _, instances {
-    all instances as _, r {
-      (length(r.applied.labels) else 0) > 0
-    }
-  }
+	all mandatory_labels as t {
+		tags contains t
+	}
 }
 ```
 </details>
 
 <details><summary>Azureの場合はこちら</summary>
 
-```
-import "tfplan"
-
-main = rule {
-  all tfplan.resources.azurerm_virtual_machine as _, instances {
-    all instances as _, r {
-      (length(r.applied.tags) else 0) > 0
-    }
-  }
-}
+```sentinel
+WIP
 ```
 </details>
 
@@ -539,7 +560,7 @@ main = rule {
 `testdata/mock-tfplan.sentinel`を確認してみましょう。
 
 ```console
-$ grep -A 4 -n tags testdata/mock-tfplan.sentinel
+$ grep -A 4 -n labels  testdata/mock-tfplan-v2.sentinel
   "tags": {
 24-               "owner": "me",
 25-               "ttl":   "100",
@@ -574,126 +595,71 @@ $ grep -A 4 -n tags testdata/mock-tfplan.sentinel
 タグがついたデータが入っておりテストが通るはずです。
 
 ```console
-$ sentinel apply foo.sentinel
+$ sentinel apply tags.sentinel
 Pass
 ```
 
-最後にポリシーを編集し挙動を確認してみましょう。特定のタグが付与されているインスタンスのみ許可するようにします。`foo.sentinel`を以下のように変更します。
+最後にポリシーコードを変更して意図通りFailするかを確認します。
 
 ```sentinel
-import "tfplan"
-
-mandatory_tags = [
-  "ttl", 
-  "owner",
-]
-
-instance_tags = rule {
-    all tfplan.resources.aws_instance as _, instances {
-      all instances as index, r {
-            all mandatory_tags as t {
-                r.applied.tags contains t
-            }
-        }
-    }
-}
-
-main = rule {
-    (instance_tags) else true
-}
+WIP
 ```
 
 <details><summary>GCPの場合はこちら</summary>
 
-```
-import "tfplan"
+```sentinel
+import "tfplan/v2" as tfplan
 
 mandatory_labels = [
-  "ttl", 
-  "owner",
+	"ttl",
+    "test",
 ]
 
+instances = filter tfplan.resource_changes as _, rc {
+	rc.mode is "managed" and
+		rc.type is "google_compute_instance"
+}
+
+tags = instances["google_compute_instance.vm_instance[0]"]["change"]["after"]["labels"]
+
 main = rule {
-    all tfplan.resources.google_compute_instance as _, instances {
-      all instances as _, r {
-            all mandatory_labels as t {
-                r.applied.labels contains t
-            }
-        }
-    }
+	all mandatory_labels as t {
+		tags contains t
+	}
 }
 ```
 </details>
 
 <details><summary>Azureの場合はこちら</summary>
 
-```
-import "tfplan"
-
-mandatory_labels = [
-  "ttl", 
-  "owner",
-]
-
-main = rule {
-    all tfplan.resources.azurerm_virtual_machine as _, instances {
-      all instances as _, r {
-            all mandatory_labels as t {
-                r.applied.tags contains t
-            }
-        }
-    }
-}
+```sentinel
+WIP
 ```
 </details>
 
-```console
-$ sentinel apply foo.sentinel
-Pass
-```
-
-次に`foo.sentinel`の
-
-```
-mandatory_tags = [
-  "ttl", 
-  "owner",
-]
-```
-
-を
-
-```
-mandatory_tags = [
-  "ttl", 
-  "owner",
-  "env",
-]
-```
-
-と変更してください。
-
-ポリシーを試してみます。
+実際のモックデータには入っていない`test`タグを必須タグとしてポリシーをセットしました。
 
 ```console
-$ sentinel apply foo.sentinel
-Fail
-
+$ sentinel apply tags.sentinel
 Execution trace. The information below will show the values of all
-the rules evaluated and their intermediate boolean expressions. Note that
-some boolean expressions may be missing if short-circuit logic was taken.
+the rules evaluated. Note that some rules may be missing if
+short-circuit logic was taken.
 
-FALSE - foo.sentinel:19:1 - Rule "main"
-  FALSE - foo.sentinel:10:5 - all tfplan.resources.aws_instance as _, instances {
-  all instances as index, r {
-    all mandatory_tags as t {
-      r.applied.tags contains t
-    }
-  }
-}
+Note that for collection types and long strings, output may be
+truncated; re-run "sentinel apply" with the -json flag to see the
+full contents of these values.
+
+The trace is displayed due to a failed policy.
+
+Fail - tags.sentinel
+
+tags.sentinel:15:1 - Rule "main"
+  Value:
+    false
 ```
 
-モックデータのインスタンスには`env`のタグはついていないので、Failとなりポリシーが意図通りに動作していることがわかります。
+意図通り`false`が返ってくるはずです。
+
 
 ## 参考リンク
 * [Sentinel](https://www.hashicorp.com/sentinel)
