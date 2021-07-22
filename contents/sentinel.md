@@ -450,9 +450,9 @@ $ tar xvfz path/to/run-gvXm387VP1VShKC1-sentinel-mocks.tar.gz  -C simulator-tf-s
 以下のような構造になればOKです。
 
 ```console
-.
-├── foo.sentinel
-├── sentinel.json
+simulator-tf-sample
+├── sentinel.hcl
+├── tags-check.sentinel
 └── testdata
     ├── mock-tfconfig-v2.sentinel
     ├── mock-tfconfig.sentinel
@@ -460,7 +460,8 @@ $ tar xvfz path/to/run-gvXm387VP1VShKC1-sentinel-mocks.tar.gz  -C simulator-tf-s
     ├── mock-tfplan.sentinel
     ├── mock-tfrun.sentinel
     ├── mock-tfstate-v2.sentinel
-    └── mock-tfstate.sentinel
+    ├── mock-tfstate.sentinel
+    └── sentinel.hcl
 ```
 
 `testdata/`以下にコピーした3つのファイルにはSentinelで定義されたモックデータが入っています。全てを理解する必要はないので、これが最新のTerraformの状況をシミュレートしているとだけ押さえておけばとりあえず大丈夫です。
