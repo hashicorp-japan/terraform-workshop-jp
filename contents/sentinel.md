@@ -25,7 +25,7 @@ $ cd sentinel-handson-workshop
 
 以下の二つのファイルを追加します。
 
-* 全クラウド共通のファイル
+* 全クラウド共通のファイル (sentinel.hcl)
 
 ```shell
 $ cat <<EOF > sentinel.hcl
@@ -35,7 +35,7 @@ policy "first-policy" {
 EOF
 ```
 
-* クラウドごとに変化するファイル
+* クラウドごとに変化するファイル (first-policy.sentinel)
 
 ```
 WIP
@@ -68,7 +68,24 @@ main = rule {
 <details><summary>Azureの場合はこちら</summary>
 
 ```
-WIP
+import "tfplan/v2" as tfplan
+
+mandatory_tags = [
+  "ttl",
+]
+
+instances = filter tfplan.resource_changes as _, rc {
+  rc.mode is "managed" and
+    rc.type is "azurerm_virtual_machine"
+}
+
+tags = instances["azurerm_virtual_machine.main[0]"]["change"]["after"]["tags"]
+
+main = rule {
+  all mandatory_tags as t {
+    tags contains t
+  }
+}
 ```
 </details>
 
@@ -122,7 +139,13 @@ $ git push -u origin main
   <img src="https://github-image-tkaburagi.s3.ap-northeast-1.amazonaws.com/terraform-workshop/sentinel-1.png">
 </kbd>
 
-以下のように入力してください。名前などは任意で構いません。**workspaceを選んだらADD WORKSPACEを押すのを忘れないでください。**
+`Connect a Policy Set`で先程作った`sentinel-handson-workshop`のレポジトリを選択します。
+
+<kbd>
+  <img src="../assets/policy-create-newui.png">
+</kbd>
+
+次の画面で以下のように入力してください。名前などは任意で構いません。**workspaceを選んだらADD WORKSPACEを押すのを忘れないでください。**
 
 <kbd>
   <img src="https://github-image-tkaburagi.s3.ap-northeast-1.amazonaws.com/terraform-workshop/sentinel-2.png">
@@ -215,6 +238,7 @@ provider "azurerm" {
   tenant_id = var.tenant_id
   subscription_id = var.subscription_id
   client_secret = var.client_secret
+  features {}
 }
 
 resource "azurerm_virtual_machine" "main" {
@@ -466,7 +490,7 @@ simulator-tf-sample
 
 `testdata/`以下にコピーした3つのファイルにはSentinelで定義されたモックデータが入っています。全てを理解する必要はないので、これが最新のTerraformの状況をシミュレートしているとだけ押さえておけばとりあえず大丈夫です。
 
-sentinel.jsonを以下のように記述してください。
+sentinel.hclを以下のように記述してください。
 
 ```hcl
 mock "tfconfig" {
@@ -520,7 +544,7 @@ mock "tfstate/v1" {
 
 ダウンロードした環境をシミュレートするSentinelファイルをモックデータとして指定しています。実際のポリシーコードではこの`tfconfig`, `tfplan`,`tfstate`をimportしてポリシーを定義しローカルで実行します。
 
-一番最初に試したタグの有無をチェックするポリシーを使って試してみたいと思います。`tags.sentinel`を以下のように編集します。
+一番最初に試したタグの有無をチェックするポリシーを使って試してみたいと思います。`tags-check.sentinel`を以下のように編集します。
 
 ```sentinel
 WIP
@@ -553,7 +577,24 @@ main = rule {
 <details><summary>Azureの場合はこちら</summary>
 
 ```sentinel
-WIP
+import "tfplan/v2" as tfplan
+
+mandatory_tags = [
+  "ttl",
+]
+
+instances = filter tfplan.resource_changes as _, rc {
+  rc.mode is "managed" and
+    rc.type is "azurerm_virtual_machine"
+}
+
+tags = instances["azurerm_virtual_machine.main[0]"]["change"]["after"]["tags"]
+
+main = rule {
+  all mandatory_tags as t {
+    tags contains t
+  }
+}
 ```
 </details>
 
@@ -596,7 +637,7 @@ $ grep -A 4 -n labels  testdata/mock-tfplan-v2.sentinel
 タグがついたデータが入っておりテストが通るはずです。
 
 ```console
-$ sentinel apply tags.sentinel
+$ sentinel apply tags-check.sentinel
 Pass
 ```
 
@@ -613,7 +654,7 @@ import "tfplan/v2" as tfplan
 
 mandatory_labels = [
 	"ttl",
-    "test",
+  "test",
 ]
 
 instances = filter tfplan.resource_changes as _, rc {
@@ -641,7 +682,7 @@ WIP
 実際のモックデータには入っていない`test`タグを必須タグとしてポリシーをセットしました。
 
 ```console
-$ sentinel apply tags.sentinel
+$ sentinel apply tags-check.sentinel
 Execution trace. The information below will show the values of all
 the rules evaluated. Note that some rules may be missing if
 short-circuit logic was taken.

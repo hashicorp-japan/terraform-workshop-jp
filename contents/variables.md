@@ -303,15 +303,7 @@ $ aws ec2 describe-instances --query "Reservations[].Instances[].{InstanceId:Ins
 ]
 ```
 
-節約のために環境を綺麗にしておきましょう。DestroyをGUIから実行するためにはTFCのワークスペースの環境変数に設定が必要です。ワークスペースの`Variables`のメニューの`Environment Variables`の項目に以下を入力します。**Terraform Variables**ではないのでご注意ください。
-
-* CONFIRM_DESTROY : 1
-
-<kbd>
-  <img src="https://github-image-tkaburagi.s3.ap-northeast-1.amazonaws.com/terraform-workshop/var-5.png">
-</kbd>
-
-Saveしたらワークスペースのセッテイングから`Destruction and Deletion`を選びます。
+節約のために環境を綺麗にしておきましょう。ワークスペースのセッテイングから`Destruction and Deletion`を選びます。
 
 <kbd>
   <img src="https://github-image-tkaburagi.s3.ap-northeast-1.amazonaws.com/terraform-workshop/var-6.png">
