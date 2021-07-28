@@ -141,7 +141,7 @@ terraform {
     hostname = "app.terraform.io"
     organization = "YOURORGANIZATION"
     workspaces {
-      name = "hello-cf"
+      name = "hello-tf"
     }
   }
 #ここまで追加
