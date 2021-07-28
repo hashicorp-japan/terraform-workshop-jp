@@ -34,7 +34,7 @@ GitHub上に"tf-handson-workshop"という名前のパブリックレポジト�
 ```
 ### GitHubのOAuth Applicationの作成
 
-トップ画面の`Settings`から`VCS Providers`を選んでください。
+トップ画面の`Settings`からサイドメニューの`Version control` -> `Providers`を選んでください。
 
 <kbd>
   <img src="https://github-image-tkaburagi.s3.ap-northeast-1.amazonaws.com/terraform-workshop/hello-1.png">
@@ -82,7 +82,7 @@ VCS Providerが一つ追加され、Callback URLが生成されたのでこれ�
 
 これでSaveしましょう。
 
-最後にトップ画面の`Settings` -> `VCS Providers` から先ほど追加したGitHubの`Connect`をクリックして認証行ってください。
+最後にトップ画面の`Settings`からサイドメニューの`Version control` -> `Providers`から先ほど追加したGitHubの`Connect`をクリックして認証行ってください。
 
 これでVCSの設定は完了です。次にこれを紐付けたワークスペースを作成します。
 
