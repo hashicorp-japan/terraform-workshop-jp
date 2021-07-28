@@ -58,7 +58,6 @@ Workspaceは以下のボタンより作成できます。
 
 ```
 * Settings > General ナビゲートし、Execution modeをLocalに設定
-* Terraform バージョンを1.0.0に指定
 * Save Settingsを選択して保存
 ```
 
