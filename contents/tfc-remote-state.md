@@ -49,6 +49,7 @@ Workspaceは以下のボタンより作成できます。
 </kbd>
 
 ワークスペース名は`hello-tf`とします。
+**下の画像は、ワークスペース名が`hello-cf`となっていますが、ワークスペース名は`hello-tf`としてください。 
 
 <kbd>
   <img src="../assets/tfc-remote-state/create-ws-new-ui-2.png">
