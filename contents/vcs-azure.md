@@ -121,8 +121,9 @@ $ export ADO_URL=<YOUR_AZURE_DEVOPS_PROJECT_URL>
 $ git init
 $ git add main.tf
 $ git commit -m "first commit"
+$ git branch -M main
 $ git remote add origin $ADO_URL
-$ git push -u origin master
+$ git push -u origin main
 ```
 
 TFC上でWorkspaceを作成します。トップ画面の`+ New Workspace`を選択し、Azure DevOpsを選択します。
