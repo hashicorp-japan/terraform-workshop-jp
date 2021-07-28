@@ -357,6 +357,8 @@ $ cd tf-azure-simple-web
 
 二つのAWSインスタンスを立ち上げ、その上にApacheをインストールしその二つのインスタンスをインスタンスグループとしてALBにアタッチしています。そのために必要な最低限のネットワーク設定も行なっていますので気になる人はコードを見てみてください。
 
+Azureでチームで同じ環境を利用している場合は`main.tf`の`azurerm_resource_group` -> `name`を`my-group-kabu`のような形に変更してください。
+
 Terraform Applyしてみましょう。
 
 ```shell
