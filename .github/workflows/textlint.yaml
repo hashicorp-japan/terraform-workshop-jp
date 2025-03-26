@@ -21,7 +21,7 @@ jobs:
         uses: actions/setup-node@v4
 
       - name: Install textlint rules
-        run: npm install ja-space-between-half-and-full-width
+        run: npm install textlint-rule-preset-ja-spacing
 
       - name: Run textlint
         run: textlint ./contents/**/*.md
