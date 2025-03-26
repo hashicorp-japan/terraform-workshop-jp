@@ -21,7 +21,7 @@ jobs:
         uses: actions/setup-node@v4
 
       - name: Install textlint rules
-        run: npm install textlint textlint-rule-preset-ja-spacing
+        run: npm install -D textlint textlint-rule-preset-ja-spacing
 
       - name: Run textlint
         run: textlint ./contents/**/*.md
