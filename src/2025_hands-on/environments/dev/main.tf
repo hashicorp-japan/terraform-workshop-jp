@@ -15,6 +15,7 @@ provider "aws" {
 
 module "storage" {
   source = "./../../modules/storage"
+  bucket_name = "my-unique-sample-name-hno3" # Ensure this is globally unique
 }
 
 module "integration" {
