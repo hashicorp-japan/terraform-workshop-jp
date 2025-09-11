@@ -26,5 +26,4 @@ jobs:
       - name: Run textlint
         run: |
           export PATH="$PATH:$(npm root)/.bin"
-          textlint README.md
-          # textlint README.md ./contents/**/*.md
+          textlint README.md ./contents/**/*.md
