@@ -31,14 +31,43 @@ Terraform CloudにはRemote State管理機能があります。ちなみに、**
 
 ここでは、Remote State管理機能を使うエクササイズを行います。
 
+
+### Organizationの設定
+
+Terraform Cloudにログインし、新規Organizationを作成します。
+
+すでにOrganizationを作ってる人はこの手順をスキップしてください。
+Organizationは、ユーザや、チームや、Workcpaceを束ねて扱う事ができる最上位単位です。
+
+<kbd>
+  <img src="../assets/tfc-remote-state/create-org.png">
+</kbd>
+
+`＋ create organization` ボタンを押して詳細を入力します。
+
+<kbd>
+  <img src="../assets/tfc-remote-state/create-org-name.png">
+</kbd>
+  
+  
+`Terraform organization name`　には、uniqueな名前を設定します。
+数字、文字、アンダースコア (_)、ハイフン (-)が利用できます。
+
+入力したら、メールアドレスを入力して、 `create organization` ボタンを押したらOrganizationが作成されます。
+メールアドレスはログインした情報を元に自動で入力されています。
+
+<kbd>
+  <img src="../assets/tfc-remote-state/create-org-inputmail.png">
+</kbd>
+
 ### Workspaceの設定
 
-Terraform Cloudにログインし、新規Workspaceを作成します。
+Organizationを作成したら、新規Workspaceを作成します。
 ワークスペース名は任意で構いません。
 
 **1つのOrganization内では全てのWorkspace名が一意である必要がありますので、複数のユーザーで作業する場合、Workspace名がユニークになるようにしてください。**
 
-Workspaceは以下のボタンより作成できます。
+Workspaceは以下の `Create a workspace` ボタンより作成できます。
 
 ![new workspace](../assets/tfc-remote-state/new_workspace.png)
 
@@ -48,8 +77,13 @@ Workspaceは以下のボタンより作成できます。
   <img src="../assets/tfc-remote-state/create-ws-new-ui.png">
 </kbd>
 
-ワークスペース名は`hello-tf`とします。
-**下の画像は、ワークスペース名が`hello-cf`となっていますが、ワークスペース名は`hello-tf`としてください。 
+ここでは、ワークスペース名は**hello-tf**とします。
+併せて、Workspaceを作成するProjectを選択します。
+
+Projectを独自に作っている人は任意のProjectを選択し、
+初めて利用する人は最初から作られている **Default Project** のまま進んでください。
+
+**Create** ボタンを押すとWorkspaceが作成されます。
 
 <kbd>
   <img src="../assets/tfc-remote-state/create-ws-new-ui-2.png">
@@ -70,22 +104,34 @@ Execution modeを**Local**に設定すると、Terraformの実行はLocal環境�
 
 ### User Tokenの作成
 
-さて、次にLocalのTerraform環境からTerraform Cloudにアクセスするために、User tokenを作成します。このUser tokenはローカル環境や別のシステム（CI/CDパイプラインや外部ツールなど）からTerraform Cloud APIを叩く際に必要となります。
+さて、次にLocalのTerraform環境からTerraform Cloudにアクセスするために、User tokenを作成します。  
+このUser tokenはローカル環境や別のシステム（CI/CDパイプラインや外部ツールなど）からTerraform Cloud APIを叩く際に必要となります。
 
-右上の自分のアイコンをクリックして**User setting**を選択します。
+右上の自分のアイコンをクリックして**Account settings**を選択します。
 
 <kbd>
   <img src="../assets/tfc-remote-state/user_setting.png">
 </kbd>
 
-そこから、**Token**メニューから**Generate Token**ボタンでUser Tokenを作成します。DescriptionにはこのTokenについての説明を追加できます。
+そこから、**Tokens**メニューから**Create an API Token**ボタンでUser Tokenを作成します。
 
+<kbd>
+  <img src="../assets/tfc-remote-state/account_setting_detail.png">
+</kbd>
+
+ダイアログが表示されるので、
+DescriptionにはこのTokenについての説明を追加します。  
+ここでは **for workshop** などとしておくとworkshop用途で使ったtokenである事を後から判別できます。
+入力したら **Generate token** ボタンを押してTokenを作成します。
+  
 <kbd>
   <img src="../assets/tfc-remote-state/generate_token.png">
 </kbd>
 
-作成されたTokenはこの画面でしか表示されないので、必ずコピーもしくはDownloadしておいてください。
-
+Tokensの一覧に、作成したTokenが表示されます。
+作成されたばかりのTokenには、Tokenの文字列が表示されています。（キャプチャの灰色部分です）
+作成されたTokenは画面遷移するともう表示されないので、必ず安全なところへコピーして控えておいてください。
+  
 <kbd>
   <img src="../assets/tfc-remote-state/generated_token.png">
 </kbd>
@@ -94,17 +140,25 @@ Execution modeを**Local**に設定すると、Terraformの実行はLocal環境�
 次に、ここで作成されたTokenをLocal環境の設定ファイルに登録します。`terraform login` コマンドを使います。Tokenは `~/.terraform.d/credentials.tfrc.json `に保存されます。
 **Windowsの場合、%APPDATA%\terraform.rcとなります。**
 
+**Token for app.terraform.io:** と聞かれたら、Tokenをペーストします。
+
 ```console
 $ cd path/to/hello-tf
 $ terraform login
-
 Terraform will request an API token for app.terraform.io using your browser.
 
 If login is successful, Terraform will store the token in plain text in
 the following file for use by subsequent commands:
-    /Users/masa/.terraform.d/credentials.tfrc.json
+    /Users/<YOUR_NAME>/.terraform.d/credentials.tfrc.json
 
-Do you want to proceed? (y/n) y
+Do you want to proceed?
+  Only 'yes' will be accepted to confirm.
+
+  Enter a value: yes
+
+
+---------------------------------------------------------------------------------
+
 Terraform must now open a web browser to the tokens page for app.terraform.io.
 
 If a browser does not open this automatically, open the following URL to proceed:
@@ -117,30 +171,27 @@ Generate a token using your browser, and copy-paste it into this prompt.
 
 Terraform will store the token in plain text in the following file
 for use by subsequent commands:
-    /Users/masa/.terraform.d/credentials.tfrc.json
+    /Users/<YOUR_NAME>/.terraform.d/credentials.tfrc.json
 
-Token for app.terraform.io: 
+Token for app.terraform.io:
+  Enter a value:
 
-Retrieved token for user masa_hashicorp
 
-
----------------------------------------------------------------------------------
-
-Success! Terraform has obtained and saved an API token.
+Retrieved token for user <YOUR_ACCOUNT>
 ```
 
 これでLocal環境からTerraform CloudのAPIにアクセスする準備が整いました。
 
 ### Remote Backendの設定
 
-つぎにTerraformにRemote Backendを使用するコードを追加します。`main.tf`の`terraform`スタンザを以下のように変更してください。*YOURORGANIZATION*は使用しているOrganizationの値に置き換えてください。
+つぎにTerraformにRemote Backendを使用するコードを追加します。`main.tf`の`terraform`スタンザを以下のように変更してください。*YOUR_ORGANIZATION*は使用しているOrganizationの値に置き換えてください。
 
 ```hcl
 terraform {
 #ここから
-  backend "remote" {
-    hostname = "app.terraform.io"
-    organization = "YOURORGANIZATION"
+  cloud {
+    organization = "YOUR_ORGANIZATION"
+
     workspaces {
       name = "hello-tf"
     }
@@ -149,25 +200,32 @@ terraform {
 }
 ```
 
-ここまでの準備が出来ましたら、Terraformを実行します。以下のコマンドを実行してください。
-
-ここで、もし直前のWorkshopで作成されたStateファイルが存在していると以下のように、「既存StateファイルをRemote Backendにコピーするか？」と尋ねられます。*Yes* と入力して下さい。
+ここまでの準備が出来ましたら、Terraformを実行します。
+`terraform init` コマンドを実行してください。
 
 ```console
-$ terraform init -migrate-state
+% terraform init
+Initializing HCP Terraform...
+Migrating from backend "remote" to HCP Terraform.
+Initializing provider plugins...
+- Reusing previous version of hashicorp/aws from the dependency lock file
+- Using previously-installed hashicorp/aws v6.12.0
 
-Initializing the backend...
-Do you want to copy existing state to the new backend?
-  Pre-existing state was found while migrating the previous "local" backend to the
-  newly configured "remote" backend. No existing state was found in the newly
-  configured "remote" backend. Do you want to copy this state to the new "remote"
-  backend? Enter "yes" to copy and "no" to start with an empty state.
+HCP Terraform has been successfully initialized!
 
-  Enter a value: yes
+You may now begin working with HCP Terraform. Try running "terraform plan" to
+see any changes that are required for your infrastructure.
 
+If you ever set or change modules or Terraform Settings, run "terraform init"
+again to reinitialize your working directory.
+```
 
-Successfully configured the backend "remote"! Terraform will automatically
-use this backend unless the backend configuration changes.
+**Migrating from backend "remote" to HCP Terraform.** と表示されているのが確認できます。
+
+実際にstateファイルをTerraform cloudのremoteで管理するには `terraform apply` による実行が必要です。
+
+```console
+$ terraform apply
 ```
 
 この段階で、Terraform CloudのWorkspaceを確認すると、Stateファイルが作成されているはずです。
@@ -201,16 +259,16 @@ $ terraform destroy
 $ aws ec2 describe-instances --query "Reservations[].Instances[].{InstanceId:InstanceId,State:State}"
 [
     {
-        "InstanceId": "i-00918d5c9466da418",
+        "InstanceId": "i-0988a3fc4de8f2980",
         "State": {
             "Code": 48,
             "Name": "terminated"
         }
     },
     {
-        "InstanceId": "i-0b0aea4b4ab27ef4b",
+        "InstanceId": "i-0b22f0bca411f88cb",
         "State": {
-            "Code": 16,
+            "Code": 48,
             "Name": "terminated"
         }
     }
