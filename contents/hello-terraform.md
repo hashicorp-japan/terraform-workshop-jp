@@ -1,10 +1,10 @@
-# 初めてのTerraform
+# 初めての Terraform
 
-ここではOSS版のTerraformを利用してAWS上に一つインスタンスを作り、それぞれのコンポーネントや用語について説明をします。
+ここでは OSS 版の Terraform を利用して AWS 上に一つインスタンスを作り、それぞれのコンポーネントや用語について説明をします。
 
-Terrformがインストールされていない場合は[こちら](https://www.terraform.io/downloads.html)よりダウンロードをしてください。
+Terrform がインストールされていない場合は[こちら](https://www.terraform.io/downloads.html)よりダウンロードをしてください。
 
-ダウンロードしたらunzipして実行権限を付与し、パスを通します。下記はmacOSの手順です。
+ダウンロードしたら unzip して実行権限を付与し、パスを通します。下記は macOS の手順です。
 
 ```console
 $ unzip terraform*.zip
@@ -21,9 +21,9 @@ $ mkdir -p tf-workspace/hello-tf
 $ cd  tf-workspace/hello-tf
 ```
 
-早速このフォルダにTerraformのコンフィグファイルを作ってみます。コンフィグファイルは`HashiCorp Configuration Language`というフレームワークを使って記述していきます。
+早速このフォルダに Terraform のコンフィグファイルを作ってみます。コンフィグファイルは`HashiCorp Configuration Language`というフレームワークを使って記述していきます。
 
-`main.tf`と`vaiables.tf`という二つのファイルを作ってみます。`main.tf`はその名の通りTerraformのメインのファイルで、このファイルに記述されている内容がTerraformで実行されます。`variables.tf`は変数を定義するファイルです。各変数にはデフォルト値や型などを指定できます。
+`main.tf`と`vaiables.tf`という二つのファイルを作ってみます。`main.tf`はその名の通り Terraform のメインのファイルで、このファイルに記述されている内容が Terraform で実行されます。`variables.tf`は変数を定義するファイルです。各変数にはデフォルト値や型などを指定できます。
 
 ```shell
 $ cat <<EOF > main.tf
@@ -164,7 +164,7 @@ resource "azurerm_network_interface" "example" {
 
 次に`variables.tf`ファイルを作ります。
 
-```shell 
+```shell
 $ cat << EOF > variables.tf
 variable "access_key" {}
 variable "secret_key" {}
@@ -210,13 +210,13 @@ variable "hello_tf_instance_count" {
 ```
 </details>
 
-二つのファイルができたらそのディレクトリ上でTerraformの初期化処理を行います。`init`処理ではステートファイルの保存先などのバックエンドの設定や必要ばプラグインのインストールを実施します。
+二つのファイルができたらそのディレクトリ上で Terraform の初期化処理を行います。`init`処理ではステートファイルの保存先などのバックエンドの設定や必要ばプラグインのインストールを実施します。
 
 ```shell
 $ terraform init
 ```
 
-ここではAWS(or GCP or Azure)のプラグインがインストールされるはずです。
+ここでは AWS(or GCP or Azure)のプラグインがインストールされるはずです。
 
 ```console
 $  ls -R .terraform/providers #OR ls -R .terraform/plugins
@@ -226,7 +226,7 @@ darwin_amd64
 lock.json                         terraform-provider-aws_v2.24.0_x4
 ```
 
-次に`plan`と`apply`を実施してインスタンスを作ってみましょう。aws cliでインスタンスの状況確認しておいてください。(GCP/Azureの場合はWebブラウザから確認してください。)
+次に`plan`と`apply`を実施してインスタンスを作ってみましょう。aws cli でインスタンスの状況確認しておいてください。(GCP/Azure の場合は Web ブラウザから確認してください。)
 
 ```console
 $ aws ec2 describe-instances --query "Reservations[].Instances[].{InstanceId:InstanceId,State:State}"
@@ -235,7 +235,7 @@ $ aws ec2 describe-instances --query "Reservations[].Instances[].{InstanceId:Ins
 ]
 ```
 
->aws cliにログイン出来ていない場合、以下のコマンドでログインしてください。
+>aws cli にログイン出来ていない場合、以下のコマンドでログインしてください。
 >
 >```console
 >$ aws configure
@@ -245,14 +245,14 @@ $ aws ec2 describe-instances --query "Reservations[].Instances[].{InstanceId:Ins
 >Default output format [json]:
 >```
 
-`plan`はTerraformによるプロビジョニングの実行プランを計画します。実際の環境やステートファイルとの差分を検出し、どのリソースにどのような変更を行うかを確認することができます。`apply`はプランに基づいたプロビジョニングの実施をするためのコマンドです。
+`plan`は Terraform によるプロビジョニングの実行プランを計画します。実際の環境やステートファイルとの差分を検出し、どのリソースにどのような変更を行うかを確認することができます。`apply`はプランに基づいたプロビジョニングの実施をするためのコマンドです。
 
 また、実行前に変数に値をセットする必要があります。方法としては
 
 * `tfvars`というファイルの中で定義する
-* `terraform apply -vars=***`という形でCLIの引数で定義する
+* `terraform apply -vars=***`という形で CLI の引数で定義する
 * `TF_VAR_***`という環境変数で定義する
-* Plan中に対話式で入力して定義する
+* Plan 中に対話式で入力して定義する
 
 がありますが、今回は環境変数でセットします。
 
@@ -284,14 +284,14 @@ $ export TF_VAR_client_id="************"
 $ export TF_VAR_subscription_id="************"
 $ export TF_VAR_client_secret="************"
 $ export TF_VAR_tenant_id="************"
-$ export TF_VAR_location="East Asia" 
+$ export TF_VAR_location="East Asia"
 $ export TF_VAR_admin_password="Password1234"
 $ terraform plan
 $ terraform apply
 ```
 </details>
 
-Applyが終了するとAWS(or GCP or Azure)のインスタンスが一つ作られていることがわかるでしょう。(GCP/Azureの場合はWebブラウザから確認してください。)
+Apply が終了すると AWS(or GCP or Azure)のインスタンスが一つ作られていることがわかるでしょう。(GCP/Azure の場合は Web ブラウザから確認してください。)
 
 ```console
 $ aws ec2 describe-instances --query "Reservations[].Instances[].{InstanceId:InstanceId,State:State}"
@@ -309,12 +309,12 @@ $ aws ec2 describe-instances --query "Reservations[].Instances[].{InstanceId:Ins
 次にインスタンスの数を増やしてみます。`hello_tf_instance_count`の値を上書きして再度実行します。
 
 ```shell
-$ export TF_VAR_hello_tf_instance_count=2 
+$ export TF_VAR_hello_tf_instance_count=2
 $ terraform plan
 $ terraform apply -auto-approve
 ```
 
-ちなみに今回は`-auto-approve`というパラメータを使って途中の実行確認を省略しています。AWS(or GCP or Azure)のインスタンスが二つに増えています。Terraformは環境に差分が生じた際はPlanで差分を検出し、差分のみ実施するため既存のリソースには何の影響も及ぼしません。(GCP/Azureの場合はWebブラウザから確認してください。)
+ちなみに今回は`-auto-approve`というパラメータを使って途中の実行確認を省略しています。AWS(or GCP or Azure)のインスタンスが二つに増えています。Terraform は環境に差分が生じた際は Plan で差分を検出し、差分のみ実施するため既存のリソースには何の影響も及ぼしません。(GCP/Azure の場合は Web ブラウザから確認してください。)
 
 ```console
 $ aws ec2 describe-instances --query "Reservations[].Instances[].{InstanceId:InstanceId,State:State}"
@@ -336,7 +336,7 @@ $ aws ec2 describe-instances --query "Reservations[].Instances[].{InstanceId:Ins
 ]
 ```
 
-## Webシステムをプロビジョニングする
+## Web システムをプロビジョニングする
 
 次はもう少し複雑な構成のシステムをプロジョニングしてみましょう。
 
@@ -355,11 +355,11 @@ $ cd tf-azure-simple-web
 ```
 </details>
 
-二つのAWSインスタンスを立ち上げ、その上にApacheをインストールしその二つのインスタンスをインスタンスグループとしてALBにアタッチしています。そのために必要な最低限のネットワーク設定も行なっていますので気になる人はコードを見てみてください。
+二つの AWS インスタンスを立ち上げ、その上に Apache をインストールしその二つのインスタンスをインスタンスグループとして ALB にアタッチしています。そのために必要な最低限のネットワーク設定も行なっていますので気になる人はコードを見てみてください。
 
-Azureでチームで同じ環境を利用している場合は`main.tf`の`azurerm_resource_group` -> `name`を`my-group-kabu`のような形に変更してください。
+Azure でチームで同じ環境を利用している場合は`main.tf`の`azurerm_resource_group` -> `name`を`my-group-kabu`のような形に変更してください。
 
-Terraform Applyしてみましょう。
+Terraform Apply してみましょう。
 
 ```shell
 $ terraform init
@@ -367,7 +367,7 @@ $ terraform plan
 $ terraform apply
 ```
 
-Applyが成功するとアウトプットとして以下のような内容が出力されるはずです。(Azureの場合はPublic IPが出力されます。)
+Apply が成功するとアウトプットとして以下のような内容が出力されるはずです。(Azure の場合は Public IP が出力されます。)
 
 ```
 Outputs:
@@ -375,22 +375,22 @@ Outputs:
 alb_dns = web-alb-1553156387.ap-northeast-1.elb.amazonaws.com
 ```
 
-こちらにWebブラウザでアクセスして、Apacheが起動していることを確認してみましょう。
-また、AWSのコンソールを確認してインスタンスやLBの他にVPC, Security Groupも作られていることを確認してみましょう。
-	
-destroyで環境をリセットします。
-	
+こちらに Web ブラウザでアクセスして、Apache が起動していることを確認してみましょう。
+また、AWS のコンソールを確認してインスタンスや LB の他に VPC, Security Group も作られていることを確認してみましょう。
+
+destroy で環境をリセットします。
+
 ```shell
 $ terraform destroy -auto-approve
 ```
 
-## Enterprise版の価値
+## Enterprise 版の価値
 
-Applyが実行されると`terraform.tfstate`というファイルが生成されます。このファイルは現在のインフラの状態をJson形式で保持しているものですが、次のPlanのタイミングの差分の検出などで扱われ非常に重要です。例えばチームで作業をする際などはこのステートの共有方法をどうやって運用するかなどの考慮が必要になります。
+Apply が実行されると`terraform.tfstate`というファイルが生成されます。このファイルは現在のインフラの状態を Json 形式で保持しているものですが、次の Plan のタイミングの差分の検出などで扱われ非常に重要です。例えばチームで作業をする際などはこのステートの共有方法をどうやって運用するかなどの考慮が必要になります。
 
-また、このファイルには各リソースのIDのみならずデータベースやAWS環境のシークレットなど様々な機密性の高いデータが含まれておりステートファイルをセキュアに保つことも運用上重要です。
+また、このファイルには各リソースの ID のみならずデータベースや AWS 環境のシークレットなど様々な機密性の高いデータが含まれておりステートファイルをセキュアに保つことも運用上重要です。
 
-以降の章ではステートファイルのみならず、OSS版ではTerraformを安全に利用するために考慮する必要がある様々な運用上の課題に対してEnterprise版がどのような機能を提供しているかを一つずつ試してみます。
+以降の章ではステートファイルのみならず、OSS 版では Terraform を安全に利用するために考慮する必要がある様々な運用上の課題に対して Enterprise 版がどのような機能を提供しているかを一つずつ試してみます。
 
 
 ## 参考リンク

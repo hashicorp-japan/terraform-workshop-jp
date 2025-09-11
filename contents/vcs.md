@@ -1,20 +1,20 @@
-# Version Control System連携を試す
+# Version Control System 連携を試す
 
-TFCには三つのApplyのトリガーを使うことができます。
+TFC には三つの Apply のトリガーを使うことができます。
 
 * API Driven
 * CLI Drive
 * VCS Driven
 
-ここではVCS DriveパターンのWebhookでの実行を試してみます。
+ここでは VCS Drive パターンの Webhook での実行を試してみます。
 
-## GitHubとTerraform Cloudのセットアップ
+## GitHub と Terraform Cloud のセットアップ
 
-ここではTerraform Cloud(以下、TFC)を使ってEnterprise版の機能を使ってみます。Terraform Cloudには機能が限定的な無償版とEnterpriseのライセンスでアクティベートされる有償版があります。このハンズオンでは講師が事前に期限限定でアクティベートしてあります。
+ここでは Terraform Cloud(以下、TFC)を使って Enterprise 版の機能を使ってみます。Terraform Cloud には機能が限定的な無償版と Enterprise のライセンスでアクティベートされる有償版があります。このハンズオンでは講師が事前に期限限定でアクティベートしてあります。
 
-TFCにアクセスし最初のセットアップを行いましょう。
+TFC にアクセスし最初のセットアップを行いましょう。
 
-ワークスペースを作成し、そこにVCSとの連携の設定を行います。対応しているVCSは以下の通りです。
+ワークスペースを作成し、そこに VCS との連携の設定を行います。対応している VCS は以下の通りです。
 
 * [GitHub](https://www.terraform.io/docs/cloud/vcs/github.html)
 * [GitHub Enterprise](https://www.terraform.io/docs/cloud/vcs/github-enterprise.html)
@@ -25,14 +25,14 @@ TFCにアクセスし最初のセットアップを行いましょう。
 * [Azure DevOps](https://www.terraform.io/docs/cloud/vcs/azure-devops-services.html)
 * [Azure DevOps Server](https://www.terraform.io/docs/cloud/vcs/azure-devops-services.html)
 
-以下はGitHubの手順ですが、違うVCSで実施した場合はリンクの手順を参考にしてください。
+以下は GitHub の手順ですが、違う VCS で実施した場合はリンクの手順を参考にしてください。
 
-### GitHubレポジトリ作成
+### GitHub レポジトリ作成
 
 ```
 GitHub上に"tf-handson-workshop"という名前のパブリックレポジトリを作成してください。
 ```
-### GitHubのOAuth Applicationの作成
+### GitHub の OAuth Application の作成
 
 トップ画面の`Settings`からサイドメニューの`Version control` -> `Providers`を選んでください。
 
@@ -44,9 +44,9 @@ GitHub上に"tf-handson-workshop"という名前のパブリックレポジト�
   <img src="https://github-image-tkaburagi.s3.ap-northeast-1.amazonaws.com/terraform-workshop/hello-2.png">
 </kbd>  
 
-次に[こちら](https://github.com/settings/applications/new)にアクセスしTFC用のキーを発行します。
+次に[こちら](https://github.com/settings/applications/new)にアクセスし TFC 用のキーを発行します。
 
-OAuthアプリケーションの登録画面で以下のように入力してください。
+OAuth アプリケーションの登録画面で以下のように入力してください。
 
 <kbd>
   <img src="https://github-image-tkaburagi.s3.ap-northeast-1.amazonaws.com/terraform-workshop/hello-3.png">
@@ -62,7 +62,7 @@ OAuthアプリケーションの登録画面で以下のように入力してく
   <img src="https://github-image-tkaburagi.s3.ap-northeast-1.amazonaws.com/terraform-workshop/hello-4.png">
 </kbd>
 
-次にTFCに戻り`Add VCS Provider`を選択します。`Client ID`と`Client Secret`の欄に上のGitHub上の画面で取得した値をコピペしてください。
+次に TFC に戻り`Add VCS Provider`を選択します。`Client ID`と`Client Secret`の欄に上の GitHub 上の画面で取得した値をコピペしてください。
 
 <kbd>
   <img src="https://github-image-tkaburagi.s3.ap-northeast-1.amazonaws.com/terraform-workshop/hello-5.png">
@@ -74,19 +74,19 @@ OAuthアプリケーションの登録画面で以下のように入力してく
   <img src="https://github-image-tkaburagi.s3.ap-northeast-1.amazonaws.com/terraform-workshop/hello-6.png">
 </kbd>
 
-VCS Providerが一つ追加され、Callback URLが生成されたのでこれをコピーし、これをGitHubの`Authorization callback URL`の項目を置き換えます。
+VCS Provider が一つ追加され、Callback URL が生成されたのでこれをコピーし、これを GitHub の`Authorization callback URL`の項目を置き換えます。
 
 <kbd>
   <img src="https://github-image-tkaburagi.s3.ap-northeast-1.amazonaws.com/terraform-workshop/hello-7.png">
 </kbd>
 
-これでSaveしましょう。
+これで Save しましょう。
 
-最後にトップ画面の`Settings`からサイドメニューの`Version control` -> `Providers`から先ほど追加したGitHubの`Connect`をクリックして認証行ってください。
+最後にトップ画面の`Settings`からサイドメニューの`Version control` -> `Providers`から先ほど追加した GitHub の`Connect`をクリックして認証行ってください。
 
-これでVCSの設定は完了です。次にこれを紐付けたワークスペースを作成します。
+これで VCS の設定は完了です。次にこれを紐付けたワークスペースを作成します。
 
-## Workspaceの作成
+## Workspace の作成
 
 まずワークスペースのレポジトリを作ります。
 
@@ -105,7 +105,7 @@ terraform {
 EOF
 ```
 
-GitHubにプッシュして連携の確認をしてみましょう。
+GitHub にプッシュして連携の確認をしてみましょう。
 
 ```shell
 $ export GITURL=<YOUR_REPO_URL>
@@ -117,8 +117,8 @@ $ git remote add origin $GITURL
 $ git push -u origin main
 ```
 
-TFC上でWorkspaceを作成します。トップ画面の`+ New Workspace`を選択しします。
-ワークスペース作成画面で`VCS Drive Workflow`を選択し、その後の画面でGitHubを選択します。
+TFC 上で Workspace を作成します。トップ画面の`+ New Workspace`を選択しします。
+ワークスペース作成画面で`VCS Drive Workflow`を選択し、その後の画面で GitHub を選択します。
 
 <kbd>
   <img src="https://github.com/hashicorp-japan/terraform-workshop-jp/blob/master/assets/tfc-remote-state/create-ws-new-ui.png">
@@ -137,7 +137,7 @@ TFC上でWorkspaceを作成します。トップ画面の`+ New Workspace`を選
 </kbd>
 
 
-次以降の章で実際のコードをApplyしてGitHubを通したインフラのプロビジョニングを試してみます。
+次以降の章で実際のコードを Apply して GitHub を通したインフラのプロビジョニングを試してみます。
 
 ## 参考リンク
 * [VCS Integration](https://www.terraform.io/docs/cloud/vcs/index.html)

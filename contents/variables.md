@@ -1,26 +1,26 @@
 # Secure Variables Storage
 
-Terraformはソフトウェアの性質上、非常に機密性の高いデータを利用します。例えばAWSにプロビジョニングを実行する際は強い権限を持ったアカウントのキーを使う必要があります。
+Terraform はソフトウェアの性質上、非常に機密性の高いデータを利用します。例えば AWS にプロビジョニングを実行する際は強い権限を持ったアカウントのキーを使う必要があります。
 
-「初めてのTerraform」の章で変数をセットするには下記の方法があると記述しました。
+「初めての Terraform」の章で変数をセットするには下記の方法があると記述しました。
 
 * `tfvars`というファイルの中で定義する
-* `terraform apply -vars=***`という形でCLIの引数で定義する
+* `terraform apply -vars=***`という形で CLI の引数で定義する
 * `TF_VAR_***`という環境変数で定義する
-* Plan中に対話式で入力して定義する
+* Plan 中に対話式で入力して定義する
 
-いずれの方法もファイル、OSのコマンド履歴、環境変数などにシークレットが残ってしまう可能性があります。そこでEnterprise版ではHashiCorp Vaultの暗号化エンジンをバックエンドで利用したVariable Storageを簡単に使うことができます。これによって安全に変数を扱うことができます。
+いずれの方法もファイル、OS のコマンド履歴、環境変数などにシークレットが残ってしまう可能性があります。そこで Enterprise 版では HashiCorp Vault の暗号化エンジンをバックエンドで利用した Variable Storage を簡単に使うことができます。これによって安全に変数を扱うことができます。
 
-Variableのストレージは一つのワークスペースに一つ用意されます。またこの他にもステートファイルなど重要なデータは例外なく暗号化され保存されています。
+Variable のストレージは一つのワークスペースに一つ用意されます。またこの他にもステートファイルなど重要なデータは例外なく暗号化され保存されています。
 
-Terraform Enterpriseには二種類に変数がサポートされています。`Terraform Variables`と`Environment Variables`です。
+Terraform Enterprise には二種類に変数がサポートされています。`Terraform Variables`と`Environment Variables`です。
 
-`Terraform Variables`はTerrafromで扱う変数です。ここでセットされた値は`terraform.tfvars`として扱われます。そのため連携するVCSにもし`terraform.tfvars`がある場合はオーバーライドされます。
+`Terraform Variables`は Terrafrom で扱う変数です。ここでセットされた値は`terraform.tfvars`として扱われます。そのため連携する VCS にもし`terraform.tfvars`がある場合はオーバーライドされます。
 
-`Environment Variables`はLinuxのWorker(Terraform Runなどを行うコンポーネント)上にセットされる値です。ここでセットされた値がexportコマンドよって実行前に環境変数としてセットされます。`Environment Variables`の中にはTFE上で特別な意味を持つものが存在します。
+`Environment Variables`は Linux の Worker(Terraform Run などを行うコンポーネント)上にセットされる値です。ここでセットされた値が export コマンドよって実行前に環境変数としてセットされます。`Environment Variables`の中には TFE 上で特別な意味を持つものが存在します。
 
 * `CONFIRM_DESTROY`: `Destroy`を許容するかどうか。デフォルトでは無効です。
-* `TFE_PARALLELISM`: 処理高速化のための並列実行のオプション。デフォルトは10です。
+* `TFE_PARALLELISM`: 処理高速化のための並列実行のオプション。デフォルトは 10 です。
 
 
 ## 変数のセット
@@ -221,7 +221,7 @@ variable "hello_tf_instance_count" {
     └── variables.tf
 ```
 
-`hello-tf`では環境変数を使って変数の値をセットしましたが、今回はエンタープライズの機能を利用します。変数のセットはGUIもしくはCLIで設定できます。
+`hello-tf`では環境変数を使って変数の値をセットしましたが、今回はエンタープライズの機能を利用します。変数のセットは GUI もしくは CLI で設定できます。
 
 <kbd>
   <img src="https://github-image-tkaburagi.s3.ap-northeast-1.amazonaws.com/terraform-workshop/var-1.png">
@@ -286,9 +286,9 @@ $ git push -u origin main
   <img src="https://github.com/hashicorp-japan/terraform-workshop-jp/blob/master/assets/run-new-ui.png">
 </kbd>
 
-クリックしてプランの詳細を確認し、プランが終わるとApply可能になります。`Confirm`をクリックしApplyを実行ししばらくすると成功するはずです。
+クリックしてプランの詳細を確認し、プランが終わると Apply 可能になります。`Confirm`をクリックし Apply を実行ししばらくすると成功するはずです。
 
-AWS CLIで確認します。(GCP/Azureの場合はWebブラウザから確認してください。)
+AWS CLI で確認します。(GCP/Azure の場合は Web ブラウザから確認してください。)
 
 ```console
 $ aws ec2 describe-instances --query "Reservations[].Instances[].{InstanceId:InstanceId,State:State}"
@@ -309,13 +309,13 @@ $ aws ec2 describe-instances --query "Reservations[].Instances[].{InstanceId:Ins
   <img src="https://github-image-tkaburagi.s3.ap-northeast-1.amazonaws.com/terraform-workshop/var-6.png">
 </kbd>
 
-`Queue Destroy Plan`を選択し、プランが完了したら`Confirm & Apply`でdestroyを実行してください。
+`Queue Destroy Plan`を選択し、プランが完了したら`Confirm & Apply`で destroy を実行してください。
 
 <kbd>
   <img src="https://github-image-tkaburagi.s3.ap-northeast-1.amazonaws.com/terraform-workshop/var-7.png">
 </kbd>
 
-Destroyされていることを確認しましょう。(GCP/Azureの場合はWebブラウザから確認してください。)
+Destroy されていることを確認しましょう。(GCP/Azure の場合は Web ブラウザから確認してください。)
 
 ```console
 $ aws ec2 describe-instances --query "Reservations[].Instances[].{InstanceId:InstanceId,State:State}"
@@ -332,7 +332,7 @@ $ aws ec2 describe-instances --query "Reservations[].Instances[].{InstanceId:Ins
 
 ## ステートファイルの確認
 
-ユーザはTerraformのステートファイルの運用をTFCに任せることができます。TFCはステートファイルのシングルレポジトリとなり、ステートの共有、外部ストレージの作成、外部ストレージへの保存、暗号化やバージョン管理などといった通常必要な作業を実施してくれます。
+ユーザは Terraform のステートファイルの運用を TFC に任せることができます。TFC はステートファイルのシングルレポジトリとなり、ステートの共有、外部ストレージの作成、外部ストレージへの保存、暗号化やバージョン管理などといった通常必要な作業を実施してくれます。
 
 ワークスペースのメニューから`States`を選択します。
 
@@ -346,10 +346,10 @@ $ aws ec2 describe-instances --query "Reservations[].Instances[].{InstanceId:Ins
   <img src="https://github-image-tkaburagi.s3.ap-northeast-1.amazonaws.com/terraform-workshop/state-2.png">
 </kbd>
 
-diffが取られ、変更点なども直感的に確認できます。各実行は毎回この最新のステートが取得されるためステートファイルの共有などもシンプルなワークフローとなります。
+diff が取られ、変更点なども直感的に確認できます。各実行は毎回この最新のステートが取得されるためステートファイルの共有などもシンプルなワークフローとなります。
 　
 ## 参考リンク
 * [Data Protection](https://www.terraform.io/docs/enterprise/system-overview/data-security.html)
 * [Variables](https://www.terraform.io/docs/cloud/workspaces/variables.html)
 * [TFC API Doc](https://www.terraform.io/docs/cloud/api/index.html)
-* [Terraform VariablesとEnviron Variables](https://www.terraform.io/docs/cloud/workspaces/variables.html#terraform-variables)
+* [Terraform Variables と Environ Variables](https://www.terraform.io/docs/cloud/workspaces/variables.html#terraform-variables)

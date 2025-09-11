@@ -1,10 +1,10 @@
-# Notificationsを利用してSlackと連携する
+# Notifications を利用して Slack と連携する
 
-ここではTerraform EnterpriseのNotificationsの機能を利用してSlackと連携しTerraform Enterpriseのイベント通知を受信する方法を試してみます。
+ここでは Terraform Enterprise の Notifications の機能を利用して Slack と連携し Terraform Enterprise のイベント通知を受信する方法を試してみます。
 
-## Slackの設定
+## Slack の設定
 
-このハンズオンを完了させるにはSlackワークスペースの`Custom Integration`の編集のできる権限が必要です。
+このハンズオンを完了させるには Slack ワークスペースの`Custom Integration`の編集のできる権限が必要です。
 
 [こちら](https://hashicorp-apac.slack.com/apps/manage/custom-integrations)にアクセスして、`Incoming WebHook`の設定を行います。
 
@@ -24,24 +24,24 @@
   <img src="https://github-image-tkaburagi.s3.ap-northeast-1.amazonaws.com/terraform-workshop/notifications-3.png">
 </kbd>
 
-`Add Incoming WebHook Integaraion`をクリックするとWebHookの設定画面になります。ここで表示される`WebHook URL`をメモしておきます。
+`Add Incoming WebHook Integaraion`をクリックすると WebHook の設定画面になります。ここで表示される`WebHook URL`をメモしておきます。
 
 
-**このURLはSlackのトークンも含まれるので絶対にGitHubのレポジトリ等にアップロードしてはいけません。**
+**この URL は Slack のトークンも含まれるので絶対に GitHub のレポジトリ等にアップロードしてはいけません。**
 
-## Terraform Enterpriseの設定
+## Terraform Enterprise の設定
 
-あとはこのURLをTerraform Entpriseのワークスペースに設定するだけです。
+あとはこの URL を Terraform Entprise のワークスペースに設定するだけです。
 
-TFCのブラウザの`Workspaces` -> `handson-workshop` -> `Settings` -> `Notifications` -> `Create a Notification`と進んでください。
+TFC のブラウザの`Workspaces` -> `handson-workshop` -> `Settings` -> `Notifications` -> `Create a Notification`と進んでください。
 
 <kbd>
   <img src="https://github-image-tkaburagi.s3.ap-northeast-1.amazonaws.com/terraform-workshop/notifications-4.png">
 </kbd>
 
-GeneralなWebHookとSlackが選択できます。Microsoft TeamsやMattermostなどSlack以外のWebHookでの通知に対応しているツールと連携する際はWebHookを選択します。
+General な WebHook と Slack が選択できます。Microsoft Teams や Mattermost など Slack 以外の WebHook での通知に対応しているツールと連携する際は WebHook を選択します。
 
-ここではSlackを選択し
+ここでは Slack を選択し
 
 * `Name`: `My Notification`
 * `WebHook URL`: 先ほどコピーしたもの
@@ -49,7 +49,7 @@ GeneralなWebHookとSlackが選択できます。Microsoft TeamsやMattermostな
 
 を選択し`Create a Notification`をクリックします。
 
-完了画面で`Send a Test`をクリックし、Slackに通知が来ることを確認してください。
+完了画面で`Send a Test`をクリックし、Slack に通知が来ることを確認してください。
 
 <kbd>
   <img src="https://github-image-tkaburagi.s3.ap-northeast-1.amazonaws.com/terraform-workshop/notifications-5.png">
@@ -63,7 +63,7 @@ GeneralなWebHookとSlackが選択できます。Microsoft TeamsやMattermostな
   <img src="https://github-image-tkaburagi.s3.ap-northeast-1.amazonaws.com/terraform-workshop/notifications-6.png">
 </kbd>
 
-`Run`の内容を確認すると、プロビジョニングのワークフローが開始され、都度Slackに通知が来るでしょう。
+`Run`の内容を確認すると、プロビジョニングのワークフローが開始され、都度 Slack に通知が来るでしょう。
 
 
 以下のように通知が来ていれば成功です。
@@ -71,7 +71,7 @@ GeneralなWebHookとSlackが選択できます。Microsoft TeamsやMattermostな
   <img src="https://github-image-tkaburagi.s3.ap-northeast-1.amazonaws.com/terraform-workshop/notifications-7.png">
 </kbd>
 
-簡単ですが、Terrafrom Enterpriseの通知機能を試してみました。
+簡単ですが、Terrafrom Enterprise の通知機能を試してみました。
 
 ## 参考リンク
 * [Run Notifications](https://www.terraform.io/docs/cloud/workspaces/notifications.htmlz)

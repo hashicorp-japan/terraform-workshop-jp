@@ -1,12 +1,12 @@
-# Private Module Registryを試す
+# Private Module Registry を試す
 
-TerraformにはDRY(Don't Repeat Yourself)を実現するために共通処理のコードをモジュール化する機能があります。OSSでも利用が可能ですがGitなどのレポジトリから取得するか[Public Module Registry](https://registry.terraform.io/)から取得する方法が用意されています。
+Terraform には DRY(Don't Repeat Yourself)を実現するために共通処理のコードをモジュール化する機能があります。OSS でも利用が可能ですが Git などのレポジトリから取得するか[Public Module Registry](https://registry.terraform.io/)から取得する方法が用意されています。
 
-Enterprise版ではOrganizationごとにプライベートなModule Registryを持つことが出来ます。これを利用することでチームだけに限定したModuleのレジストリを介してソースコードを再利用できます。
+Enterprise 版では Organization ごとにプライベートな Module Registry を持つことが出来ます。これを利用することでチームだけに限定した Module のレジストリを介してソースコードを再利用できます。
 
 ## モジュールを作る
 
-まずModuleを作っていきましょう。モジュールはTFEで対応しているコードレポジトリ上に作っていきます。まずはGitHub上にレポジトリを作ります。
+まず Module を作っていきましょう。モジュールは TFE で対応しているコードレポジトリ上に作っていきます。まずは GitHub 上にレポジトリを作ります。
 
 ```
 GitHubのアカウントに"terraform-aws-securitygroup"という名前のレポジトリを作ってください。
@@ -155,7 +155,7 @@ output "lan_serf" {
 ```
 </details>
 
-これでモジュール作りは終了です。GitHubにコミットしましょう。
+これでモジュール作りは終了です。GitHub にコミットしましょう。
 
 ```shell
 $ git init 
@@ -166,13 +166,13 @@ $ git tag -a 0.0.1 -m "v 0.0.1"
 $ git push origin 0.0.1 master
 ```
 
-TFEのPrivate Module Registryのいいところはバージョン管理ができ、いつでも複数バージョンから選択できる点です。Gitのtagからバージョンを取得しています。
+TFE の Private Module Registry のいいところはバージョン管理ができ、いつでも複数バージョンから選択できる点です。Git の tag からバージョンを取得しています。
 
 バージョニングは`x.x.x`のフォーマットでセマンティックバージョニングを行うのが良いでしょう。
 
-## Module Registryの作成
+## Module Registry の作成
 
-それではコミットしたモジュールをTFE上で公開してみます。公開範囲はOrganizationで、その中のWorkspaceであればどのコンフィグからも利用可能です。
+それではコミットしたモジュールを TFE 上で公開してみます。公開範囲は Organization で、その中の Workspace であればどのコンフィグからも利用可能です。
 
 <kbd>
   <img src="https://github-image-tkaburagi.s3.ap-northeast-1.amazonaws.com/terraform-workshop/module-1.png">
@@ -192,7 +192,7 @@ TFEのPrivate Module Registryのいいところはバージョン管理ができ
 
 上記のようなサマリー画面が見えるはずです。README、変数のインプットやバージョンなどの情報が確認出来ます。
 
-## Module Registryの利用
+## Module Registry の利用
 
 このモジュールを使ってみます。トップ画面から`Modules`に戻り、次は`Design configuration`をクリックします。
 
@@ -206,23 +206,23 @@ TFEのPrivate Module Registryのいいところはバージョン管理ができ
   <img src="https://github-image-tkaburagi.s3.ap-northeast-1.amazonaws.com/terraform-workshop/module-4.png">
 </kbd>
 
-変数の設定画面が出てくるはずです。`Design configuration` ではインプットに必要な変数を自動で検出してGUI上で設定することが出来ます。この際、`variables.tf`で`default`が設定されているものは`OPTIONAL`、設定されていないものは`REQUIRED`となり、設定漏れを防ぐことが出来て便利です。
+変数の設定画面が出てくるはずです。`Design configuration` ではインプットに必要な変数を自動で検出して GUI 上で設定することが出来ます。この際、`variables.tf`で`default`が設定されているものは`OPTIONAL`、設定されていないものは`REQUIRED`となり、設定漏れを防ぐことが出来て便利です。
 
-今回実際Applyは行わないので適当な値を入れて`Next`をクリックして下さい。
+今回実際 Apply は行わないので適当な値を入れて`Next`をクリックして下さい。
 
 <kbd>
   <img src="https://github-image-tkaburagi.s3.ap-northeast-1.amazonaws.com/terraform-workshop/module-5.png">
 </kbd>
 
-コードが生成されるはずです。これをコピーして既存のコードに利用してもいいですし、ダウンロードして新規のコンフィグレーションを立ち上げてもOKです。このコードはここでしか取得出来ないので何らかの形で残しておきましょう。
+コードが生成されるはずです。これをコピーして既存のコードに利用してもいいですし、ダウンロードして新規のコンフィグレーションを立ち上げても OK です。このコードはここでしか取得出来ないので何らかの形で残しておきましょう。
 
 `Done`をクリックして終了します。
 
 以上で一連の使い方は終了ですが、余力のある方はバージョンアップをやってみましょう。
 
-## Moduleのバージョンアップ
+## Module のバージョンアップ
 
-バージョンを指定してModuleを利用出来ることはエンタープライズ版のメリットのうちの一つです。`main`, `variables`, `output`をそれぞれ以下のように編集します。
+バージョンを指定して Module を利用出来ることはエンタープライズ版のメリットのうちの一つです。`main`, `variables`, `output`をそれぞれ以下のように編集します。
 
 `main.tf`
 
@@ -260,7 +260,7 @@ $ git tag -a 0.1.0 -m "v 0.1.0"
 $ git push origin 0.1.0 master
 ```
 
-TFEの画面に戻り`Modules`をクリックしてモジュールの`Details`を選ぶとバージョンが`0.1.0`にアップしていることがわかるでしょう。
+TFE の画面に戻り`Modules`をクリックしてモジュールの`Details`を選ぶとバージョンが`0.1.0`にアップしていることがわかるでしょう。
 
 また`Versions`のボタンから複数バージョンを確認することが出来ます。
 

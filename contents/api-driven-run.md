@@ -1,29 +1,29 @@
 # API Drive Runs
 
-TFC (*Terraform cloud*) 及びTFE (*Terraform Enterprise*)では、3つのApplyの方法があります。
+TFC (*Terraform cloud*) 及び TFE (*Terraform Enterprise*)では、3 つの Apply の方法があります。
 
 - CLI Driven
 - VCS Driven
 - API Driven
 
-ここではAPI Drivenのやり方を試していきます。
-API Drivenを用いることで、CIツールやカスタムのシステムなどで管理されるTerraformのコードをAPI呼び出しのみで実行することができます。
+ここでは API Driven のやり方を試していきます。
+API Driven を用いることで、CI ツールやカスタムのシステムなどで管理される Terraform のコードを API 呼び出しのみで実行することができます。
 
 
 ## 事前準備
 
 ここでの作業を行う前に以下のものを準備ください。
 
-- [TFCの**API Token**](https://www.terraform.io/docs/cloud/users-teams-organizations/api-tokens.html)
-  - User API tokenもしくはTeam API tokenを発行してください。
-  - Plan, Apply, upload statesの権限が必用なので、対象となるWorkspaceへWriteが許可されていることを確認してください。
-- TFCの**Organization**名
-- TFCの**Workspace**名
-- TFCの**Workspace**のID
-  - Workspace IDはTFCのUIもしくはAPIから取得できます。
-  - UIの場合
+- [TFC の**API Token**](https://www.terraform.io/docs/cloud/users-teams-organizations/api-tokens.html)
+  - User API token もしくは Team API token を発行してください。
+  - Plan, Apply, upload states の権限が必用なので、対象となる Workspace へ Write が許可されていることを確認してください。
+- TFC の**Organization**名
+- TFC の**Workspace**名
+- TFC の**Workspace**の ID
+  - Workspace ID は TFC の UI もしくは API から取得できます。
+  - UI の場合
     - Workspace　→　Settings　→　General　→　ID
-  - APIの場合
+  - API の場合
 ```shell
 export ORGANIZATION=<Organization名>
 export WORKSPACE_NAME=<Workspace名>
@@ -34,21 +34,21 @@ curl --header "Authorization: Bearer ${TOKEN}"   --header "Content-Type: applica
 
 ## 大まかな流れ
 
-APIによるRunの実行は以下の流れで行われます。
+API による Run の実行は以下の流れで行われます。
 
-1. Configuration versionの作成
-2. TerraformのコードをConfiguration versionへアップロード
-3. Runに対してApplyを作成
-   - **注意** WorkspaceのApply Methodが`Auto apply`に設定されている場合は自動的にApplyが作成されます。
+1. Configuration version の作成
+2. Terraform のコードを Configuration version へアップロード
+3. Run に対して Apply を作成
+   - **注意** Workspace の Apply Method が`Auto apply`に設定されている場合は自動的に Apply が作成されます。
 
 * 詳細については[こちら](https://www.terraform.io/docs/cloud/run/api.html)を参照ください。
 
 
-## Configuration versionの作成
+## Configuration version の作成
 
-[Configurationo version](https://www.terraform.io/docs/cloud/api/configuration-versions.html#create-a-configuration-version)はアップロードするTerraformコードへの参照用リソースです。Configuration versionを作成すると、Terraformコードをアップロードする先のURLが取得できます。
+[Configurationo version](https://www.terraform.io/docs/cloud/api/configuration-versions.html#create-a-configuration-version)はアップロードする Terraform コードへの参照用リソースです。Configuration version を作成すると、Terraform コードをアップロードする先の URL が取得できます。
 
-Workspaceに対してConfiguration versionを作成します。この例では、`data.attributes.auto-queue-runs`に`true`を指定しています。この設定ではTerraformコードがアップロードされると自動的にPlan＆Applyが実行されます。
+Workspace に対して Configuration version を作成します。この例では、`data.attributes.auto-queue-runs`に`true`を指定しています。この設定では Terraform コードがアップロードされると自動的に Plan＆Apply が実行されます。
 
 
 ```shell
@@ -101,11 +101,11 @@ curl --header "Authorization: Bearer ${TOKEN}" --header "Content-Type: applicati
 }
 ```
 
-このレスポンスの`.data.attributes.upload-url`がTerraformコードをアップロードする先になります。
+このレスポンスの`.data.attributes.upload-url`が Terraform コードをアップロードする先になります。
 
-## TerraformのコードをConfiguration versionへアップロード
+## Terraform のコードを Configuration version へアップロード
 
-次にTerraformのコード群をアップロードするために`tar.gz`フォーマットへパッケージングします。この章の目的はProvisioningではなくAPI Drivenの動作方法なので、ここでは簡単に実行できるシンプルなTerraformコードを使います。
+次に Terraform のコード群をアップロードするために`tar.gz`フォーマットへパッケージングします。この章の目的は Provisioning ではなく API Driven の動作方法なので、ここでは簡単に実行できるシンプルな Terraform コードを使います。
 
 ```shell
 mkdir tf_test
@@ -126,30 +126,30 @@ tar cvfz main.tar.gz -C tf_test .
 
 >**Note**
 >
->tar.gzパッケージのルートディレクトリが、そのままTerraform実行時のディレクトリになります。以下のような構成になっていればOKです。
+>tar.gz パッケージのルートディレクトリが、そのまま Terraform 実行時のディレクトリになります。以下のような構成になっていれば OK です。
 ```shell
 $ tar tvfz main.tar.gz
 drwxr-xr-x  0 masa   staff       0  4 14 14:59 ./
 -rw-r--r--  0 masa   staff     130  4 14 14:59 ./main.tf
 ```
 
-それでは[アップロード用のAPI](https://www.terraform.io/docs/cloud/api/configuration-versions.html#upload-configuration-files)を使ってパッケージをアップロードします。
+それでは[アップロード用の API](https://www.terraform.io/docs/cloud/api/configuration-versions.html#upload-configuration-files)を使ってパッケージをアップロードします。
 
 ```shell
 curl --header "Authorization: Bearer ${TOKEN}" --header "Content-Type: application/vnd.api+json" --request PUT --data-binary @main.tar.gz https://archivist.terraform.io/v1/object/dmF1bHQ6djE6MVZRc0JpbVY2b0tuV0dydmVXSVVyRzJ2VEZuSmdBRmo2QWM5TmNGdFRVK29tTHRKdU9CdGJsWjNablR0ZWsrQVEvQkxHbHFnY3lRVUJ1NEt4dHhnWjVRN29BVXQrL0w1L0Y1eE1IeFhtY3hZUkRMaFYvUW1QUG51MzVkeUt4eDZ2U3VQc09jVXlWQ1YrZ0c1WHRzUTR1M0hJRU4rZkRna1k0WGJqaCt0ZFhFRTdaS3EyREJnTzI0YkFyQ0FqbFNzdTg5QnhPTVFFdWRsei95N2NlaERvUkxQY0dacVBEN25KOXFkbFRQeUxLV2hPNWp1ajJvaG1CRlVQZmJZZzR4cHlLc25hOGFZbGFBSWgyMFVNSzRPTGtvZkpkRGhzdTg9
 ```
 
-このAPIが成功するとTFC上のWorkspaceでPlan＆Applyが実行されます。
+この API が成功すると TFC 上の Workspace で Plan＆Apply が実行されます。
 
-## Runに対してApplyを作成
+## Run に対して Apply を作成
 
 > **Note**
 >
-> WorkspaceのApply Methodが`Auto apply`に設定されている場合は自動的にApplyが作成されますので、このセクションはスキップできます。
+> Workspace の Apply Method が`Auto apply`に設定されている場合は自動的に Apply が作成されますので、このセクションはスキップできます。
 
-WorkspaceのApply Methodが`Manual apply`に設定されている場合、実際のApplyを実行する際に**Confirm apply**の承認をする必要があります。ここでは、その承認をAPIで行なうやり方を試します。
+Workspace の Apply Method が`Manual apply`に設定されている場合、実際の Apply を実行する際に**Confirm apply**の承認をする必要があります。ここでは、その承認を API で行なうやり方を試します。
 
-まずはWorkspaceからApplyしたいRunのIDを取得します。[List Runs in a Worrkspace](https://www.terraform.io/docs/cloud/api/run.html#list-runs-in-a-workspace)のAPIを使用します。
+まずは Workspace から Apply したい Run の ID を取得します。[List Runs in a Worrkspace](https://www.terraform.io/docs/cloud/api/run.html#list-runs-in-a-workspace)の API を使用します。
 
 ```shell
 export WORKSPACE_ID=<WorkspaceのID>
@@ -322,9 +322,9 @@ curl --header "Authorization: Bearer ${TOKEN}" --header "Content-Type: applicati
 </details>
 
 
-このレスポンスに含まれる`.data[0].id`がRun IDになります。この例ですと、`run-bc4WDCExqr5CF4Ad`になります。
+このレスポンスに含まれる`.data[0].id`が Run ID になります。この例ですと、`run-bc4WDCExqr5CF4Ad`になります。
 
-それでは取得したRun IDに対して[Apply a RunのAPI](https://www.terraform.io/docs/cloud/api/run.html#apply-a-run)を実行します。
+それでは取得した Run ID に対して[Apply a Run の API](https://www.terraform.io/docs/cloud/api/run.html#apply-a-run)を実行します。
 
 ```shell
 export RUN_ID=<取得したRun ID>
@@ -338,17 +338,17 @@ EOF
 curl --header "Authorization: Bearer ${TOKEN}" --header "Content-Type: application/vnd.api+json" --request POST --data @apply_run.json https://app.terraform.io/api/v2/runs/${RUN_ID}/actions/apply
 ```
 
-このAPIが成功すると`Confirm & Apply`が承認されApplyが実行されているはずです。
+この API が成功すると`Confirm & Apply`が承認され Apply が実行されているはずです。
 
 ## まとめ
 
-Terraform cloud及びTerraform enterpriseは[ほぼ全ての機能がAPIでアクセス](https://www.terraform.io/docs/cloud/api/index.html)できます。ここでは既存のWorkspaceに対しTerraformコードをアップロードしてRunを行いました。それ以外にもWorkspaceのLockやRunの実行状態の取得など、非常に細かに制御する事ができます。
+Terraform cloud 及び Terraform enterprise は[ほぼ全ての機能が API でアクセス](https://www.terraform.io/docs/cloud/api/index.html)できます。ここでは既存の Workspace に対し Terraform コードをアップロードして Run を行いました。それ以外にも Workspace の Lock や Run の実行状態の取得など、非常に細かに制御する事ができます。
 
 - 皆様のワークフローに合わせた作り込み
-- Terraformバイナリが使えないような環境からもProvisioning可能
-  - CI/CDツール
-  - 独自のProvisioningシステム
+- Terraform バイナリが使えないような環境からも Provisioning 可能
+  - CI/CD ツール
+  - 独自の Provisioning システム
   - コンテナやサーバーレス
   - など
 
-ぜひTerraform cloud APIを活用してハッピーなProvisioningライフをおくってください！
+ぜひ Terraform cloud API を活用してハッピーな Provisioning ライフをおくってください！

@@ -1,20 +1,20 @@
-# Version Control System連携を試す
+# Version Control System 連携を試す
 
-TFCには三つのApplyのトリガーを使うことができます。
+TFC には三つの Apply のトリガーを使うことができます。
 
 * API Driven
 * CLI Drive
 * VCS Driven
 
-ここではVCS DriveパターンのWebhookでの実行を試してみます。
+ここでは VCS Drive パターンの Webhook での実行を試してみます。
 
-## GitHubとTerraform Cloudのセットアップ
+## GitHub と Terraform Cloud のセットアップ
 
-ここではTerraform Cloud(以下、TFC)を使ってEnterprise版の機能を使ってみます。Terraform Cloudには機能が限定的な無償版とEnterpriseのライセンスでアクティベートされる有償版があります。このハンズオンでは講師が事前に期限限定でアクティベートしてあります。
+ここでは Terraform Cloud(以下、TFC)を使って Enterprise 版の機能を使ってみます。Terraform Cloud には機能が限定的な無償版と Enterprise のライセンスでアクティベートされる有償版があります。このハンズオンでは講師が事前に期限限定でアクティベートしてあります。
 
-TFCにアクセスし最初のセットアップを行いましょう。
+TFC にアクセスし最初のセットアップを行いましょう。
 
-ワークスペースを作成し、そこにVCSとの連携の設定を行います。対応しているVCSは以下の通りです。
+ワークスペースを作成し、そこに VCS との連携の設定を行います。対応している VCS は以下の通りです。
 
 * [GitHub](https://www.terraform.io/docs/cloud/vcs/github.html)
 * [GitHub Enterprise](https://www.terraform.io/docs/cloud/vcs/github-enterprise.html)
@@ -25,16 +25,16 @@ TFCにアクセスし最初のセットアップを行いましょう。
 * [Azure DevOps Services](https://www.terraform.io/docs/cloud/vcs/azure-devops-services.html)
 * [Azure DevOps Server](https://www.terraform.io/docs/cloud/vcs/azure-devops-services.html)
 
-以下はAzure DevOpsの手順ですが、違うVCSで実施した場合はリンクの手順を参考にしてください。
+以下は Azure DevOps の手順ですが、違う VCS で実施した場合はリンクの手順を参考にしてください。
 
-### Azure DevOps Progects作成
+### Azure DevOps Progects 作成
 
- [こちらから](https://aex.dev.azure.com/me?mkt=en-US)Organizationを作成してください。次に、
+ [こちらから](https://aex.dev.azure.com/me?mkt=en-US)Organization を作成してください。次に、
 
 ```
 "tf-handson-workshop"という名前のパブリックプロジェクトを作成してください。
 ```
-### GitHubのOAuth Applicationの作成
+### GitHub の OAuth Application の作成
 
 トップ画面の`Settings`からサイドメニューの`Version control` -> `Providers`を選んでください。この画面はこのままにしておいてください。
 
@@ -46,9 +46,9 @@ TFCにアクセスし最初のセットアップを行いましょう。
   <img src="https://github-image-tkaburagi.s3.ap-northeast-1.amazonaws.com/terraform-workshop/hello-2.png">
 </kbd>  
 
-次に[こちら](https://aex.dev.azure.com/app/register?mkt=en-US)にアクセスしTFC用のキーを発行します。
+次に[こちら](https://aex.dev.azure.com/app/register?mkt=en-US)にアクセスし TFC 用のキーを発行します。
 
-OAuthアプリケーションの登録画面で以下のように入力してください。
+OAuth アプリケーションの登録画面で以下のように入力してください。
 
 <kbd>
   <img src="https://github-image-tkaburagi.s3.ap-northeast-1.amazonaws.com/terraform-workshop/vcs-azure-1.png">
@@ -68,9 +68,9 @@ OAuthアプリケーションの登録画面で以下のように入力してく
 
 `App ID`と`Client Secret`はコピーしておいてください。この画面はこのままにしておいてください。
 
-次にTFCに戻り`Add VCS Provider`を選択します。
+次に TFC に戻り`Add VCS Provider`を選択します。
 
-`Version Control System(VCS) Provider`からプルダウンで`Azure DevOps Services`を選択し、`App ID`と`Client Secret`の欄に上のAzure DevOps上の画面で取得した値をコピペしてください。
+`Version Control System(VCS) Provider`からプルダウンで`Azure DevOps Services`を選択し、`App ID`と`Client Secret`の欄に上の Azure DevOps 上の画面で取得した値をコピペしてください。
 
 <kbd>
   <img src="https://github-image-tkaburagi.s3.ap-northeast-1.amazonaws.com/terraform-workshop/vcs-azure-3.png">
@@ -82,21 +82,21 @@ OAuthアプリケーションの登録画面で以下のように入力してく
   <img src="https://github-image-tkaburagi.s3.ap-northeast-1.amazonaws.com/terraform-workshop/vcs-azure-4.png">
 </kbd>
 
-VCS Providerが一つ追加され、Callback URLが生成されたのでこれをコピーし、これをAzure DevOpsの`Authorization callback URL`の項目を置き換えます。
+VCS Provider が一つ追加され、Callback URL が生成されたのでこれをコピーし、これを Azure DevOps の`Authorization callback URL`の項目を置き換えます。
 
-Azure DevOpsの画面に戻り、`Edit Application`をクリックし、`Authorization callback URL`の`https://example.com/replace-this-later`をコピーしたCallback URLに変更します。
+Azure DevOps の画面に戻り、`Edit Application`をクリックし、`Authorization callback URL`の`https://example.com/replace-this-later`をコピーした Callback URL に変更します。
 
 <kbd>
   <img src="https://github-image-tkaburagi.s3.ap-northeast-1.amazonaws.com/terraform-workshop/vcs-azure-5.png">
 </kbd>
 
-これでSave changesしましょう。
+これで Save changes しましょう。
 
-最後にトップ画面の`Settings`からサイドメニューの`Version control` -> `Providers`から先ほど追加したGitHubの`Connect organization username`をクリックして認証行ってください。
+最後にトップ画面の`Settings`からサイドメニューの`Version control` -> `Providers`から先ほど追加した GitHub の`Connect organization username`をクリックして認証行ってください。
 
-これでVCSの設定は完了です。次にこれを紐付けたワークスペースを作成します。
+これで VCS の設定は完了です。次にこれを紐付けたワークスペースを作成します。
 
-## Workspaceの作成
+## Workspace の作成
 
 まずワークスペースのレポジトリを作ります。
 
@@ -114,7 +114,7 @@ terraform {
 EOF
 ```
 
-Azure DevOpsにプッシュして連携の確認をしてみましょう。[Azure DevOpsのコンソール](https://aex.dev.azure.com/)から先ほど作ったOrganization->`tf-handson-workshop`を選択し、左カラムの`Repos`からURLをコピーしてください。また、`Generate Git Credentials`からパスワードをコピーしておいて下さい。
+Azure DevOps にプッシュして連携の確認をしてみましょう。[Azure DevOps のコンソール](https://aex.dev.azure.com/)から先ほど作った Organization->`tf-handson-workshop`を選択し、左カラムの`Repos`から URL をコピーしてください。また、`Generate Git Credentials`からパスワードをコピーしておいて下さい。
 
 ```shell
 $ export ADO_URL=<YOUR_AZURE_DEVOPS_PROJECT_URL>
@@ -126,7 +126,7 @@ $ git remote add origin $ADO_URL
 $ git push -u origin main
 ```
 
-TFC上でWorkspaceを作成します。トップ画面の`+ New Workspace`を選択し、Azure DevOpsを選択します。
+TFC 上で Workspace を作成します。トップ画面の`+ New Workspace`を選択し、Azure DevOps を選択します。
 
 <kbd>
   <img src="https://github-image-tkaburagi.s3.ap-northeast-1.amazonaws.com/terraform-workshop/vcs-azure-6.png">
@@ -145,7 +145,7 @@ TFC上でWorkspaceを作成します。トップ画面の`+ New Workspace`を選
 </kbd>
 
 
-次以降の章で実際のコードをApplyしてGitHubを通したインフラのプロビジョニングを試してみます。
+次以降の章で実際のコードを Apply して GitHub を通したインフラのプロビジョニングを試してみます。
 
 ## 参考リンク
 * [VCS Integration](https://www.terraform.io/docs/cloud/vcs/index.html)
