@@ -1,26 +1,26 @@
 # Teams in Terraform cloud/enterpise
 
-Terraform cloud free-tier (無料版)にはTeamという概念がありません。よって複数のメンバーで使用するときにアクセス制御をつける事ができません。
+Terraform cloud free-tier (無料版)には Team という概念がありません。よって複数のメンバーで使用するときにアクセス制御をつける事ができません。
 
-その問題を解決するために、Terraform cloud及びEnterpriseには**Roles / Team managerment**という機能が準備されています。
-この機能は以下のTerraform offeringで利用可能です。
+その問題を解決するために、Terraform cloud 及び Enterprise には**Roles / Team managerment**という機能が準備されています。
+この機能は以下の Terraform offering で利用可能です。
 - Terraform cloud team
 - Terraform cloud team & governance
 - Terraform Enterprise
 
-Teamに対する権限はOrganizationレベルとWorkspaceレベルの2段階で設定できます。
+Team に対する権限は Organization レベルと Workspace レベルの 2 段階で設定できます。
 
-ここでのエクササイズでは、organization及びWorkspaceに対してTeamを作成し、アクセス権限を付与してみます。
+ここでのエクササイズでは、organization 及び Workspace に対して Team を作成し、アクセス権限を付与してみます。
 
-## OrganizationレベルのTeamの作成
+## Organization レベルの Team の作成
 
-まず、[Terraform cloud](https://app.terraform.io/)へアクセスし、Organizationの**Setting >> Teams**へ行きます。
+まず、[Terraform cloud](https://app.terraform.io/)へアクセスし、Organization の**Setting >> Teams**へ行きます。
 
 <kbd>
   <img src="../assets/teams/create_team.png">
 </kbd>
 
-Teamには以下のような3つの権限をつけることが出来ます。**ここでの権限はOrganizationレベルの権限であり、Workspaceレベルの権限ではありません。**
+Team には以下のような 3 つの権限をつけることが出来ます。**ここでの権限は Organization レベルの権限であり、Workspace レベルの権限ではありません。**
 - Managed Policies
 - Manage workspaces
 - Manage VCS setting
@@ -29,26 +29,26 @@ Teamには以下のような3つの権限をつけることが出来ます。**�
   <img src="../assets/teams/organization_access.png">
 </kbd>
 
-**Create a New Team**から以下の3つのチームを1つづつ作成します。
+**Create a New Team**から以下の 3 つのチームを 1 つづつ作成します。
 
 1. admin
-   - adminには3つ全ての権限をつけて下さい。
+   - admin には 3 つ全ての権限をつけて下さい。
 2. developers
-   - 権限は何もつけなくてよいです。（Organizationレベルの権限は付与しない)
+   - 権限は何もつけなくてよいです。（Organization レベルの権限は付与しない)
 3. managers
-   - 権限は何もつけなくてよいです。(Organizationレベルの権限は付与しない)
+   - 権限は何もつけなくてよいです。(Organization レベルの権限は付与しない)
 
-## WorkspaceレベルのTeamの作成
+## Workspace レベルの Team の作成
 
-次にWorkspaceレベルのTeamの作成を行います。
+次に Workspace レベルの Team の作成を行います。
 
-Workspaceを開き、**Settings > Team Access**へナビゲートしてください。
+Workspace を開き、**Settings > Team Access**へナビゲートしてください。
 
 <kbd>
   <img src="../assets/teams/workspace_team.png">
 </kbd>
 
-ここで先程作成したTeamに、以下のようにWorkspaceレベルのPermissionsを付与してください。
+ここで先程作成した Team に、以下のように Workspace レベルの Permissions を付与してください。
 
 - admin
   - admin
@@ -57,47 +57,47 @@ Workspaceを開き、**Settings > Team Access**へナビゲートしてくださ
 - managers
   - read
 
-以下のように表示されればOKです。
+以下のように表示されれば OK です。
 
 <kbd>
   <img src="../assets/teams/workspace_permission.png">
 </kbd>
 
-このPermissionについては詳細は[ドキュメント](https://www.terraform.io/docs/cloud/users-teams-organizations/permissions.html)を参照いただければと思います。簡単にまとめますと：
+この Permission については詳細は[ドキュメント](https://www.terraform.io/docs/cloud/users-teams-organizations/permissions.html)を参照いただければと思います。簡単にまとめますと：
 
 - Read
-  - Stateファイルの参照
-  - Run履歴の参照
+  - State ファイルの参照
+  - Run 履歴の参照
   - セキュア変数の参照
-  - Stateファイルに変更の加わる処理はできない
+  - State ファイルに変更の加わる処理はできない
 - Plan
-  - Read権限の全て
-  - Runの作成（Planの実行可、Applyの実行不可）
+  - Read 権限の全て
+  - Run の作成（Plan の実行可、Apply の実行不可）
 - Write
-  - Plan権限の全て
-  - Stateファイルへの変更（Applyの実行）
-  - Run実行の承認
+  - Plan 権限の全て
+  - State ファイルへの変更（Apply の実行）
+  - Run 実行の承認
   - セキュア変数の変更
-  - WorkspaceのLock/Unlock
+  - Workspace の Lock/Unlock
 - Admin
-  - Write権限の全て
-  - Workspaceの削除
-  - Workspaceへのメンバーの追加・変更
-  - Workspace設定（VCSなど）の変更
+  - Write 権限の全て
+  - Workspace の削除
+  - Workspace へのメンバーの追加・変更
+  - Workspace 設定（VCS など）の変更
 
 となります。
 
-## チームメンバーをTeamにアサイン
+## チームメンバーを Team にアサイン
 
-Teamが設定されたら、admins権限のあるユーザーはチームメンバーをTeamにアサインします。
+Team が設定されたら、admins 権限のあるユーザーはチームメンバーを Team にアサインします。
 
-既にOrganizationに追加されているユーザーであれば、**organizationレベルのSettings >> Teams** からTeamを選択し、**Add a New Team Member**でユーザーを追加します。
+既に Organization に追加されているユーザーであれば、**organization レベルの Settings >> Teams** から Team を選択し、**Add a New Team Member**でユーザーを追加します。
 
 <kbd>
   <img src="../assets/teams/add_team_member.png">
 </kbd>
 
-これからユーザーを追加する場合は、**organizationレベルのSettings >> Users**の**Invite a user**ボタンからユーザーのTeamを選択してインバイトします。
+これからユーザーを追加する場合は、**organization レベルの Settings >> Users**の**Invite a user**ボタンからユーザーの Team を選択してインバイトします。
 
 <kbd>
   <img src="../assets/teams/invite_a_user_button.png">
@@ -109,6 +109,6 @@ Teamが設定されたら、admins権限のあるユーザーはチームメン�
 
 ## まとめ
 
-Terraform cloud free-tierではWorkspaceへのアクセスがあれば誰でもStateファイルへ変更（Applyの実効）が可能ですが、Terraform cloud paid及びEnterpriseでは、様々な処理に対しアクセス制限を付けることができます。複数のチームメンバーに対し、それぞれ役割に応じた権限を割り当てることで、ルールに応じたワークフローを実現できるのではないでしょうか。
+Terraform cloud free-tier では Workspace へのアクセスがあれば誰でも State ファイルへ変更（Apply の実効）が可能ですが、Terraform cloud paid 及び Enterprise では、様々な処理に対しアクセス制限を付けることができます。複数のチームメンバーに対し、それぞれ役割に応じた権限を割り当てることで、ルールに応じたワークフローを実現できるのではないでしょうか。
 
-Teamとアクセス制限を駆使してTerraform Cloud/EnterpriseではRBAC（Role based access control)を実現します。
+Team とアクセス制限を駆使して Terraform Cloud/Enterprise では RBAC（Role based access control)を実現します。

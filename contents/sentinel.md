@@ -1,17 +1,17 @@
-# SentinelによるPolicy as Code
+# Sentinel による Policy as Code
 
-Terraformは便利なツールですが、多くのユーザが利用し大規模な運用になるとガバンナンスをきかせユーザの行動を制御することが運用上課題となります。有償版ではHashiCorpが開発する[Sentinel](https://www.hashicorp.com/sentinel)というフレームワークを利用し、ポリシーを定義することができます。
+Terraform は便利なツールですが、多くのユーザが利用し大規模な運用になるとガバンナンスをきかせユーザの行動を制御することが運用上課題となります。有償版では HashiCorp が開発する[Sentinel](https://www.hashicorp.com/sentinel)というフレームワークを利用し、ポリシーを定義することができます。
 
 定義できるポリシーは多岐に渡りますが、下記のような一例としてユースケースがあります。
 
-* Terrafrom実行時間の制御
-* AZ/Regionの制約
+* Terrafrom 実行時間の制御
+* AZ/Region の制約
 * タグの確認
-* CIDRやネットワーク設定の確認
+* CIDR やネットワーク設定の確認
 * 特定リソースの利用禁止
 
-## Sentinelコードの作成
-それではまずはSentinelを利用するための設定を行います。Sentinelは最低限二つのファイルが必要です。一つは`sentinel.hcl`、もう一つは`<POLICYNAME>.sentinel`です。
+## Sentinel コードの作成
+それではまずは Sentinel を利用するための設定を行います。Sentinel は最低限二つのファイルが必要です。一つは`sentinel.hcl`、もう一つは`<POLICYNAME>.sentinel`です。
 
 ```
 GitHub上に`sentinel-handson-workshop`という名前のパブリックレポジトリを作成してください。
@@ -90,7 +90,7 @@ main = rule {
 </details>
 
 
-このようになっていればOKです。
+このようになっていれば OK です。
 
 ```
 .
@@ -113,7 +113,7 @@ main = rule {
 
 `first-policy.sentinel`のファイルは実際のポリシーコードです。ここの例は全てのインスタンスに対してタグがついているかを確認しています。
 
-それではこれをGitHubにプッシュしてみます。
+それではこれを GitHub にプッシュしてみます。
 
 ```shell
 $ echo "# sentinel-handson-workshop" >> README.md
@@ -126,8 +126,8 @@ $ git remote add origin ${GITURL}
 $ git push -u origin main
 ```
 
-## TFCの設定
-次にTFC側の設定です。トップ画面の一番上のタブから`Settings`を選択し、
+## TFC の設定
+次に TFC 側の設定です。トップ画面の一番上のタブから`Settings`を選択し、
 
 <kbd>
   <img src="https://github-image-tkaburagi.s3.ap-northeast-1.amazonaws.com/terraform-workshop/sentinel-0.png">
@@ -145,7 +145,7 @@ $ git push -u origin main
   <img src="../assets/policy-create-newui.png">
 </kbd>
 
-次の画面で以下のように入力してください。名前などは任意で構いません。**workspaceを選んだらADD WORKSPACEを押すのを忘れないでください。**
+次の画面で以下のように入力してください。名前などは任意で構いません。**workspace を選んだら ADD WORKSPACE を押すのを忘れないでください。**
 
 <kbd>
   <img src="https://github-image-tkaburagi.s3.ap-northeast-1.amazonaws.com/terraform-workshop/sentinel-2.png">
@@ -153,13 +153,13 @@ $ git push -u origin main
 
 ## ポリシーを試してみる
 
-それでは実行してみましょう。ワークスペースの`Actions` -> `Start a New Plan` を選択し、Runをキックします。
+それでは実行してみましょう。ワークスペースの`Actions` -> `Start a New Plan` を選択し、Run をキックします。
 
 <kbd>
   <img src="https://github-image-tkaburagi.s3.ap-northeast-1.amazonaws.com/terraform-workshop/sentinel-3.png">
 </kbd>
 
-前回と違いPolicy Checkのワークフローが追加されていることがわかります。
+前回と違い Policy Check のワークフローが追加されていることがわかります。
 
 <kbd>
   <img src="https://github-image-tkaburagi.s3.ap-northeast-1.amazonaws.com/terraform-workshop/sentinel-4.png">
@@ -320,9 +320,9 @@ $ git commit -m "added tags"
 $ git push
 ```
 
-再度ワークスペースのRunsの中から最新の実行を選んでください。次はポリシーチェックをクリアし、Applyできるはずです。`confirm & apply`をクリックしてApplyしてみましょう。
+再度ワークスペースの Runs の中から最新の実行を選んでください。次はポリシーチェックをクリアし、Apply できるはずです。`confirm & apply`をクリックして Apply してみましょう。
 
-Applyが成功したら念の為インタンスにタグが付与されていることも確認しておきましょう。(GCP/Azureの場合はWebブラウザから確認してください。)
+Apply が成功したら念の為インタンスにタグが付与されていることも確認しておきましょう。(GCP/Azure の場合は Web ブラウザから確認してください。)
 
 ```console
 $ aws ec2 describe-instances --query "Reservations[].Instances[].{InstanceId:InstanceId,State:State,Tags:Tags}"
@@ -347,19 +347,19 @@ $ aws ec2 describe-instances --query "Reservations[].Instances[].{InstanceId:Ins
 ]
 ```
 
-これで最初のSentinelは終了です。ちなみにタグは有無だけではなく特定のタグがない場合を弾くなど、さらに細かく設定することもできます。
+これで最初の Sentinel は終了です。ちなみにタグは有無だけではなく特定のタグがない場合を弾くなど、さらに細かく設定することもできます。
 
 ## Sentinel Simulator
 
-Sentinelで都度実際に実行して確認するのではなく`Sentinel Sumilator`を利用してテストを実施するのが普通です。テストにはsentinel cliが必要なので[こちらから](https://docs.hashicorp.com/sentinel/downloads)ダウンロードしてください。
+Sentinel で都度実際に実行して確認するのではなく`Sentinel Sumilator`を利用してテストを実施するのが普通です。テストには sentinel cli が必要なので[こちらから](https://docs.hashicorp.com/sentinel/downloads)ダウンロードしてください。
 
 `Apply`と`Test`の二つの機能があります。
 
 ### Apply
 
-applyコマンドはSentinelのコードをローカルで実行して試すコマンドです。ポリシーが意図通り動いていることやSyntaxや文法にエラーがないかなどを事前に確認することができます。
+apply コマンドは Sentinel のコードをローカルで実行して試すコマンドです。ポリシーが意図通り動いていることや Syntax や文法にエラーがないかなどを事前に確認することができます。
 
-Applyにはコンフィグレーションファイルというファイルが必要です。このファイルにはモックデータやテストケースを記述します。
+Apply にはコンフィグレーションファイルというファイルが必要です。このファイルにはモックデータやテストケースを記述します。
 
 サンプルを一つ作ってみます。
 
@@ -382,9 +382,9 @@ $ cat <<EOF > sentinel.json
 EOF
 ```
 
-これがコンフィグレーションファイルとなります。このjsonは[time](https://docs.hashicorp.com/sentinel/imports/time)というSentinelの標準で使える機能をモックし、仮のデータ`9時42分`として入れています。
+これがコンフィグレーションファイルとなります。この json は[time](https://docs.hashicorp.com/sentinel/imports/time)という Sentinel の標準で使える機能をモックし、仮のデータ`9時42分`として入れています。
 
-次にSentinelのコードを作ります。
+次に Sentinel のコードを作ります。
 
 ```shell
 $ cat <<EOF > foo.sentinel
@@ -394,7 +394,7 @@ main = time.hour == 10
 EOF
 ```
 
-ここでは10時かどうかを確認しているためApplyするとエラーになるはずです。Applyして試してみましょう。
+ここでは 10 時かどうかを確認しているため Apply するとエラーになるはずです。Apply して試してみましょう。
 
 ```console
 $ sentinel apply foo.sentinel
@@ -405,16 +405,16 @@ the rules evaluated and their intermediate boolean expressions. Note that
 some boolean expressions may be missing if short-circuit logic was taken.
 ```
 
-コードを直して再度試してみます。`main = time.hour == 10` を`main = time.hour == 9`に変更して再度Applyを実行します。
+コードを直して再度試してみます。`main = time.hour == 10` を`main = time.hour == 9`に変更して再度 Apply を実行します。
 
 ```console
 $ sentinel apply foo.sentinel
 Pass
 ```
 
-データのモックには上記のように静的に指定する方法とSentinelのコードで指定する方法があります。関数などJSONで静的にデータをモック出来ないタイプのデータがいくつかあります。ここでは関数を指定する方法を試してみます。
+データのモックには上記のように静的に指定する方法と Sentinel のコードで指定する方法があります。関数など JSON で静的にデータをモック出来ないタイプのデータがいくつかあります。ここでは関数を指定する方法を試してみます。
 
-まずは関数を一つ作ってみます。ここでのSentinelはポリシーの定義ではなくあくまでも関数でのモックデータの定義なので`main`は必要ありません。
+まずは関数を一つ作ってみます。ここでの Sentinel はポリシーの定義ではなくあくまでも関数でのモックデータの定義なので`main`は必要ありません。
 
 ```shell
 $ cat <<EOF > mock-foo.sentinel
@@ -424,7 +424,7 @@ bar = func() {
 EOF
 ```
 
-次に新しいコンフィグを作ってモックデータに先ほどSentinelで作った関数を指定します。
+次に新しいコンフィグを作ってモックデータに先ほど Sentinel で作った関数を指定します。
 
 ```shell
 $ cat <<EOF > sentinel-2.json
@@ -445,24 +445,24 @@ main = foo.bar() == "baz"
 EOF
 ```
 
-モックデータで定義されている`foo`をimportして、関数`bar`を実行し、実行結果が`baz`であるかどうかを判定しています。
+モックデータで定義されている`foo`を import して、関数`bar`を実行し、実行結果が`baz`であるかどうかを判定しています。
 
 ```console
 $ sentinel apply -config=sentinel-2.json foo-2.sentinel
 Pass
 ```
 
-ApplyするとPassとなるはずです。
+Apply すると Pass となるはずです。
 
-### Terraformのデータを利用する
+### Terraform のデータを利用する
 
-上記の例ではシンプルなデータを使ってSimulatorの機能を試してきました。実際のTerraformの環境ではモックのデータを自分で作るにはかなりの手間がかかります。TFCではSetinel用にワークスペースの最新の構成をモックデータとしてExportする機能が入っています。
+上記の例ではシンプルなデータを使って Simulator の機能を試してきました。実際の Terraform の環境ではモックのデータを自分で作るにはかなりの手間がかかります。TFC では Setinel 用にワークスペースの最新の構成をモックデータとして Export する機能が入っています。
 
 <kbd>
   <img src="https://github-image-tkaburagi.s3.ap-northeast-1.amazonaws.com/terraform-workshop/sentinel-5.png">
 </kbd>
 
-WorkspacesのRunsから最新の実行結果の`Plan finished`をクリックすると`Downloads Sentinel mocks`というボタンがあるのでこれをクリックしてモックデータをダウンロードし新しいフォルダを作ります。
+Workspaces の Runs から最新の実行結果の`Plan finished`をクリックすると`Downloads Sentinel mocks`というボタンがあるのでこれをクリックしてモックデータをダウンロードし新しいフォルダを作ります。
 
 ```shell
 $ cd path/to/tf-workspace
@@ -471,7 +471,7 @@ $ touch simulator-tf-sample/sentinel.hcl simulator-tf-sample/tags-check.sentinel
 $ tar xvfz path/to/run-gvXm387VP1VShKC1-sentinel-mocks.tar.gz  -C simulator-tf-sample/testdata
 ```
 
-以下のような構造になればOKです。
+以下のような構造になれば OK です。
 
 ```console
 simulator-tf-sample
@@ -488,9 +488,9 @@ simulator-tf-sample
     └── sentinel.hcl
 ```
 
-`testdata/`以下にコピーした3つのファイルにはSentinelで定義されたモックデータが入っています。全てを理解する必要はないので、これが最新のTerraformの状況をシミュレートしているとだけ押さえておけばとりあえず大丈夫です。
+`testdata/`以下にコピーした 3 つのファイルには Sentinel で定義されたモックデータが入っています。全てを理解する必要はないので、これが最新の Terraform の状況をシミュレートしているとだけ押さえておけばとりあえず大丈夫です。
 
-sentinel.hclを以下のように記述してください。
+sentinel.hcl を以下のように記述してください。
 
 ```hcl
 mock "tfconfig" {
@@ -542,7 +542,7 @@ mock "tfstate/v1" {
 }
 ```
 
-ダウンロードした環境をシミュレートするSentinelファイルをモックデータとして指定しています。実際のポリシーコードではこの`tfconfig`, `tfplan`,`tfstate`をimportしてポリシーを定義しローカルで実行します。
+ダウンロードした環境をシミュレートする Sentinel ファイルをモックデータとして指定しています。実際のポリシーコードではこの`tfconfig`, `tfplan`,`tfstate`を import してポリシーを定義しローカルで実行します。
 
 一番最初に試したタグの有無をチェックするポリシーを使って試してみたいと思います。`tags-check.sentinel`を以下のように編集します。
 
@@ -641,7 +641,7 @@ $ sentinel apply tags-check.sentinel
 Pass
 ```
 
-最後にポリシーコードを変更して意図通りFailするかを確認します。
+最後にポリシーコードを変更して意図通り Fail するかを確認します。
 
 ```sentinel
 WIP

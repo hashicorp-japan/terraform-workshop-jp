@@ -1,43 +1,43 @@
-# Terraform Cloudによるリモートステート管理
+# Terraform Cloud によるリモートステート管理
 
-さて、最初のWorkshopではLocal環境でTerraformを実行し、StateファイルもLocal環境に作成されました。
+さて、最初の Workshop では Local 環境で Terraform を実行し、State ファイルも Local 環境に作成されました。
 
-Stateファイルは非常に重要なファイルで様々な情報がつまっています。
-- ProvisioningされたResourceの識別情報
-- APIキーやパスワードなどのSecret
+State ファイルは非常に重要なファイルで様々な情報がつまっています。
+- Provisioning された Resource の識別情報
+- API キーやパスワードなどの Secret
 - など
 
-Terraformで継続的にProvisioningを行なうためにはStateファイルの管理が必至です。Terraformはデフォルトの挙動として、実行されて得たStateファイルをLocal環境に保存します。ただ、Local環境でStateファイルを管理するにはいくつかの問題があります。
-- 個人のLocal環境だけに存在すると、チームでの作業が出来ない
-  - 例えばAさんのローカルマシン上にだけStateファイルがある場合、Aさん以外の人はその環境にたいして、それ以上のProvisioningが出来ない。
+Terraform で継続的に Provisioning を行なうためには State ファイルの管理が必至です。Terraform はデフォルトの挙動として、実行されて得た State ファイルを Local 環境に保存します。ただ、Local 環境で State ファイルを管理するにはいくつかの問題があります。
+- 個人の Local 環境だけに存在すると、チームでの作業が出来ない
+  - 例えば A さんのローカルマシン上にだけ State ファイルがある場合、A さん以外の人はその環境にたいして、それ以上の Provisioning が出来ない。
 - 誤って削除してしまうと元に戻せない（よって全てのインフラ情報が損失してしまう）
-  - 既存の環境をStateファイルに取り込むimportというコマンドもありますが、非常に手間と時間がかかります。
-- Stateファイルは常に最後のTerraform実行の情報だけが記載されるので、過去のインフラ状態のトラッキングが出来ない
-  - トラッキングのために、Terraformの実行毎にStateファイルを共有スペース（ファイルサーバーやS3など）やVCSなどに保存するやり方もありますが、手間がかかります。
+  - 既存の環境を State ファイルに取り込む import というコマンドもありますが、非常に手間と時間がかかります。
+- State ファイルは常に最後の Terraform 実行の情報だけが記載されるので、過去のインフラ状態のトラッキングが出来ない
+  - トラッキングのために、Terraform の実行毎に State ファイルを共有スペース（ファイルサーバーや S3 など）や VCS などに保存するやり方もありますが、手間がかかります。
 
-そこで、Terraform OSSのユーザーはこれらの問題を回避するために様々な仕組みをカスタムしてきました。ただ、これらのカスタマイズは各ユーザー側の開発・メンテナンスなどを必要とし、その管理のために本来の仕事とは別の時間を費やしてしまいます。
+そこで、Terraform OSS のユーザーはこれらの問題を回避するために様々な仕組みをカスタムしてきました。ただ、これらのカスタマイズは各ユーザー側の開発・メンテナンスなどを必要とし、その管理のために本来の仕事とは別の時間を費やしてしまいます。
 
-Terraform Cloud及びTerraform Enterpriseにはこれらの問題を解決すべく、様々なTeam collaboration及びGovernanceの機能を予め用意してあります。これからのWorkshopでは、これら機能を紹介していきます。
+Terraform Cloud 及び Terraform Enterprise にはこれらの問題を解決すべく、様々な Team collaboration 及び Governance の機能を予め用意してあります。これからの Workshop では、これら機能を紹介していきます。
 
 ## 事前準備
 
-1. このWorkshopを行なうにはTerraform Cloudのアカウントが必要です。こちらからサインアップをしてください。（すでにアカウントをお持ちの方はスキップしてください。）
+1. この Workshop を行なうには Terraform Cloud のアカウントが必要です。こちらからサインアップをしてください。（すでにアカウントをお持ちの方はスキップしてください。）
 
 [https://app.terraform.io/signup/account](https://app.terraform.io/signup/account)
 
 ## リモートステート管理機能
 
-Terraform CloudにはRemote State管理機能があります。ちなみに、**この機能は誰でも無料で利用できます**。
+Terraform Cloud には Remote State 管理機能があります。ちなみに、**この機能は誰でも無料で利用できます**。
 
-ここでは、Remote State管理機能を使うエクササイズを行います。
+ここでは、Remote State 管理機能を使うエクササイズを行います。
 
 
-### Organizationの設定
+### Organization の設定
 
-Terraform Cloudにログインし、新規Organizationを作成します。
+Terraform Cloud にログインし、新規 Organization を作成します。
 
-すでにOrganizationを作ってる人はこの手順をスキップしてください。
-Organizationは、ユーザや、チームや、Workcpaceを束ねて扱う事ができる最上位単位です。
+すでに Organization を作ってる人はこの手順をスキップしてください。
+Organization は、ユーザや、チームや、Workcpace を束ねて扱う事ができる最上位単位です。
 
 <kbd>
   <img src="../assets/tfc-remote-state/create-org.png">
@@ -48,26 +48,26 @@ Organizationは、ユーザや、チームや、Workcpaceを束ねて扱う事�
 <kbd>
   <img src="../assets/tfc-remote-state/create-org-name.png">
 </kbd>
-  
-  
-`Terraform organization name`　には、uniqueな名前を設定します。
+
+
+`Terraform organization name`　には、unique な名前を設定します。
 数字、文字、アンダースコア (_)、ハイフン (-)が利用できます。
 
-入力したら、メールアドレスを入力して、 `create organization` ボタンを押したらOrganizationが作成されます。
+入力したら、メールアドレスを入力して、 `create organization` ボタンを押したら Organization が作成されます。
 メールアドレスはログインした情報を元に自動で入力されています。
 
 <kbd>
   <img src="../assets/tfc-remote-state/create-org-inputmail.png">
 </kbd>
 
-### Workspaceの設定
+### Workspace の設定
 
-Organizationを作成したら、新規Workspaceを作成します。
+Organization を作成したら、新規 Workspace を作成します。
 ワークスペース名は任意で構いません。
 
-**1つのOrganization内では全てのWorkspace名が一意である必要がありますので、複数のユーザーで作業する場合、Workspace名がユニークになるようにしてください。**
+**1 つの Organization 内では全ての Workspace 名が一意である必要がありますので、複数のユーザーで作業する場合、Workspace 名がユニークになるようにしてください。**
 
-Workspaceは以下の `Create a workspace` ボタンより作成できます。
+Workspace は以下の `Create a workspace` ボタンより作成できます。
 
 ![new workspace](../assets/tfc-remote-state/new_workspace.png)
 
@@ -78,18 +78,18 @@ Workspaceは以下の `Create a workspace` ボタンより作成できます。
 </kbd>
 
 ここでは、ワークスペース名は**hello-tf**とします。
-併せて、Workspaceを作成するProjectを選択します。
+併せて、Workspace を作成する Project を選択します。
 
-Projectを独自に作っている人は任意のProjectを選択し、
+Project を独自に作っている人は任意の Project を選択し、
 初めて利用する人は最初から作られている **Default Project** のまま進んでください。
 
-**Create** ボタンを押すとWorkspaceが作成されます。
+**Create** ボタンを押すと Workspace が作成されます。
 
 <kbd>
   <img src="../assets/tfc-remote-state/create-ws-new-ui-2.png">
 </kbd>
 
-つぎに作成したワークスペースのSettingsメニューから以下の操作を実施して下さい。
+つぎに作成したワークスペースの Settings メニューから以下の操作を実施して下さい。
 
 ```
 * Settings > General ナビゲートし、Execution modeをLocalに設定
@@ -100,47 +100,47 @@ Projectを独自に作っている人は任意のProjectを選択し、
   <img src="../assets/tfc-remote-state/execution_mode.png">
 </kbd>
 
-Execution modeを**Local**に設定すると、Terraformの実行はLocal環境で行いますが、作成されるStateファイルはTerraform Cloudに保存されます。
+Execution mode を**Local**に設定すると、Terraform の実行は Local 環境で行いますが、作成される State ファイルは Terraform Cloud に保存されます。
 
-### User Tokenの作成
+### User Token の作成
 
-さて、次にLocalのTerraform環境からTerraform Cloudにアクセスするために、User tokenを作成します。  
-このUser tokenはローカル環境や別のシステム（CI/CDパイプラインや外部ツールなど）からTerraform Cloud APIを叩く際に必要となります。
+さて、次に Local の Terraform 環境から Terraform Cloud にアクセスするために、User token を作成します。
+この User token はローカル環境や別のシステム（CI/CD パイプラインや外部ツールなど）から Terraform Cloud API を叩く際に必要となります。
 
-右上の自分のアイコンをクリックして**Account settings**を選択します。
+右上の自分のアイコンをクリックして **Account settings** を選択します。
 
 <kbd>
   <img src="../assets/tfc-remote-state/user_setting.png">
 </kbd>
 
-そこから、**Tokens**メニューから**Create an API Token**ボタンでUser Tokenを作成します。
+そこから、**Tokens** メニューから **Create an API Token** ボタンで User Token を作成します。
 
 <kbd>
   <img src="../assets/tfc-remote-state/account_setting_detail.png">
 </kbd>
 
 ダイアログが表示されるので、
-DescriptionにはこのTokenについての説明を追加します。  
-ここでは **for workshop** などとしておくとworkshop用途で使ったtokenである事を後から判別できます。
-入力したら **Generate token** ボタンを押してTokenを作成します。
-  
+Description にはこの Token についての説明を追加します。
+ここでは **for workshop** などとしておくと workshop 用途で使った token である事を後から判別できます。
+入力したら **Generate token** ボタンを押して Token を作成します。
+
 <kbd>
   <img src="../assets/tfc-remote-state/generate_token.png">
 </kbd>
 
-Tokensの一覧に、作成したTokenが表示されます。
-作成されたばかりのTokenには、Tokenの文字列が表示されています。（キャプチャの灰色部分です）
-作成されたTokenは画面遷移するともう表示されないので、必ず安全なところへコピーして控えておいてください。
-  
+Tokens の一覧に、作成した Token が表示されます。
+作成されたばかりの Token には、Token の文字列が表示されています。（キャプチャの灰色部分です）
+作成された Token は画面遷移するともう表示されないので、必ず安全なところへコピーして控えておいてください。
+
 <kbd>
   <img src="../assets/tfc-remote-state/generated_token.png">
 </kbd>
 
 
-次に、ここで作成されたTokenをLocal環境の設定ファイルに登録します。`terraform login` コマンドを使います。Tokenは `~/.terraform.d/credentials.tfrc.json `に保存されます。
-**Windowsの場合、%APPDATA%\terraform.rcとなります。**
+次に、ここで作成された Token を Local 環境の設定ファイルに登録します。`terraform login` コマンドを使います。Token は `~/.terraform.d/credentials.tfrc.json `に保存されます。
+**Windows の場合、%APPDATA%\terraform.rc となります。**
 
-**Token for app.terraform.io:** と聞かれたら、Tokenをペーストします。
+**Token for app.terraform.io:** と聞かれたら、Token をペーストします。
 
 ```console
 $ cd path/to/hello-tf
@@ -180,11 +180,11 @@ Token for app.terraform.io:
 Retrieved token for user <YOUR_ACCOUNT>
 ```
 
-これでLocal環境からTerraform CloudのAPIにアクセスする準備が整いました。
+これで Local 環境から Terraform Cloud の API にアクセスする準備が整いました。
 
-### Remote Backendの設定
+### Remote Backend の設定
 
-つぎにTerraformにRemote Backendを使用するコードを追加します。`main.tf`の`terraform`スタンザを以下のように変更してください。*YOUR_ORGANIZATION*は使用しているOrganizationの値に置き換えてください。
+つぎに Terraform に Remote Backend を使用するコードを追加します。`main.tf` の `terraform` スタンザを以下のように変更してください。*YOUR_ORGANIZATION* は使用している Organization の値に置き換えてください。
 
 ```hcl
 terraform {
@@ -200,7 +200,7 @@ terraform {
 }
 ```
 
-ここまでの準備が出来ましたら、Terraformを実行します。
+ここまでの準備が出来ましたら、Terraform を実行します。
 `terraform init` コマンドを実行してください。
 
 ```console
@@ -222,13 +222,13 @@ again to reinitialize your working directory.
 
 **Migrating from backend "remote" to HCP Terraform.** と表示されているのが確認できます。
 
-実際にstateファイルをTerraform cloudのremoteで管理するには `terraform apply` による実行が必要です。
+実際に state ファイルを Terraform cloud の remote で管理するには `terraform apply` による実行が必要です。
 
 ```console
 $ terraform apply
 ```
 
-この段階で、Terraform CloudのWorkspaceを確認すると、Stateファイルが作成されているはずです。
+この段階で、Terraform Cloud の Workspace を確認すると、State ファイルが作成されているはずです。
 
 <kbd>
   <img src="../assets/tfc-remote-state/new_state.png">
@@ -245,15 +245,15 @@ $ terraform apply
 次に`destroy`で環境をリセットします。
 
 ```shell
-$ terraform destroy 
+$ terraform destroy
 ```
-実行中にステートレポジトリのGUIを見るとロックがかかっていることがわかります。
+実行中にステートレポジトリの GUI を見るとロックがかかっていることがわかります。
 
 <kbd>
   <img src="../assets/tfc-remote-state/state-3.png">
 </kbd>
 
-実行ししばらくするとEC2インスタンスが`terminated`の状態になってることがわかるはずです。(GCP/Azureの場合はWebブラウザから確認してください。)
+実行ししばらくすると EC2 インスタンスが `terminated` の状態になってることがわかるはずです。(GCP/Azure の場合は Web ブラウザから確認してください。)
 
 ```console
 $ aws ec2 describe-instances --query "Reservations[].Instances[].{InstanceId:InstanceId,State:State}"
@@ -275,9 +275,9 @@ $ aws ec2 describe-instances --query "Reservations[].Instances[].{InstanceId:Ins
 ]
 ```
 
-この`destroy`ではLocalのStateファイルではなく、Terraform Cloud上のStateファイルを使用します。よって、もうLocalのStateファイルは必要ないので削除しても構いません。
+この `destroy` では Local の State ファイルではなく、Terraform Cloud 上の State ファイルを使用します。よって、もう Local の State ファイルは必要ないので削除しても構いません。
 
-再度Terraform CloudのGUIからステートファイルを確認してください。変更が反映されることがわかるはずです。
+再度 Terraform Cloud の GUI からステートファイルを確認してください。変更が反映されることがわかるはずです。
 
 <kbd>
   <img src="../assets/tfc-remote-state/state-1.png">
@@ -285,6 +285,6 @@ $ aws ec2 describe-instances --query "Reservations[].Instances[].{InstanceId:Ins
 
 ## まとめ
 
-これでRemote Backendの設定は完了です。ここでのエクササイズでは、個人個人でWorkspaceを作りましたが、これをチームで共有することでStateファイルの共有が実現できます。
+これで Remote Backend の設定は完了です。ここでのエクササイズでは、個人個人で Workspace を作りましたが、これをチームで共有することで State ファイルの共有が実現できます。
 
-ただ、Stateファイルの共有が実現できたとしてもまだまだチーム利用としては足りない機能が多々あります。それらを次からのWorkshopで見ていきたいと思います。
+ただ、State ファイルの共有が実現できたとしてもまだまだチーム利用としては足りない機能が多々あります。それらを次からの Workshop で見ていきたいと思います。

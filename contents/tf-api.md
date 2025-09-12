@@ -1,14 +1,14 @@
-# Terraform Enterprise APIを試す
+# Terraform Enterprise API を試す
 
-ここまでGUIで操作を行ってきましたが、TFEではAPIによる操作も可能でCIパイプラインによる自動化の運用のワークフローなどに組み込むことが可能です。
+ここまで GUI で操作を行ってきましたが、TFE では API による操作も可能で CI パイプラインによる自動化の運用のワークフローなどに組み込むことが可能です。
 
-Terraformに関わる操作に加えてユーザ管理など様々な運用作業をAPIで実施できます。
+Terraform に関わる操作に加えてユーザ管理など様々な運用作業を API で実施できます。
 
-**ここまでで実行したプロビジョニングが全てDestroyされていることを確認してこの手順を進めて下さい。**
+**ここまでで実行したプロビジョニングが全て Destroy されていることを確認してこの手順を進めて下さい。**
 
 ## トークンを取得する
 
-まずAPIを利用するにはトークンを取得する必要があります。
+まず API を利用するにはトークンを取得する必要があります。
 
 [ユーザセッティング](https://app.terraform.io/app/settings/tokens)の画面からトークンを作成します。
 
@@ -78,7 +78,7 @@ $ curl \
 ```
 </details>
 
-## Terraformの操作をAPIで行う
+## Terraform の操作を API で行う
 
 ここではワークスペース作成から実際のプロビジョニングを行ってみましょう。
 
@@ -86,7 +86,7 @@ $ curl \
 
 まずはワークスペースを作成してみます。
 
-Workspaceの一覧はこちらです。
+Workspace の一覧はこちらです。
 
 ```shell
 $ export TF_ORG=<YOUR_ORG_NAME>
@@ -98,7 +98,7 @@ $ curl \
   https://app.terraform.io/api/v2/organizations/${TF_ORG}/workspaces | jq -r ".data[].attributes.name"
   ```
 
-次にワークスペースを作成します。VCSの章で作成した設定からGitHubの`OAUTH_TOKEN_ID`を取得します。トップ画面の`Setting` -> `VCS Providers` から値をコピーして下さい。
+次にワークスペースを作成します。VCS の章で作成した設定から GitHub の`OAUTH_TOKEN_ID`を取得します。トップ画面の`Setting` -> `VCS Providers` から値をコピーして下さい。
 
 <kbd>
   <img src="https://github-image-tkaburagi.s3-ap-northeast-1.amazonaws.com/terraform-workshop/api-2.png">
@@ -136,7 +136,7 @@ $ curl \
   https://app.terraform.io/api/v2/organizations/${TF_ORG}/workspaces | jq
 ```
 
-`organizations/ORG_ID/workspaces`を実行し、一つワークスペースが作成されました。再度一覧を見てみましょう。一つワークスペースが作成されているはずです。ここで出力される`.data.id`の`ws-********`の値はワークスペースのIDです後で利用するのでメモしておいてください。
+`organizations/ORG_ID/workspaces`を実行し、一つワークスペースが作成されました。再度一覧を見てみましょう。一つワークスペースが作成されているはずです。ここで出力される`.data.id`の`ws-********`の値はワークスペースの ID です後で利用するのでメモしておいてください。
 
 ```shell
 $ export WS_ID=<YOUR_WORKSPACE_ID>
@@ -153,7 +153,7 @@ new-workspace
 handson-workshop
 ```
 
-ワークスペースの情報を確認してVCSの連携の設定などが正しく反映されているか確認してください。`organizations/${TF_ORG}/workspaces/<WS_NAME>`がエンドポイントです。
+ワークスペースの情報を確認して VCS の連携の設定などが正しく反映されているか確認してください。`organizations/${TF_ORG}/workspaces/<WS_NAME>`がエンドポイントです。
 
 ```shell
 $ curl \
@@ -165,7 +165,7 @@ $ curl \
 
 ### 変数のセット
 
-次に変数をセットします。変数のセットはJSONで定義した変数を`/vars`のエンドポイントにPOSTします。取得する時は同エンドポイントにGETします。
+次に変数をセットします。変数のセットは JSON で定義した変数を`/vars`のエンドポイントに POST します。取得する時は同エンドポイントに GET します。
 
 先ほど作ったワークスペースで試してみましょう。
 
@@ -177,9 +177,9 @@ $ curl \
   https://app.terraform.io/api/v2/vars\?filter%5Borganization%5D%5Bname%5D\=${TF_ORG}\&filter%5Bworkspace%5D%5Bname%5D\=handson-workshop | jq
 ```
 
-セットしたインスタンス数の値が見れる一方、`senstive`としてセットしたAWSのキーなどは`null`と表示されるでしょう。
+セットしたインスタンス数の値が見れる一方、`senstive`としてセットした AWS のキーなどは`null`と表示されるでしょう。
 
-それでは変数をセットしていきます。JSONで変数をセットするために必要なパラメータは[こちら](https://www.terraform.io/docs/cloud/api/variables.html)を参照してください。まずは`hello_tf_instance_count`です。
+それでは変数をセットしていきます。JSON で変数をセットするために必要なパラメータは[こちら](https://www.terraform.io/docs/cloud/api/variables.html)を参照してください。まずは`hello_tf_instance_count`です。
 
 ```shell
 $ cat << EOF > payload-var.json
@@ -259,9 +259,9 @@ $ curl \
   https://app.terraform.io/api/v2/vars\?filter%5Borganization%5D%5Bname%5D\=${TF_ORG}\&filter%5Bworkspace%5D%5Bname%5D\=new-workspace | jq
 ``` 
 
-残りの変数をセットしていきますが、現在TFE APIではデータのリスト型をサポートしていないため一つ一つファイルを定義していく必要があります。
+残りの変数をセットしていきますが、現在 TFE API ではデータのリスト型をサポートしていないため一つ一つファイルを定義していく必要があります。
 
-ここではAPIとは関係ありませんが、ここではTerraformの`Terraform Enterprise Provider`を使ってバルクでセットしてみます。Terraform Enterprise Providerについては[こちら](https://www.terraform.io/docs/providers/tfe/index.html)を参照して下さい。
+ここでは API とは関係ありませんが、ここでは Terraform の`Terraform Enterprise Provider`を使ってバルクでセットしてみます。Terraform Enterprise Provider については[こちら](https://www.terraform.io/docs/providers/tfe/index.html)を参照して下さい。
 
 残りの`aws_access_key`, `aws_secret_key`, `ami`, `region`, `confirm_destroy`をまとめてセットしていきます。
 
@@ -342,9 +342,9 @@ $ terraform apply -auto-approve
 $ cd ..
 ```
 
-`aws_access_key`, `aws_secret_key`, `token`の入力が必要です。`token`にはTerraform Enterpriseのトークンを入力します。
+`aws_access_key`, `aws_secret_key`, `token`の入力が必要です。`token`には Terraform Enterprise のトークンを入力します。
 
-Applyが終了したら変数を確認してください。
+Apply が終了したら変数を確認してください。
 
 ```shell
 $ curl \
@@ -358,9 +358,9 @@ $ curl \
 
 それでは最後にプロビジョニングと環境の削除をやってみます。
 
-まず`/runs`エンドポイントでプランを作成しましょう。プランにはプランに含めるメッセージやワークスペースのIDなどが必要です。
+まず`/runs`エンドポイントでプランを作成しましょう。プランにはプランに含めるメッセージやワークスペースの ID などが必要です。
 
-これをJSONで定義し、`runs`エンドポイントにPOSTすることでプランが作成されます。
+これを JSON で定義し、`runs`エンドポイントに POST することでプランが作成されます。
 
 ```shell
 $ cat << EOF > payload-plans.json
@@ -391,7 +391,7 @@ $ curl \
   https://app.terraform.io/api/v2/runs | jq > plan-response-body.json
 ```
 
-これでPlanが開始されているはずです。`plan-response-body.json`の内容を確認してみてください。
+これで Plan が開始されているはずです。`plan-response-body.json`の内容を確認してみてください。
 
 以下の`workspaces/${WS_ID}/runs`で状態を確認してみましょう。
 
@@ -452,7 +452,7 @@ $ curl \
 $ export RUN_ID=run-3YUm7dKKh6qHQo1y
 ```
 
-Planが終わったらプラン内容を確認します。先ほど取得した`plan-response-body.json`からPlan IDを取得しましょう。
+Plan が終わったらプラン内容を確認します。先ほど取得した`plan-response-body.json`から Plan ID を取得しましょう。
 
 ```shell
 $ export PLAN_ID=$(cat plan-response-body.json | jq -r '.data.relationships.plan.data.id')
@@ -472,9 +472,9 @@ wget $(cat plan-details.json | jq -r '.data.attributes."log-read-url"'
 
 テキストファイルが出力されますので内容を確認してください。
 
-最後にApplyをします。プランの結果、`apply`や`dsicard`を選択できます。
+最後に Apply をします。プランの結果、`apply`や`dsicard`を選択できます。
 
-Applyの場合は、`/runs/:run_id/actions/apply`がエンドポイントです。
+Apply の場合は、`/runs/:run_id/actions/apply`がエンドポイントです。
 
 ```shell
 $ cat << EOF > payload-comment.json
@@ -484,7 +484,7 @@ $ cat << EOF > payload-comment.json
 EOF
 ```
 
-コメントをJSONで定義して、Applyをしてみましょう。
+コメントを JSON で定義して、Apply をしてみましょう。
 
 ```shell
 $ curl \
@@ -495,7 +495,7 @@ $ curl \
   https://app.terraform.io/api/v2/runs/${RUN_ID}/actions/apply
 ```
 
-Runの状態を何度か見ると`applied`となり、プロビジョニングが完了します。
+Run の状態を何度か見ると`applied`となり、プロビジョニングが完了します。
 
 ```shell
 $ curl \
@@ -507,7 +507,7 @@ $ curl \
 
 ### 環境をクリーンナップする
 
-最後に`destroy`を実行し、環境をクリーンナップしましょう。DestroyはPlanと同一のエンドポイントに`data.attributes.is-destroy`が`true`にセットされたJSONを実行させます。
+最後に`destroy`を実行し、環境をクリーンナップしましょう。Destroy は Plan と同一のエンドポイントに`data.attributes.is-destroy`が`true`にセットされた JSON を実行させます。
 
 ```shell
 $ cat << EOF > payload-destroy.json
@@ -531,7 +531,7 @@ $ cat << EOF > payload-destroy.json
 EOF
 ```
 
-`is-destroy`がTrueになっていることを確認してください。これをプランしてみましょう。
+`is-destroy`が True になっていることを確認してください。これをプランしてみましょう。
 
 ```shell
 $ curl \
@@ -542,13 +542,13 @@ $ curl \
   https://app.terraform.io/api/v2/runs | jq
 ```
 
-次に、コメントをつけてDestroyをApplyします。上記で出力された`Run ID`は環境変数にセットしておきます。
+次に、コメントをつけて Destroy を Apply します。上記で出力された`Run ID`は環境変数にセットしておきます。
 
 ```shell
 $ export RUN_ID=run-msjedz6ExGfGZuqm
 ```
 
-`actions/apply`のエンドポイントにコメントのJSONをPOSTします。
+`actions/apply`のエンドポイントにコメントの JSON を POST します。
 
 ```shell
 $ cat << EOF > payload-comment.json
@@ -565,7 +565,7 @@ $ curl \
   https://app.terraform.io/api/v2/runs/${RUN_ID}/actions/apply
 ```
 
-最後にRunの内容を確認し、Destroyが終了していることを確認してください。
+最後に Run の内容を確認し、Destroy が終了していることを確認してください。
 
 ```shell
 $ curl \
@@ -575,7 +575,7 @@ $ curl \
   https://app.terraform.io/api/v2/runs/${RUN_ID}
 ```
 
-以上でAPIの利用の章は終了です。TFE APIではワークスペースやプロビジョニングに関する操作の他に、ユーザ管理系のオプレーションなど様々な作業を実施することができ、自動化のプロセスに組み込むことが可能です。
+以上で API の利用の章は終了です。TFE API ではワークスペースやプロビジョニングに関する操作の他に、ユーザ管理系のオプレーションなど様々な作業を実施することができ、自動化のプロセスに組み込むことが可能です。
 
 ## 参考リンク
 * [Terraform Cloud API Document](https://www.terraform.io/docs/cloud/api/index.html)
