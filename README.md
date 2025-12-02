@@ -32,10 +32,9 @@ OSS 版ではすでに多くの情報が日本語でも調べることが可能�
 * VCS 連携 ([GitHub](https://github.com/hashicorp-japan/terraform-workshop/blob/master/contents/vcs.md), [Azure DevOps](https://github.com/hashicorp-japan/terraform-workshop/blob/master/contents/vcs-azure.md))
 * [Secure Variable Storage](https://github.com/hashicorp-japan/terraform-workshop/blob/master/contents/variables.md)
 * [Enterprise 機能 1: RBAC](./contents/teams.md)
-* [Enterprise 機能 2: Policy as Code](https://github.com/hashicorp-japan/terraform-workshop/blob/master/contents/sentinel.md)
-* [Enterprise 機能 3: Private Module Registry](https://github.com/hashicorp-japan/terraform-workshop/blob/master/contents/module.md)
-* [Enterprise 機能 4: Terraform Enterprise API](https://github.com/hashicorp-japan/terraform-workshop/blob/master/contents/tf-api.md)
-* [Enterprise 機能 5: Notifications](https://github.com/hashicorp-japan/terraform-workshop/blob/master/contents/notifications.md)
+* [Enterprise 機能 2: Private Module Registry](https://github.com/hashicorp-japan/terraform-workshop/blob/master/contents/module.md)
+* [Enterprise 機能 3: Terraform Enterprise API](https://github.com/hashicorp-japan/terraform-workshop/blob/master/contents/tf-api.md)
+* [Enterprise 機能 4: Notifications](https://github.com/hashicorp-japan/terraform-workshop/blob/master/contents/notifications.md)
 * CLI Drive Run
 * [API Drive Run](./contents/api-driven-run.md)
 * Terraform Enterprise のインストール
