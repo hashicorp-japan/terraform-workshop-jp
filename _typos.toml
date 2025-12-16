@@ -5,4 +5,16 @@ extend-ignore-re = [
 ]
 
 [default.extend-words]
-HashiCorp = "HashiCorp"
+HashiCorp  = "HashiCorp"
+Terraform  = "Terraform"
+Vault      = "Vault"
+Consul     = "Consul"
+Nomad      = "Nomad"
+Vagrant    = "Vagrant"
+Packer     = "Packer"
+Boundary   = "Boundary"
+Waypoint   = "Waypoint"
+HCL        = "HCL"
+Sentinel   = "Sentinel"
+HCP        = "HCP"
+InfraGraph = "InfraGraph"
