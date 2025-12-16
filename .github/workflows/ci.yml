@@ -10,10 +10,12 @@ jobs:
   # 1. リンク切れチェック
   link-check:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - uses: actions/checkout@v4
       - name: Link Checker
-        uses: lycheeverse/lychee-action@v1.9.0
+        uses: lycheeverse/lychee-action@v1
         with:
           args: --verbose --no-progress './**/*.md'
         env:
