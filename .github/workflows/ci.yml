@@ -42,4 +42,4 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Run textlint
-        run: npx textlint '**/*.md'
+        run: npx textlint --config .textlintrc.json '**/*.md'
