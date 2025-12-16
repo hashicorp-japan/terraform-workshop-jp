@@ -6,6 +6,7 @@ extend-ignore-re = [
 
 [default.extend-words]
 HashiCorp  = "HashiCorp"
+Hashi      = "Hashi"
 Terraform  = "Terraform"
 Vault      = "Vault"
 Consul     = "Consul"
