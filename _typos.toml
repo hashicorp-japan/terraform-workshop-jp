@@ -1,0 +1,8 @@
+[default]
+# // spellchecker:disable-line を行末に入れるとチェックを回避
+extend-ignore-re = [
+    "(?Rm)^.*(#|//)\\s*spellchecker:disable-line$",
+]
+
+[default.extend-words]
+HashiCorp = "HashiCorp"
