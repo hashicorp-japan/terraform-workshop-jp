@@ -1,0 +1,6 @@
+{
+  "devDependencies": {
+    "textlint": "^15.5.0",
+    "textlint-rule-terminology": "^5.2.16"
+  }
+}
