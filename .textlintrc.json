@@ -5,6 +5,36 @@
     "ja-space-between-half-and-full-width": {
       "space": "always",
       "lintStyledNode": true
+    },
+    "terminology": {
+      "defaultTerms": true,
+      "terms": [
+        "HashiCorp",
+        "HCP",
+        "Terraform",
+        "HCP Terraform",
+        "Terraform Enterprise",
+        "Vault",
+        "HCP Vault",
+        "HCP Vault Secrets",
+        "Vault Enterprise",
+        "Consul",
+        "HCP Consul",
+        "Consul Enterprise",
+        "Nomad",
+        "Nomad Enterprise",
+        "Vagrant",
+        "Packer",
+        "HCP Packer",
+        "Boundary",
+        "HCP Boundary",
+        "Waypoint",
+        "HCP Waypoint",
+        "Project Infragraph",
+        "HCL",
+        "Sentinel",
+        "GitHub Actions"
+      ]
     }
   }
 }
