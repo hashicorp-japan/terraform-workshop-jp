@@ -178,13 +178,13 @@ TFE の Private Module Registry のいいところはバージョン管理がで
   <img src="../assets/module/module-1.png">
 </kbd>
 
-トップ画面から`Modules`を選択します。（まだ何もリストされていないはずです) `Add Module`を選択し、
+トップ画面から`Registry`を選択します。（まだ何もリストされていないはずです) `Publish`から`Module`を選択します。
 
 <kbd>
   <img src="../assets/module/module-2.png">
 </kbd>
 
-次の画面で先ほどのレポジトリを指定します。`Publish Module`を押してください。これでモジュールの公開は終了です。
+次の画面で先ほどのレポジトリを指定します。Nextへ進み、モジュール名とプロバイダ名を入力し、`Publish Module`を押してください。これでモジュールの公開は終了です。
 
 <kbd>
   <img src="../assets/module/module-3.png">
@@ -194,23 +194,23 @@ TFE の Private Module Registry のいいところはバージョン管理がで
 
 ## Module Registry の利用
 
-このモジュールを使ってみます。トップ画面から`Modules`に戻り、次は`Design configuration`をクリックします。
+このモジュールを使ってみます。先ほど作成したモジュールにおいて、右側にある`Open in Designer`をクリックします。
 
-`Design configuration`はモジュールを利用するための設定を行うためのエンタープライズ機能です。
+`Open in Designer`はモジュールを利用するための設定を行うためのエンタープライズ機能です。
+
+<kbd>
+  <img src="../assets/module/module-4.png">
+</kbd>
 
 先ほど追加したモジュールが出てくるはずなので`Add module`をクリックして、`Next`をクリックして下さい。
 
 なお、複数のモジュールを組み合わせて使う際はここから複数選択して、まとめてコンフィグレーションを行うことが出来ます。
 
 <kbd>
-  <img src="../assets/module/module-4.png">
-</kbd>
-
-<kbd>
   <img src="../assets/module/module-5.png">
 </kbd>
 
-変数の設定画面が出てくるはずです。`Design configuration` ではインプットに必要な変数を自動で検出して GUI 上で設定することが出来ます。この際、`variables.tf`で`default`が設定されているものは`OPTIONAL`、設定されていないものは`REQUIRED`となり、設定漏れを防ぐことが出来て便利です。
+変数の設定画面が出てくるはずです。ここではインプットに必要な変数を自動で検出して GUI 上で設定することが出来ます。この際、`variables.tf`で`default`が設定されているものは`OPTIONAL`、設定されていないものは`REQUIRED`となり、設定漏れを防ぐことが出来て便利です。
 
 今回実際 Apply は行わないので適当な値を入れて`Next`をクリックして下さい。
 
