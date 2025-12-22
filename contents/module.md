@@ -175,43 +175,47 @@ TFE の Private Module Registry のいいところはバージョン管理がで
 それではコミットしたモジュールを TFE 上で公開してみます。公開範囲は Organization で、その中の Workspace であればどのコンフィグからも利用可能です。
 
 <kbd>
-  <img src="https://github-image-tkaburagi.s3.ap-northeast-1.amazonaws.com/terraform-workshop/module-1.png">
+  <img src="../assets/module/module-1.png">
 </kbd>
 
-トップ画面から`Modules`を選択します。（まだ何もリストされていないはずです) `Add Module`を選択し、
+トップ画面から`Registry`を選択します。（まだ何もリストされていないはずです) `Publish`から`Module`を選択します。
 
 <kbd>
-  <img src="https://github-image-tkaburagi.s3.ap-northeast-1.amazonaws.com/terraform-workshop/module-2.png">
+  <img src="../assets/module/module-2.png">
 </kbd>
 
-次の画面で先ほどのレポジトリを指定します。`Publish Module`を押してください。これでモジュールの公開は終了です。
+次の画面で先ほどのレポジトリを指定します。Nextへ進み、モジュール名とプロバイダ名を入力し、`Publish Module`を押してください。これでモジュールの公開は終了です。
 
 <kbd>
-  <img src="https://github-image-tkaburagi.s3.ap-northeast-1.amazonaws.com/terraform-workshop/module-3.png">
+  <img src="../assets/module/module-3.png">
 </kbd>
 
 上記のようなサマリー画面が見えるはずです。README、変数のインプットやバージョンなどの情報が確認出来ます。
 
 ## Module Registry の利用
 
-このモジュールを使ってみます。トップ画面から`Modules`に戻り、次は`Design configuration`をクリックします。
+このモジュールを使ってみます。先ほど作成したモジュールにおいて、右側にある`Open in Designer`をクリックします。
 
-`Design configuration`はモジュールを利用するための設定を行うためのエンタープライズ機能です。
+`Open in Designer`はモジュールを利用するための設定を行うためのエンタープライズ機能です。
+
+<kbd>
+  <img src="../assets/module/module-4.png">
+</kbd>
 
 先ほど追加したモジュールが出てくるはずなので`Add module`をクリックして、`Next`をクリックして下さい。
 
 なお、複数のモジュールを組み合わせて使う際はここから複数選択して、まとめてコンフィグレーションを行うことが出来ます。
 
 <kbd>
-  <img src="https://github-image-tkaburagi.s3.ap-northeast-1.amazonaws.com/terraform-workshop/module-4.png">
+  <img src="../assets/module/module-5.png">
 </kbd>
 
-変数の設定画面が出てくるはずです。`Design configuration` ではインプットに必要な変数を自動で検出して GUI 上で設定することが出来ます。この際、`variables.tf`で`default`が設定されているものは`OPTIONAL`、設定されていないものは`REQUIRED`となり、設定漏れを防ぐことが出来て便利です。
+変数の設定画面が出てくるはずです。ここではインプットに必要な変数を自動で検出して GUI 上で設定することが出来ます。この際、`variables.tf`で`default`が設定されているものは`OPTIONAL`、設定されていないものは`REQUIRED`となり、設定漏れを防ぐことが出来て便利です。
 
 今回実際 Apply は行わないので適当な値を入れて`Next`をクリックして下さい。
 
 <kbd>
-  <img src="https://github-image-tkaburagi.s3.ap-northeast-1.amazonaws.com/terraform-workshop/module-5.png">
+  <img src="../assets/module/module-6.png">
 </kbd>
 
 コードが生成されるはずです。これをコピーして既存のコードに利用してもいいですし、ダウンロードして新規のコンフィグレーションを立ち上げても OK です。このコードはここでしか取得出来ないので何らかの形で残しておきましょう。
@@ -265,7 +269,7 @@ TFE の画面に戻り`Modules`をクリックしてモジュールの`Details`�
 また`Versions`のボタンから複数バージョンを確認することが出来ます。
 
 <kbd>
-  <img src="https://github-image-tkaburagi.s3.ap-northeast-1.amazonaws.com/terraform-workshop/module-6.png">
+  <img src="../assets/module/module-7.png">
 </kbd>
 
 実際に作成する際もこれらのバージョンから選択してモジュールを使っていくことになります。
