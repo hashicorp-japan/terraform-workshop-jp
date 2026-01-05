@@ -13,8 +13,8 @@ OSS 版ではすでに多くの情報が日本語でも調べることが可能�
 
 * ソフトウェア
 	* Terraform
-	* jq / watch / curl
-	* git cli
+	* jq / watch / cURL
+	* Git cli
 	* aws / gcloud
 
 * アカウント
