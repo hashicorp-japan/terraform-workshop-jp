@@ -24,7 +24,7 @@ OSS 版ではすでに多くの情報が日本語でも調べることが可能�
 
 ## 資料
 
-* [Terraform Enterprise Overview](https://docs.google.com/presentation/d/1Ovdee0FIrJ_h66B5DToQNYKWJ9XRbudS0RCk4d_x1Eg/edit?usp=sharing)
+* [Terraform Enterprise(有償版)機能](https://www.hashicorp.com/en/products/terraform/features)
 
 ## アジェンダ
 * [初めての Terraform](./contents/hello-terraform.md)
