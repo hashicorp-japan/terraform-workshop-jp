@@ -177,7 +177,7 @@ $ curl \
   https://app.terraform.io/api/v2/vars\?filter%5Borganization%5D%5Bname%5D\=${TF_ORG}\&filter%5Bworkspace%5D%5Bname%5D\=handson-workshop | jq
 ```
 
-セットしたインスタンス数の値が見れる一方、`senstive`としてセットした AWS のキーなどは`null`と表示されるでしょう。
+セットしたインスタンス数の値が見れる一方、`sensitive`としてセットした AWS のキーなどは`null`と表示されるでしょう。
 
 それでは変数をセットしていきます。JSON で変数をセットするために必要なパラメータは[こちら](https://www.terraform.io/docs/cloud/api/variables.html)を参照してください。まずは`hello_tf_instance_count`です。
 

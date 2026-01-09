@@ -2,7 +2,7 @@
 
 Terraform cloud free-tier (無料版)には Team という概念がありません。よって複数のメンバーで使用するときにアクセス制御をつける事ができません。
 
-その問題を解決するために、Terraform cloud 及び Enterprise には**Roles / Team managerment**という機能が準備されています。
+その問題を解決するために、Terraform cloud 及び Enterprise には**Roles / Team management**という機能が準備されています。
 この機能は以下の Terraform offering で利用可能です。
 - Terraform cloud team
 - Terraform cloud team & governance

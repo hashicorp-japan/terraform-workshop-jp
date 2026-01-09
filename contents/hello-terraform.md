@@ -2,7 +2,7 @@
 
 ここでは OSS 版の Terraform を利用して AWS 上に一つインスタンスを作り、それぞれのコンポーネントや用語について説明をします。
 
-Terrform がインストールされていない場合は[こちら](https://www.terraform.io/downloads.html)よりダウンロードをしてください。
+Terraform がインストールされていない場合は[こちら](https://www.terraform.io/downloads.html)よりダウンロードをしてください。
 
 ダウンロードしたら unzip して実行権限を付与し、パスを通します。下記は macOS の手順です。
 
@@ -23,7 +23,7 @@ $ cd  tf-workspace/hello-tf
 
 早速このフォルダに Terraform のコンフィグファイルを作ってみます。コンフィグファイルは`HashiCorp Configuration Language`というフレームワークを使って記述していきます。
 
-`main.tf`と`vaiables.tf`という二つのファイルを作ってみます。`main.tf`はその名の通り Terraform のメインのファイルで、このファイルに記述されている内容が Terraform で実行されます。`variables.tf`は変数を定義するファイルです。各変数にはデフォルト値や型などを指定できます。
+`main.tf`と`variables.tf`という二つのファイルを作ってみます。`main.tf`はその名の通り Terraform のメインのファイルで、このファイルに記述されている内容が Terraform で実行されます。`variables.tf`は変数を定義するファイルです。各変数にはデフォルト値や型などを指定できます。
 
 ```shell
 $ cat <<EOF > main.tf
@@ -271,7 +271,7 @@ $ terraform apply
 $ export TF_VAR_gcp_key=PATH_TO_KEY_JSON
 $ export TF_VAR_machine_type=f1-micro
 $ export TF_VAR_image=debian-cloud/debian-9
-$ export TF_VAR_project=YOUT_PROJECT
+$ export TF_VAR_project=YOUR_PROJECT
 $ terraform plan
 $ terraform apply
 ```
@@ -386,7 +386,7 @@ $ terraform destroy -auto-approve
 
 ## Enterprise 版の価値
 
-Apply が実行されると`terraform.tfstate`というファイルが生成されます。このファイルは現在のインフラの状態を Json 形式で保持しているものですが、次の Plan のタイミングの差分の検出などで扱われ非常に重要です。例えばチームで作業をする際などはこのステートの共有方法をどうやって運用するかなどの考慮が必要になります。
+Apply が実行されると`terraform.tfstate`というファイルが生成されます。このファイルは現在のインフラの状態を JSON 形式で保持しているものですが、次の Plan のタイミングの差分の検出などで扱われ非常に重要です。例えばチームで作業をする際などはこのステートの共有方法をどうやって運用するかなどの考慮が必要になります。
 
 また、このファイルには各リソースの ID のみならずデータベースや AWS 環境のシークレットなど様々な機密性の高いデータが含まれておりステートファイルをセキュアに保つことも運用上重要です。
 
