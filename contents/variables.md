@@ -230,8 +230,8 @@ variable "hello_tf_instance_count" {
 `Add variables`をクリックして以下の変数を入力してください。
 
 ```
-* access_key : 自身のキー : Senstive
-* secret_key : 自身のキー : Senstive
+* access_key : 自身のキー : Sensitive
+* secret_key : 自身のキー : Sensitive
 * region : ap-northeast-1
 * ami : ami-06d9ad3f86032262d
 * hello_tf_instance_count : 1
@@ -241,7 +241,7 @@ variable "hello_tf_instance_count" {
 <details><summary>GCPの場合はこちら</summary>
 
 ```
-* gcp_key : JSONファイルコピペ : Senstive
+* gcp_key : JSONファイルコピペ : Sensitive
 * region : ap-northeast1
 * image : debian-cloud/debian-9
 * machine_type : f1-micro
@@ -253,10 +253,10 @@ variable "hello_tf_instance_count" {
 <details><summary>Azureの場合はこちら</summary>
 
 ```
-* client_id : ******* : Senstive
-* client_secret : ******* : Senstive
-* tenant_id : ******* : Senstive
-* subscription_id : ******* : Senstive
+* client_id : ******* : Sensitive
+* client_secret : ******* : Sensitive
+* tenant_id : ******* : Sensitive
+* subscription_id : ******* : Sensitive
 * location : East Asia
 * admin_password : Password1234!
 * hello_tf_instance_count : 1

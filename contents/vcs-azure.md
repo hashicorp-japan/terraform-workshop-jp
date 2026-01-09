@@ -54,7 +54,7 @@ OAuth アプリケーションの登録画面で以下のように入力して�
   <img src="https://github-image-tkaburagi.s3.ap-northeast-1.amazonaws.com/terraform-workshop/vcs-azure-1.png">
 </kbd>  
 
-* Company name: <COMPNAY_NAME>
+* Company name: <COMPANY_NAME>
 * Application Name : Terraform Cloud
 * Application site: `https://app.terraform.io`
 * Authorization callback URL: `https://example.com/replace-this-later`
