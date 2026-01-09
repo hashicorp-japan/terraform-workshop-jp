@@ -184,7 +184,7 @@ TFE の Private Module Registry のいいところはバージョン管理がで
   <img src="../assets/module/module-2.png">
 </kbd>
 
-次の画面で先ほどのレポジトリを指定します。Nextへ進み、モジュール名とプロバイダ名を入力し、`Publish Module`を押してください。これでモジュールの公開は終了です。
+次の画面で先ほどのレポジトリを指定します。Next へ進み、モジュール名とプロバイダ名を入力し、`Publish Module`を押してください。これでモジュールの公開は終了です。
 
 <kbd>
   <img src="../assets/module/module-3.png">

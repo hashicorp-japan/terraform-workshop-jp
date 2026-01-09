@@ -74,4 +74,4 @@ General な WebHook と Slack が選択できます。Microsoft Teams や Matter
 簡単ですが、Terrafrom Enterprise の通知機能を試してみました。
 
 ## 参考リンク
-* [Run Notifications](https://www.terraform.io/docs/cloud/workspaces/notifications.htmlz)
+* [Run Notifications](https://www.terraform.io/docs/cloud/workspaces/notifications.html)
