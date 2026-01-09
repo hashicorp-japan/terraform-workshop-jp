@@ -56,7 +56,7 @@ OAuth アプリケーションの登録画面で以下のように入力して�
 
 * Company name: <COMPNAY_NAME>
 * Application Name : Terraform Cloud
-* Application website: `https://app.terraform.io`
+* Application site: `https://app.terraform.io`
 * Authorization callback URL: `https://example.com/replace-this-later`
 * Authorized scopes: Code(read), Code(status)にチェック
 
