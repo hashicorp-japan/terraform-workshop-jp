@@ -25,7 +25,7 @@ OSS 版ではすでに多くの情報が日本語でも調べることが可能�
 ## 資料
 
 * [HCP Terraform (有償版/SaaS)機能](https://developer.hashicorp.com/terraform/cloud-docs)
-* [Terraform Enterprise(有償版/Self-Managed)機能](https://developer.hashicorp.com/terraform/enterprise)* 
+* [Terraform Enterprise(有償版/Self-Managed)機能](https://developer.hashicorp.com/terraform/enterprise)
 
 
 ## アジェンダ
