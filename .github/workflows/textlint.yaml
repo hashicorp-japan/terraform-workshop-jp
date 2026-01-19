@@ -3,6 +3,7 @@ name: textlint
 on:
   pull_request:
     paths:
+    - "README.md"
     - "contents/**/*.md"
   workflow_dispatch:
 
