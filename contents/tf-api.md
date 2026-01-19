@@ -13,8 +13,9 @@ Terraform に関わる操作に加えてユーザ管理など様々な運用作�
 [ユーザセッティング](https://app.terraform.io/app/settings/tokens)の画面からトークンを作成します。
 
 <kbd>
-  <img src="https://github-image-tkaburagi.s3-ap-northeast-1.amazonaws.com/terraform-workshop/+api-1.png">
+  <img src="../assets/tf-api/token_create.png">
 </kbd>
+
 
 上記のように任意のトークンの名前を入力して、`Generate Token`をクリックしてください。
 
@@ -101,7 +102,7 @@ $ curl \
 次にワークスペースを作成します。VCS の章で作成した設定から GitHub の`OAUTH_TOKEN_ID`を取得します。トップ画面の`Setting` -> `VCS Providers` から値をコピーして下さい。
 
 <kbd>
-  <img src="https://github-image-tkaburagi.s3-ap-northeast-1.amazonaws.com/terraform-workshop/api-2.png">
+  <img src="../assets/tf-api/VCS_provider_settings.png">
 </kbd>
 
 
