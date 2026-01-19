@@ -9,19 +9,19 @@
 [こちら](https://hashicorp-apac.slack.com/apps/manage/custom-integrations)にアクセスして、`Incoming WebHook`の設定を行います。
 
 <kbd>
-  <img src="https://github-image-tkaburagi.s3.ap-northeast-1.amazonaws.com/terraform-workshop/notifications-1.png">
+  <img src="../assets/notifications/notifications-1.png">
 </kbd>
 
 `Add to Slack`をクリックして、次の画面に進みます。
 
 <kbd>
-  <img src="https://github-image-tkaburagi.s3.ap-northeast-1.amazonaws.com/terraform-workshop/notifications-2.png">
+  <img src="../assets/notifications/notifications-2.png">
 </kbd>
 
 `Post to Channel`のプルダウンで通知をしたいチャネルやダイレクトメッセージ先を選択しましょう。　
 
 <kbd>
-  <img src="https://github-image-tkaburagi.s3.ap-northeast-1.amazonaws.com/terraform-workshop/notifications-3.png">
+  <img src="../assets/notifications/notifications-3.png">
 </kbd>
 
 `Add Incoming WebHook Integaraion`をクリックすると WebHook の設定画面になります。ここで表示される`WebHook URL`をメモしておきます。
@@ -36,7 +36,7 @@
 TFC のブラウザの`Workspaces` -> `handson-workshop` -> `Settings` -> `Notifications` -> `Create a Notification`と進んでください。
 
 <kbd>
-  <img src="https://github-image-tkaburagi.s3.ap-northeast-1.amazonaws.com/terraform-workshop/notifications-4.png">
+  <img src="../assets/notifications/notifications-4.png">
 </kbd>
 
 General な WebHook と Slack が選択できます。Microsoft Teams や Mattermost など Slack 以外の WebHook での通知に対応しているツールと連携する際は WebHook を選択します。
@@ -52,7 +52,7 @@ General な WebHook と Slack が選択できます。Microsoft Teams や Matter
 完了画面で`Send a Test`をクリックし、Slack に通知が来ることを確認してください。
 
 <kbd>
-  <img src="https://github-image-tkaburagi.s3.ap-northeast-1.amazonaws.com/terraform-workshop/notifications-5.png">
+  <img src="../assets/notifications/notifications-5.png">
 </kbd>
 
 ## 実際にプロビジョニングを試す
@@ -60,7 +60,7 @@ General な WebHook と Slack が選択できます。Microsoft Teams や Matter
 最後に実際のプロビジョニングでどのようなメッセージが来るかを確認してみましょう。`handson-workshop`のメニューで以下のように`Queue Plan`をして下さい。
 
 <kbd>
-  <img src="https://github-image-tkaburagi.s3.ap-northeast-1.amazonaws.com/terraform-workshop/notifications-6.png">
+  <img src="../assets/notifications/notifications-6.png">
 </kbd>
 
 `Run`の内容を確認すると、プロビジョニングのワークフローが開始され、都度 Slack に通知が来るでしょう。
@@ -68,7 +68,7 @@ General な WebHook と Slack が選択できます。Microsoft Teams や Matter
 
 以下のように通知が来ていれば成功です。
 <kbd>
-  <img src="https://github-image-tkaburagi.s3.ap-northeast-1.amazonaws.com/terraform-workshop/notifications-7.png">
+  <img src="../assets/notifications/notifications-7.png">
 </kbd>
 
 簡単ですが、Terrafrom Enterprise の通知機能を試してみました。
