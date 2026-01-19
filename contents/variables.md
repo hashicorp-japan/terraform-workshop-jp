@@ -224,7 +224,7 @@ variable "hello_tf_instance_count" {
 `hello-tf`では環境変数を使って変数の値をセットしましたが、今回はエンタープライズの機能を利用します。変数のセットは GUI もしくは CLI で設定できます。
 
 <kbd>
-  <img src="https://github-image-tkaburagi.s3.ap-northeast-1.amazonaws.com/terraform-workshop/var-1.png">
+  <img src="../assets/variables/var-1.png">
 </kbd>
 
 `Add variables`をクリックして以下の変数を入力してください。
@@ -265,7 +265,7 @@ variable "hello_tf_instance_count" {
 </details>
 
 <kbd>
-  <img src="https://github-image-tkaburagi.s3.ap-northeast-1.amazonaws.com/terraform-workshop/var-2.png">
+  <img src="../assets/variables/var-2.png">
 </kbd>
 
 またこれらの値は[TFC API](https://www.terraform.io/docs/cloud/api/variables.html)でセットすることもできます。
@@ -283,7 +283,7 @@ $ git push -u origin main
 ワークスペースのトップ画面に戻り`Runs`のタブを見ると新規のコミットに対してプランが走っていることがわかります。
 
 <kbd>
-  <img src="https://github.com/hashicorp-japan/terraform-workshop-jp/blob/master/assets/run-new-ui.png">
+  <img src="../assets/variables/run-new-ui.png">
 </kbd>
 
 クリックしてプランの詳細を確認し、プランが終わると Apply 可能になります。`Confirm`をクリックし Apply を実行ししばらくすると成功するはずです。
@@ -306,13 +306,13 @@ $ aws ec2 describe-instances --query "Reservations[].Instances[].{InstanceId:Ins
 節約のために環境を綺麗にしておきましょう。ワークスペースのセッテイングから`Destruction and Deletion`を選びます。
 
 <kbd>
-  <img src="https://github-image-tkaburagi.s3.ap-northeast-1.amazonaws.com/terraform-workshop/var-6.png">
+  <img src="../assets/variables/var-6.png">
 </kbd>
 
 `Queue Destroy Plan`を選択し、プランが完了したら`Confirm & Apply`で destroy を実行してください。
 
 <kbd>
-  <img src="https://github-image-tkaburagi.s3.ap-northeast-1.amazonaws.com/terraform-workshop/var-7.png">
+  <img src="../assets/variables/var-7.png">
 </kbd>
 
 Destroy されていることを確認しましょう。(GCP/Azure の場合は Web ブラウザから確認してください。)
@@ -337,13 +337,13 @@ $ aws ec2 describe-instances --query "Reservations[].Instances[].{InstanceId:Ins
 ワークスペースのメニューから`States`を選択します。
 
 <kbd>
-  <img src="https://github-image-tkaburagi.s3.ap-northeast-1.amazonaws.com/terraform-workshop/state-1.png">
+  <img src="../assets/variables/state-1.png">
 </kbd>
 
 複数バージョンのステートがリストされていることがわかります。最新のステートを選択してみましょう。
 
 <kbd>
-  <img src="https://github-image-tkaburagi.s3.ap-northeast-1.amazonaws.com/terraform-workshop/state-2.png">
+  <img src="../assets/variables/state-2.png">
 </kbd>
 
 diff が取られ、変更点なども直感的に確認できます。各実行は毎回この最新のステートが取得されるためステートファイルの共有などもシンプルなワークフローとなります。
