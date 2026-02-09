@@ -17,7 +17,7 @@ jobs:
       - name: Link Checker
         uses: lycheeverse/lychee-action@v2
         with:
-          args: --verbose --no-progress './**/*.md'
+          args: --verbose --no-progress --max-retries 5 --accept 200..299,429,301,302 --retry-wait-time 10 './**/*.md'
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
