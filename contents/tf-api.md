@@ -576,7 +576,7 @@ $ curl \
   https://app.terraform.io/api/v2/runs/${RUN_ID}
 ```
 
-以上で API の利用の章は終了です。TFE API ではワークスペースやプロビジョニングに関する操作の他に、ユーザ管理系のオプレーションなど様々な作業を実施することができ、自動化のプロセスに組み込むことが可能です。
+以上で API の利用の章は終了です。TFE API ではワークスペースやプロビジョニングに関する操作の他に、ユーザ管理系のオペレーションなど様々な作業を実施することができ、自動化のプロセスに組み込むことが可能です。
 
 ## 参考リンク
 * [Terraform Cloud API Docs](https://developer.hashicorp.com/terraform/cloud-docs/api-docs)
