@@ -24,6 +24,8 @@ jobs:
   # 2. タイポチェック
   typos-check:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - uses: actions/checkout@v6
       - name: Typos source code spell checker
@@ -32,6 +34,8 @@ jobs:
   # 3. 表記揺れチェック (Textlint)
   textlint-check:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - uses: actions/checkout@v6
       - name: Setup Node.js
